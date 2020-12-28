@@ -22,7 +22,6 @@ def post (event):
 async def task ():
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
-
     response = ""
     if exitCode == 0:
         print("이벤트 없음")
@@ -41,6 +40,3 @@ async def task ():
     else:
         print("Invalid status")
     print(response.status_code, ":", response.text)
-
-if __name__ == '__main__':
-    await.task()
