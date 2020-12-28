@@ -70,6 +70,7 @@ def main ():
         traceback.print_exc()
     finally:
         GPIO.cleanup()
+        print("End process")
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 
 main()
