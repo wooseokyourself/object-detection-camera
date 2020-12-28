@@ -72,12 +72,16 @@ def basicMode ():
 
 def main ():
     try:
-        GPIO.add_event_detect(modePin, GPIO.RISING, callback=pinAdminCallback)
         startTime = time.time()
-        while GPIO.input(modePin) == False and time.time() - startTime < waitTime:
-            time.sleep(0.1)
-        basicMode()
-                        
+        while (True):
+            if GPIO.input(modePin) == True:
+                adminMode()
+                break
+            if time.time() - startTime < waitTime:
+                time.sleep(0.1)
+            else:
+                basicMode()
+                break
     except Exception as e:
         traceback.print_exc()
     finally:
