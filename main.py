@@ -9,6 +9,8 @@ try:
     modePin = 15
     outPin = 4
     
+    GPIO.setup(modePin, GPIO.IN)
+    GPIO.setup(outPin, GPIO.OUT)
     while True:
         # @modePin should set initially
         if GPIO.input(modePin) == 1:
