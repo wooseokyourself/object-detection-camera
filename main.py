@@ -17,7 +17,7 @@ try:
         # @modePin should be set initially
         if GPIO.input(modePin) == 1:
             print("get GPIO pin!")
-            # LTE power on
+            # LTE power on here
             asyncio.run(detector.task())
             print("break")
             break
