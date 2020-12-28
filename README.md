@@ -1,14 +1,20 @@
 ## Dependencies
+- Raspbian
 - OpenCV 4
 - CMake
 
 ## Build
 ~~~
-chmod 755 build.sh detect_and_send.sh
+chmod 755 build.sh detect-send.sh
 ./build.sh
 ~~~
 
 ## Run
 ~~~
-./detect_and_send.sh
+python3 main.py
+~~~
+
+## Detector Test
+~~~
+./detect-send.sh
 ~~~   
