@@ -10,7 +10,7 @@ import random # for test
 now = datetime.now()
 API_ENDPOINT="http://ino-on.umilevx.com/api/devices/events"
 API_METHOD="POST"
-TIMESTAMP=str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "_" + str(now.hour) + ":" + str(now.minute) + ":" + str(now.second)
+TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 IMAGEFILE=TIMESTAMP + ".jpg"
 
 detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
