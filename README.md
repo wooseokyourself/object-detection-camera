@@ -13,8 +13,3 @@ chmod 755 build.sh detect-send.sh
 ~~~
 python3 main.py
 ~~~
-
-## Detector Test
-~~~
-./detect-send.sh
-~~~   
