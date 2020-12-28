@@ -3,9 +3,11 @@
 - OpenCV 4
 - CMake
 
+## 
+
 ## Build
 ~~~
-chmod 755 build.sh detect-send.sh
+chmod 755 build.sh
 ./build.sh
 ~~~
 
