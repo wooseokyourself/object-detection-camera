@@ -4,11 +4,11 @@
 
 ## Build
 ~~~
-chmod 755 build.sh basic.sh
+chmod 755 build.sh detect_and_send.sh
 ./build.sh
 ~~~
 
 ## Run
 ~~~
-./basic.sh
+./detect_and_send.sh
 ~~~   
