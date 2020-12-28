@@ -3,8 +3,8 @@ sys.path.insert(0, "./GPIOEmulator")
 from EmulatorGUI import GPIO # EmulatorGUI for debug
 import subprocess
 import requests, json
+import time
 from datetime import datetime
-
 import random # for test
 
 now = datetime.now()
