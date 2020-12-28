@@ -79,7 +79,7 @@ def main ():
                 break
             elapsed = time.time() - startTime
             if elapsed < waitTime:
-                print(" Basic mode will starts after", int(waitTime - elapsed + 1), "secs... GPIO-BCM", modePin, "waits for admin mode.")
+                print(" Basic mode will starts after", int(waitTime - elapsed + 1), "secs... GPIO-BCM", modePin, "PIN waits for admin mode.")
                 time.sleep(1)
             else:
                 basicMode()
