@@ -31,7 +31,7 @@ function post_event(){ # time, event, rssi, battery, filename
 # LTE 모뎀 전원 인가
 
 # CPP 실행
-bash -c '(./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/wooseok.jpg); exit $?' 2>&1
+bash -c '(./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/wooseok.jpg 0.4 0.5 416); exit $?' 2>&1
 STATUS=$?
 case $STATUS in
     0)

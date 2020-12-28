@@ -33,20 +33,22 @@ private:
     string MODEL_PATH;
     string NETWORK_PATH;
     string CLASSES_PATH;
-    float confThreshold = 0.4;
-    float nmsThreshold = 0.5;
+    float confThreshold;
+    float nmsThreshold;
+    int resize;
     Net net;
     vector<cv::String> outNames;
     vector<string> classes;
+    Size padSize;
     
 public:
-    Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH);
-    bool detect (const string outputImagePath, const int resize); /** returns which the excavator was detected or not */
+    Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH, const float _confThreshold, const float _nmsThreshold, const int _resize);
+    bool detect (const string outputImagePath); /** returns which the excavator was detected or not */
 
 private:
     Mat getCam ();
-    void preProcess (Mat& frame, const int resize);
-    int postProcess (Mat& frame, const vector<Mat> outs); /** returns the number of detected excavators */
+    void netPreProcess (Mat& frame);
+    int netPostProcess (Mat& frame, const vector<Mat> outs); /** returns the number of detected excavators */
 };
 
 #endif

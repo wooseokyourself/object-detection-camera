@@ -5,15 +5,16 @@ void Assert (bool condition, int status) {
         exit(status);
 }
 
-Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH) {
-    try {
+Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH, const float _confThreshold, const float _nmsThreshold, const int _resize) {
         this->MODEL_PATH = _MODEL_PATH;
         this->NETWORK_PATH = _NETWORK_PATH;
         this->CLASSES_PATH = _CLASSES_PATH;
 
-        this->confThreshold = 0.4;
-        this->nmsThreshold = 0.5;
+        this->confThreshold = _confThreshold;
+        this->nmsThreshold = _nmsThreshold;
+        this->resize = _resize;
 
+    try {
         this->net = readNet(MODEL_PATH, NETWORK_PATH);
         this->net.setPreferableBackend(DNN_BACKEND_OPENCV);
         this->net.setPreferableTarget(DNN_TARGET_CPU);
@@ -29,21 +30,42 @@ Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const 
     }
 }
 
-bool Yolo_cpu::detect (const string outputImagePath, const int resize) {
+bool Yolo_cpu::detect (const string outputImagePath) {
     bool isDetected = false;
     Mat frame;
     frame = getCam();
     vector<Mat> outs;
 
-    preProcess(frame, resize);
+    //MARK: Add padding to image
+    if (frame.rows != frame.cols) {
+        int length = frame.cols > frame.rows ? frame.cols : frame.rows;
+        if (frame.cols < length) {
+            this->padSize.width = length - frame.cols;
+            this->padSize.height = length;
+            Mat pad(this->padSize, frame.type(), Scalar(255, 255, 255));
+            hconcat(pad, frame, frame);
+        }
+        else {
+            this->padSize.width = length;
+            this->padSize.height = length - frame.rows;
+            Mat pad(this->padSize, frame.type(), Scalar(255, 255, 255));
+            vconcat(pad, frame, frame);
+        }
+    }
+
+    netPreProcess(frame);
     net.forward(outs, outNames);
-    if (postProcess(frame, outs) != 0)
+    if (netPostProcess(frame, outs) != 0)
         isDetected = true;
 
+    //MARK: Get elapsed time
     vector<double> layersTimes;
     double freq = getTickFrequency() / 1000;
     double t = net.getPerfProfile(layersTimes) / freq;
     
+    //MARK: Remove padding from image
+    frame = frame(Range(this->padSize.height, frame.rows), Range(0, frame.cols));
+
     string labelInferTime = format("Inference time: %.2f ms", t);
     putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
 
@@ -67,24 +89,11 @@ Mat Yolo_cpu::getCam () {
     return frame;
 }
 
-void Yolo_cpu::preProcess (Mat& frame, const int resize) {
-    //MARK: Image padding
-    if (frame.rows != frame.cols) {
-        int length = frame.cols > frame.rows ? frame.cols : frame.rows;
-        if (frame.cols < length) {
-            Mat pad(length, length - frame.cols, frame.type(), Scalar(255, 255, 255));
-            hconcat(pad, frame, frame);
-        }
-        else {
-            Mat pad(length - frame.rows, length, frame.type(), Scalar(255, 255, 255));
-            vconcat(pad, frame, frame);
-        }
-    }
-
+void Yolo_cpu::netPreProcess (Mat& frame) {
     //MARK: Prepare for inference
     static Mat blob = blobFromImage(frame, 
                                     1, // scalarfactor: double
-                                    Size(resize, resize), // resizeRes: Size
+                                    Size(this->resize, this->resize),
                                     Scalar(), 
                                     true, // swapRB: bool
                                     false, 
@@ -96,7 +105,7 @@ void Yolo_cpu::preProcess (Mat& frame, const int resize) {
                  Scalar()); // mean: Scalar
 }
 
-int Yolo_cpu::postProcess (Mat& frame, const vector<Mat> outs) {
+int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     int excavatorCount = 0;
     static vector<int> outLayers = net.getUnconnectedOutLayers();
     static string outLayerType = net.getLayer(outLayers[0])->type;
@@ -112,7 +121,7 @@ int Yolo_cpu::postProcess (Mat& frame, const vector<Mat> outs) {
             float* data = (float*)outs[k].data;
             for (size_t i = 0; i < outs[k].total(); i += 7) {
                 float confidence = data[i + 2];
-                if (confidence > confThreshold) {
+                if (confidence > this->confThreshold) {
                     int left   = (int)data[i + 3];
                     int top    = (int)data[i + 4];
                     int right  = (int)data[i + 5];
@@ -145,7 +154,7 @@ int Yolo_cpu::postProcess (Mat& frame, const vector<Mat> outs) {
                 Point classIdPoint;
                 double confidence;
                 minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
-                if (confidence > confThreshold) {
+                if (confidence > this->confThreshold) {
                     int centerX = (int)(data[0] * frame.cols);
                     int centerY = (int)(data[1] * frame.rows);
                     int width = (int)(data[2] * frame.cols);
@@ -165,7 +174,7 @@ int Yolo_cpu::postProcess (Mat& frame, const vector<Mat> outs) {
 
     //MARK: Draw rectangle
     vector<int> indices;
-    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
+    NMSBoxes(boxes, confidences, this->confThreshold, this->nmsThreshold, indices);
     for (size_t i = 0; i < indices.size(); ++i) {   
         int idx = indices[i];
         if (classIds[idx] == 0) { // Draw rectangle if class is for excavator.
