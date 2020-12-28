@@ -7,11 +7,9 @@ import time
 from datetime import datetime
 import random # for test
 
-now = datetime.now()
-API_ENDPOINT="http://ino-on.umilevx.com/api/devices/events"
-API_METHOD="POST"
+API_ENDPOINT = "http://ino-on.umilevx.com/api/devices/events"
 TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-IMAGEFILE=TIMESTAMP + ".jpg"
+IMAGEFILE = TIMESTAMP + ".jpg"
 
 detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
 
@@ -59,13 +57,25 @@ def task ():
     print(response.status_code, ":", response.text)
 
 def adminMode ():
+    """
+    #
     # Wifi power on here
+    #
+    """
     print("Wifi power on")
+    """
+    #
     # Web server on here
+    #
+    """
     print("Web server on")
 
 def basicMode ():
+    """
+    #
     # LTE power on here
+    #
+    """
     print("LTE power on")
     task()
     GPIO.output(4, GPIO.HIGH)
