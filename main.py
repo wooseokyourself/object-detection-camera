@@ -1,7 +1,9 @@
 import sys
 sys.path.insert(0, "./GPIOEmulator")
 from EmulatorGUI import GPIO
-import subprocess
+import asyncio
+import detect-send
+
 
 try:
     GPIO.setmode(GPIO.BCM)
@@ -12,11 +14,12 @@ try:
     GPIO.setup(modePin, GPIO.IN)
     GPIO.setup(outPin, GPIO.OUT)
     while True:
-        # @modePin should set initially
+        # @modePin should be set initially
         if GPIO.input(modePin) == 1:
             print("get GPIO pin!")
             # LTE power on
-            subprocess.run("./detect-send.sh", shell=True)
+            asyncio.run(detect-send.main())
+            print("break")
             break
         # else:
             # Admin mode
