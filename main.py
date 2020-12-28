@@ -51,21 +51,31 @@ def task ():
         print("Invalid status")
     print(response.status_code, ":", response.text)
 
+def adminMode (channel): # call when got admin mode signal
+    # Wifi power on here
+    print("Wifi power on")
+    # Web server on here
+    print("Web server on")
+
+def basicMode ():
+    # LTE power on here
+    print("LTE power on")
+    task()
+    GPIO.output(4, GPIO.HIGH)
+
 def main ():
     try:
+        waitTime = 5 # Wait 5 seconds for get admin signal, otherwise run basic mode
         GPIO.setmode(GPIO.BCM)
-        modePin = 15 # temp pin number
         outPin = 4 # temp pin number
-        GPIO.setup(modePin, GPIO.IN, initial = GPIO.HIGH) # initial setting for debug
+        GPIO.setup(modePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
         GPIO.setup(outPin, GPIO.OUT)
-        if GPIO.input(modePin) == GPIO.HIGH: # Basic mode 
-            # LTE power on here
-            print("LTE power on")
-            detector.task()
-            GPIO.output(4, GPIO.HIGH)
-        else: # Admin mode
-            # Wifi power on here
-            print("Wifi power on")
+        GPIO.add_event_detect(modePin, GPIO.RISING, callback=pinAdminCallback)
+        startTime = time.time()
+        while GPIO.input(modePin) == False and time.time() - startTime < waitTime:
+            time.sleep(0.1)
+        basicMode()
+                        
     except Exception as e:
         traceback.print_exc()
     finally:
