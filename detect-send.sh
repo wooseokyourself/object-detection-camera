@@ -1,3 +1,4 @@
+#
 #!/bin/sh
 
 API_ENDPOINT="http://ino-on.umilevx.com/api/devices/events"

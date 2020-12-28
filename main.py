@@ -16,7 +16,7 @@ try:
         if GPIO.input(modePin) == 1:
             print("get GPIO pin!")
             # LTE power on
-            subprocess.call("./detector-send.sh", shell=True)
+            subprocess.run("./detect-send.sh", shell=True)
             break
         # else:
             # Admin mode
