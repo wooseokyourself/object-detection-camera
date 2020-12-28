@@ -24,19 +24,19 @@ async def task ():
     exitCode = process.returncode
     response = ""
     if exitCode == 0:
-        print("이벤트 없음")
+        print("No event")
         response = post(event=False)
     elif exitCode == 1:
-        print("이벤트 감지")
+        print("Event detected")
         response = post(event=True)
     elif exitCode == 2:
-        print("카메라 연결 실패")
+        print("Camera connection failed")
     elif exitCode == 3:
-        print("분석이미지 저장 실패")
+        print("Writing output image failed")
     elif exitCode == 4:
-        print("모델 로딩 실패")
+        print("Load model failed")
     elif exitCode == 5:
-        print("사진 분석 실패")
+        print("Inference failed")
     else:
         print("Invalid status")
     print(response.status_code, ":", response.text)
