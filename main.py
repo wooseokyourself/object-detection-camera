@@ -15,6 +15,13 @@ IMAGEFILE=TIMESTAMP + ".jpg"
 
 detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
 
+waitTime = 5 # Wait 5 seconds for get admin signal, otherwise run basic mode
+GPIO.setmode(GPIO.BCM)
+modePin = 15 # temp pin number
+outPin = 4 # temp pin number
+GPIO.setup(modePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
+GPIO.setup(outPin, GPIO.OUT)
+
 def getRssi ():
     return random.randrange(-40, -10)
 
@@ -65,11 +72,6 @@ def basicMode ():
 
 def main ():
     try:
-        waitTime = 5 # Wait 5 seconds for get admin signal, otherwise run basic mode
-        GPIO.setmode(GPIO.BCM)
-        outPin = 4 # temp pin number
-        GPIO.setup(modePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
-        GPIO.setup(outPin, GPIO.OUT)
         GPIO.add_event_detect(modePin, GPIO.RISING, callback=pinAdminCallback)
         startTime = time.time()
         while GPIO.input(modePin) == False and time.time() - startTime < waitTime:
