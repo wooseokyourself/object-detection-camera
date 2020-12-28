@@ -5,7 +5,7 @@ import subprocess
 import requests, json
 from datetime import datetime
 
-import random() # for test
+import random # for test
 
 now = datetime.now()
 API_ENDPOINT="http://ino-on.umilevx.com/api/devices/events"
