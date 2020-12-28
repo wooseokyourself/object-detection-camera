@@ -13,7 +13,7 @@ GPIO.setup(outPin, GPIO.OUT)
 if GPIO.input(modePin) == GPIO.LOW:
     # Basic task
     # LTE 모뎀 전원 인가
-    subprocess.call("./detect_and_send.sh", shell=True)
+    subprocess.call("./detect-send.sh", shell=True)
 else:
     # Admin task
     
