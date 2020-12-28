@@ -4,6 +4,7 @@
 
 ## Build
 ~~~
+chmod 755 build.sh basic.sh
 ./build.sh
 ~~~
 
