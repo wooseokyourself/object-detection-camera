@@ -58,7 +58,7 @@ def task ():
         print("Invalid status")
     print(response.status_code, ":", response.text)
 
-def adminMode (channel): # call when got admin mode signal
+def adminMode ():
     # Wifi power on here
     print("Wifi power on")
     # Web server on here
