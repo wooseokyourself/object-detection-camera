@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0, "./GPIOEmulator")
 from EmulatorGUI import GPIO
 import asyncio
-import detect-send
+import detector
 
 
 try:
@@ -18,7 +18,7 @@ try:
         if GPIO.input(modePin) == 1:
             print("get GPIO pin!")
             # LTE power on
-            asyncio.run(detect-send.main())
+            asyncio.run(detector.task())
             print("break")
             break
         # else:

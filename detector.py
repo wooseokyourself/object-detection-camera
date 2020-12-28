@@ -19,7 +19,7 @@ def post (event):
         data = {"time":TIMESTAMP, "event":1, "rssi":0, "battery":0, "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
     return requests.post(API_ENDPOINT, json=data)
 
-async def main ():
+async def task ():
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
 
@@ -43,4 +43,4 @@ async def main ():
     print(response.status_code, ":", response.text)
 
 if __name__ == '__main__':
-    main()
+    await.task()
