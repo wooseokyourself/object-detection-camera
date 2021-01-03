@@ -73,6 +73,6 @@ def main ():
         traceback.print_exc()
     finally:
         print("End process")
-        # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
+        subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 
 main()
