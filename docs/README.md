@@ -1,7 +1,7 @@
 ## Dependencies
-- Raspbian
-- OpenCV 4
-- CMake
+- Raspbian with Python 3.3 >=
+- OpenCV 4.4 >=
+- CMake 2.8 >=
 
 ## Build
 ~~~
@@ -11,5 +11,5 @@ $ ./build.sh
 
 ## Run
 ~~~
-$ python3 main.py
+$ python3 app.py
 ~~~

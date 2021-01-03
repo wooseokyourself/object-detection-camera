@@ -1,6 +1,7 @@
 import sys
-sys.path.insert(0, "./GPIOEmulator")
-from EmulatorGUI import GPIO # EmulatorGUI for debug
+from packages.EmulatorGUI import GPIO # Block with release
+# import RPi.GPIO as GPIO # Block with dev
+from packages.CZCATM1.CATM1 import CATM1
 import subprocess
 import requests, json
 import time
@@ -25,7 +26,6 @@ def getRssi ():
 
 def getBattery ():
     return random.randrange(1, 100)
-
 def post (event):
     data = {}
     if event == False:
@@ -34,6 +34,7 @@ def post (event):
         data = {"time":TIMESTAMP, "event":1, "rssi":getRssi(), "battery":getBattery(), "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
     return requests.post(API_ENDPOINT, json=data)
 
+# Snapshot, inference, request
 def task ():
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
@@ -71,13 +72,10 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
-    """
-    #
-    # LTE power on here
-    #
-    """
-    print("LTE power on")
-    task()
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=17, statPinNum=27)
+    lte.pwrOnModem() # LTE power on
+    task() # Task
+    lte.pwrOffModem() # LTE power off
     GPIO.output(4, GPIO.HIGH)
 
 def main ():
