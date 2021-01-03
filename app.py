@@ -9,6 +9,7 @@ TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 IMAGEFILE = TIMESTAMP + ".jpg"
 detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
 
+### GPIO BCM ###
 taskModePin = 15    # NRF - Task Mode Signal Pin (input)
 rpiOffPin = 29      # NRF - Work Completion Signal Pin (output)
 ltePwrPin = 21      # CAT.M1 Power Pin (output)
