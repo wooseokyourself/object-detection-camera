@@ -15,6 +15,6 @@ $ python3 app.py
 ~~~
 
 ## Resources
-* [OpenCV]"https://opencv.org/"
-* [GPIOEmulator]"https://sourceforge.net/projects/pi-gpio-emulator/"
-* [CATM1]"https://github.com/codezoo-ltd/CAT.M1_RaspberryPi/"
+* [OpenCV](https://opencv.org/)
+* [GPIOEmulator](https://sourceforge.net/projects/pi-gpio-emulator/)
+* [CATM1](https://github.com/codezoo-ltd/CAT.M1_RaspberryPi/)
