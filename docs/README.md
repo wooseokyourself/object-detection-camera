@@ -4,13 +4,25 @@
 - CMake 2.8 or later
 
 ## Information
-+ GPIO Pin number (BCM)
-    + NRF, 작동상태 모드 확인: 15 input   
-    + NRF, 작업 완료 알림: 29 output   
-    + CAT.M1, 모뎀 파워: 21 output   
-    + CAT.M1, 모뎀 상태: 23 input   
+#### GPIO Pin number (BCM)
++ NRF, 작동상태 모드 확인: 15 input   
++ NRF, 작업 완료 알림: 29 output   
++ CAT.M1, 모뎀 파워: 21 output   
++ CAT.M1, 모뎀 상태: 23 input   
 
 ※ 모든 핀 번호는 하드코딩 되어있음   
+
+#### Configuration (Json)
++ config/config.json
++ 각 필드의 의미는 다음과 같다.
+    + Object: YOLO
+        + Data: CONFIDENCE_THRESHOLD (default=0.4)
+            + 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
+        + Data: NMS_THRESHOLD (default=0.5)
+            + 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
+        + Data: RESIZE (default=416)
+            + 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
+    
 
 ## Build
 ~~~
