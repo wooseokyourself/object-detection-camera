@@ -1,10 +1,10 @@
-## Dependencies
+# Dependencies
 - Raspbian with Python 3.3 or later
 - OpenCV 4.4 or later
 - CMake 2.8 or later
 
-## Information
-#### GPIO Pin number (BCM)
+# Information
+### GPIO Pin number (BCM)
 + NRF, 작동상태 모드 확인: 15 input   
 + NRF, 작업 완료 알림: 29 output   
 + CAT.M1, 모뎀 파워: 21 output   
@@ -12,7 +12,7 @@
 
 ※ 모든 핀 번호는 하드코딩 되어있음   
 
-#### Configuration (Json)
+### Configuration (Json)
 + config/config.json
 + 각 필드의 의미는 다음과 같다.
     + Object: YOLO
@@ -24,19 +24,19 @@
         > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
     
 
-## Build
+# Build
 ~~~
 $ chmod 755 build.sh
 $ ./build.sh
 ~~~
 
-## Run
+# Run
 ~~~
 $ python3 app.py
 ~~~
 
-## Test
-#### 촬영 및 검출
+# Test
+### 촬영 및 검출
 ~~~ 
 $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 ~~~
@@ -47,7 +47,7 @@ $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 * resize(optional)
 > Yolov4 입력이미지 사이즈 (default = 416)
 
-#### CAT.M1 정보 확인
+### CAT.M1 정보 확인
 ~~~
 $ python3 test/catm1.py
 ~~~
@@ -60,12 +60,12 @@ $ python3 test/catm1.py
     + HW model   
     + Phone Number   
 
-#### 라즈베리파이 GPIO 작동여부 
+### 라즈베리파이 GPIO 작동여부 
 ~~~
 $ python3 test/gpio-emulator.py
 ~~~
 
-## Resources
+# Resources
 * [OpenCV](https://opencv.org/)
 * [GPIOEmulator](https://sourceforge.net/projects/pi-gpio-emulator/)
 * [CATM1](https://github.com/codezoo-ltd/CAT.M1_RaspberryPi/)
