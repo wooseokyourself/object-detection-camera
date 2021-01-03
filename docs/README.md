@@ -9,7 +9,8 @@
     + NRF, 작업 완료 알림: 29 output   
     + CAT.M1, 모뎀 파워: 21 output   
     + CAT.M1, 모뎀 상태: 23 input   
-모든 핀 번호는 하드코딩 되어있음   
+
+※ 모든 핀 번호는 하드코딩 되어있음   
 
 ## Build
 ~~~
@@ -28,7 +29,7 @@ $ python3 app.py
 $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 ~~~
 * out: 출력된 이미지를 저장할 경로
-* thr(optional): Yolov4 confidence threshold, NMS threshold (default = 0.4 0.5)
+* thr(optional): Yolov4 confidence threshold / NMS threshold (default = 0.4 0.5)
 * resize(optional): Yolov4 입력이미지 사이즈 (default = 416)
 
 #### CAT.M1 정보 확인
