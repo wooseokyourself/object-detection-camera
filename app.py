@@ -61,7 +61,6 @@ def basicMode ():
         print("Invalid status")
     
     lte.pwrOffModem() # LTE power off
-    nrf.pwrOffPi()
 
 def main ():
     try:
@@ -74,6 +73,8 @@ def main ():
         traceback.print_exc()
     finally:
         print("End process")
-        subprocess.call("sudo poweroff", shell=True) # shutdown raspi
+        nrf.pwrOffPi()
+        RPi.GPIO.cleanup()
+        # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 
 main()
