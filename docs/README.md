@@ -4,11 +4,11 @@
 - CMake 2.8 or later
 
 ## Information
-* GPIO Pin number (BCM)
-- NRF, 작동상태 모드 확인: 15 input   
-- NRF, 작업 완료 알림: 29 output   
-- CAT.M1, 모뎀 파워: 21 output   
-- CAT.M1, 모뎀 상태: 23 input   
++ GPIO Pin number (BCM)
+    + NRF, 작동상태 모드 확인: 15 input   
+    + NRF, 작업 완료 알림: 29 output   
+    + CAT.M1, 모뎀 파워: 21 output   
+    + CAT.M1, 모뎀 상태: 23 input   
 모든 핀 번호는 하드코딩 되어있음   
 
 ## Build
@@ -35,14 +35,14 @@ $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 ~~~
 $ python3 test/catm1.py
 ~~~
-* 출력되는 정보
-- AT   
-- ATE0   
-- IMEI   
-- RSSI   
-- FW Ver   
-- HW model   
-- Phone Number   
++ 출력되는 정보
+    + AT   
+    + ATE0   
+    + IMEI   
+    + RSSI   
+    + FW Ver   
+    + HW model   
+    + Phone Number   
 
 #### 라즈베리파이 GPIO 작동여부 
 ~~~
