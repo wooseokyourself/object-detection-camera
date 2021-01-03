@@ -30,7 +30,7 @@ def post (event, rssi, battery):
     return requests.post(API_ENDPOINT, json=data)
 
 # Snapshot, inference, request
-def task (rssi, battery):
+def mainTask (rssi, battery):
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     response = ""
@@ -69,8 +69,8 @@ def adminMode ():
 def basicMode ():
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=17, statPinNum=27)
     lte.pwrOnModem() # LTE power on
-    rssi, battery = lte.getRSSI(), random.randrange(1, 100)
-    task() # Task
+    rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함
+    mainTask(rssi, battery) # Task
     lte.pwrOffModem() # LTE power off
     GPIO.output(4, GPIO.HIGH)
 
