@@ -17,7 +17,6 @@ rpiOffPin = 29      # NRF - Work Completion Signal Pin (output)
 ltePwrPin = 21      # CAT.M1 Power Pin (output)
 lteStatPin = 23     # CAT.M1 Status Pin (input)
 
-lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
 nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
 web = WEB(url="http://ino-on.umilevx.com/api/devices/events")
 
@@ -36,7 +35,7 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
-    lte.pwrOnModem() # LTE power on
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
     rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함
 
     process = subprocess.run(detector, capture_output=True, shell=True)
