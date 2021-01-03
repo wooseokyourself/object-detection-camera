@@ -1,7 +1,7 @@
 ## Dependencies
-- Raspbian with Python 3.3 >=
-- OpenCV 4.4 >=
-- CMake 2.8 >=
+- Raspbian with Python 3.3 or later
+- OpenCV 4.4 or later
+- CMake 2.8 or later
 
 ## Build
 ~~~
