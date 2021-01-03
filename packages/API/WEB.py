@@ -1,4 +1,5 @@
 import requests, json
+import packages.Define as Define
 
 class WEB:
     def __init__(self, url):

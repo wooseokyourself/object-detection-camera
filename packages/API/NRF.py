@@ -1,6 +1,9 @@
 import time
-from packages.EmulatorGUI import GPIO # Block with release
-# import RPi.GPIO as GPIO # Block with dev
+import packages.Define as Define
+if Define.GPIO_EMULATOR == True:
+    from packages.EmulatorGUI import GPIO
+else:
+    import RPi.GPIO as GPIO # Block with dev
 
 class NRF:
     def __init__(self, taskPinNum, offPinNum):

@@ -2,8 +2,11 @@ import time
 import serial
 import re
 import threading
-from packages.EmulatorGUI import GPIO # Block with release
-# import RPi.GPIO as GPIO # Block with dev
+import packages.Define as Define
+if Define.GPIO_EMULATOR == True:
+    from packages.GPIOEmulator.EmulatorGUI import GPIO
+else:
+    import RPi.GPIO as GPIO # Block with dev
 
 """
 AT 커맨드는 아래 사이트 참조하였음
