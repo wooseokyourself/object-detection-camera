@@ -1,4 +1,5 @@
 import subprocess
+import json
 from datetime import datetime
 import random
 import packages.Define as Define
@@ -9,7 +10,6 @@ from packages.API.WEB import WEB
 
 TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 IMAGEFILE = TIMESTAMP + ".jpg"
-detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
 
 ### GPIO BCM ###
 taskModePin = 15    # NRF - Task Mode Signal Pin (input)
@@ -35,11 +35,17 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
-    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
-    rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함
-
+    detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
+    with open("config/config.json", "r") as f:
+        config = json.load(f)
+        confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
+        resize = config["YOLO"]["RESIZE"]
+        detector += conf + " " + nms + " " + resize
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
+    
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
+    rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함    
     
     if exitCode == 0:
         print("No event")

@@ -1,0 +1,7 @@
+{
+    "YOLO": {
+        "CONFIDENCE_THRESHOLD": "0.4",
+        "NMS_THRESHOLD": "0.5",
+        "RESIZE": "416"
+    }
+}
