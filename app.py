@@ -16,10 +16,14 @@ detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custo
 
 waitTime = 5 # Wait 5 seconds for get admin signal, otherwise run basic mode
 GPIO.setmode(GPIO.BCM)
-modePin = 15 # temp pin number
-outPin = 4 # temp pin number
-GPIO.setup(modePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
-GPIO.setup(outPin, GPIO.OUT)
+
+taskModePin = 15    # Task Mode Signal Pin (input)
+rpiOffPin = 29      # Work Completion Signal Pin (output)
+ltePwrPin = 21      # CAT.M1 Power Pin (output) --> pin initialized in CZCATM1 package
+lteStatPin = 23     # CAT.M1 Status Pin (input) --> pin initialized in CZCATM1 package
+
+GPIO.setup(taskModePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
+GPIO.setup(rpiOffPin, GPIO.OUT)
 
 def post (event, rssi, battery):
     data = {}
@@ -67,18 +71,18 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
-    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=17, statPinNum=27)
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
     lte.pwrOnModem() # LTE power on
     rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함
     mainTask(rssi, battery) # Task
     lte.pwrOffModem() # LTE power off
-    GPIO.output(4, GPIO.HIGH)
+    GPIO.output(rpiOffPin, GPIO.HIGH)
 
 def main ():
     try:
         startTime = time.time()
         while (True):
-            if GPIO.input(modePin) == True:
+            if GPIO.input(taskModePin) == True:
                 adminMode()
                 break
             elapsed = time.time() - startTime
