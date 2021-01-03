@@ -1,12 +1,10 @@
-import sys
-from packages.EmulatorGUI import GPIO # Block with release
-# import RPi.GPIO as GPIO # Block with dev
-from packages.CZCATM1.CATM1 import CATM1
 import subprocess
 import requests, json
 import time
 from datetime import datetime
 import random # for test
+from packages.API.CATM1 import CATM1
+from packages.API.NRF import NRF
 
 API_ENDPOINT = "http://ino-on.umilevx.com/api/devices/events"
 TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
@@ -14,16 +12,13 @@ IMAGEFILE = TIMESTAMP + ".jpg"
 
 detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " 0.4 0.5 416"
 
-waitTime = 5 # Wait 5 seconds for get admin signal, otherwise run basic mode
-GPIO.setmode(GPIO.BCM)
-
 taskModePin = 15    # Task Mode Signal Pin (input)
 rpiOffPin = 29      # Work Completion Signal Pin (output)
 ltePwrPin = 21      # CAT.M1 Power Pin (output) --> pin initialized in CZCATM1 package
 lteStatPin = 23     # CAT.M1 Status Pin (input) --> pin initialized in CZCATM1 package
 
-GPIO.setup(taskModePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
-GPIO.setup(rpiOffPin, GPIO.OUT)
+lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
 
 def post (event, rssi, battery):
     data = {}
@@ -71,31 +66,22 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
-    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
     lte.pwrOnModem() # LTE power on
     rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함
     mainTask(rssi, battery) # Task
     lte.pwrOffModem() # LTE power off
-    GPIO.output(rpiOffPin, GPIO.HIGH)
+    nrf.pwrOffPi()
 
 def main ():
     try:
-        startTime = time.time()
-        while (True):
-            if GPIO.input(taskModePin) == True:
-                adminMode()
-                break
-            elapsed = time.time() - startTime
-            if elapsed < waitTime:
-                print(" Basic mode will starts after", int(waitTime - elapsed + 1), "secs... GPIO-BCM", modePin, "PIN waits for admin mode.")
-                time.sleep(1)
-            else:
-                basicMode()
-                break
+        # Wait 5 seconds for get admin signal
+        if nrf.isAdminMode(timeout=5):
+            adminMode()
+        else:
+            basicMode()
     except Exception as e:
         traceback.print_exc()
     finally:
-        GPIO.cleanup()
         print("End process")
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 

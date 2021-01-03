@@ -2,7 +2,8 @@ import time
 import serial
 import re
 import threading
-import RPi.GPIO as GPIO
+from packages.EmulatorGUI import GPIO # Block with release
+# import RPi.GPIO as GPIO # Block with dev
 
 """
 AT 커맨드는 아래 사이트 참조하였음
