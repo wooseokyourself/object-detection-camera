@@ -21,30 +21,25 @@ outPin = 4 # temp pin number
 GPIO.setup(modePin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # pud is temporary
 GPIO.setup(outPin, GPIO.OUT)
 
-def getRssi ():
-    return random.randrange(-40, -10)
-
-def getBattery ():
-    return random.randrange(1, 100)
-def post (event):
+def post (event, rssi, battery):
     data = {}
     if event == False:
-        data = {"time":TIMESTAMP, "event":0, "rssi":getRssi(), "battery":getBattery()}
+        data = {"time":TIMESTAMP, "event":0, "rssi":rssi, "battery":battery}
     else:
-        data = {"time":TIMESTAMP, "event":1, "rssi":getRssi(), "battery":getBattery(), "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
+        data = {"time":TIMESTAMP, "event":1, "rssi":rssi, "battery":battery, "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
     return requests.post(API_ENDPOINT, json=data)
 
 # Snapshot, inference, request
-def task ():
+def task (rssi, battery):
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     response = ""
     if exitCode == 0:
         print("No event")
-        response = post(event=False)
+        response = post(event=False, rssi, battery)
     elif exitCode == 1:
         print("Event detected")
-        response = post(event=True)
+        response = post(event=True, rssi, battery)
     elif exitCode == 2:
         print("Camera connection failed")
     elif exitCode == 3:
@@ -74,6 +69,7 @@ def adminMode ():
 def basicMode ():
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=17, statPinNum=27)
     lte.pwrOnModem() # LTE power on
+    rssi, battery = lte.getRSSI(), random.randrange(1, 100)
     task() # Task
     lte.pwrOffModem() # LTE power off
     GPIO.output(4, GPIO.HIGH)

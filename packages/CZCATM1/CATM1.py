@@ -4,7 +4,12 @@ import re
 import threading
 import RPi.GPIO as GPIO
 
+"""
+AT 커맨드는 아래 사이트 참조하였음
+https://m2msupport.net/m2msupport/atcsq-signal-quality/
+"""
 ATCmdList = {
+    'RSSI': {'CMD': "AT+CSQ", 'REV': "\r\nOK\r\n"}, # custom
     'IMEI': {'CMD': "AT+CGSN", 'REV': "\r\nOK\r\n"},
     'FWInfo': {'CMD': "AT+CGMR", 'REV': "\r\nOK\r\n"},
     'HWInfo': {'CMD': "AT+CGMM", 'REV': "\r\nOK\r\n"},
@@ -167,6 +172,11 @@ class CATM1:
                 return self.response
 
     # AT command methods
+    def getRSSI(self): # custom
+        ''' get RSSI number'''
+        data = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'])
+        return data[:data.index(ATCmdList['RSSI']['REV'])]
+
     def getIMEI(self):
         ''' get IMEI number'''
         data = self.sendATCmd(ATCmdList['IMEI']['CMD'], ATCmdList['IMEI']['REV'])
