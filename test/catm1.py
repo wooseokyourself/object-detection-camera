@@ -1,5 +1,6 @@
+import os
 import sys
-sys.path.append("../")
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from packages.API.CATM1 import CATM1
 
 ltePwrPin = 21      # CAT.M1 Power Pin (output)
