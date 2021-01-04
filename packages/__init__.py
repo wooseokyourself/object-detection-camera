@@ -1,3 +1,3 @@
-import .API
-import .GPIOEmulator
-import .Define
+import API
+import GPIOEmulator
+import Define
