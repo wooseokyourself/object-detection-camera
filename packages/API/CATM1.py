@@ -4,7 +4,7 @@ import re
 import threading
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
-    from packages.GPIOEmulator import EmulatorGUI as GPIO
+    from packages.GPIOEmulator.EmulatorGUI import GPIO
 else:
     import RPi.GPIO as GPIO
 
