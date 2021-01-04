@@ -36,11 +36,12 @@ class CATM1:
     __TimeOut = 5     # seconds
 
     '''
-    Raspberry Pi 4B default serial port -> /dev/ttyAMA0
+    Raspberry Pi 4B default serial port -> /dev/ttyS0
+        when serial login shell disabled, serial interface enabled in raspi-config
     CAT.M1 default power pin -> 17
     CAT.M1 default status pin -> 27
     '''
-    def __init__(self, serialPort='/dev/ttyAMA0', baudrate=115200, pwrPinNum=17, statPinNum=27):
+    def __init__(self, serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=17, statPinNum=27):
 
         # serial port setup
         if(CATM1.isConectSerial == False):
