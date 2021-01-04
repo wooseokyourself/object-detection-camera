@@ -362,6 +362,14 @@ class GPIO:
 
     
     #GPIO LIBRARY Functions
+    def getmode():
+        if(mode == GPIO.BCM):
+            return GPIO.BCM
+        elif(mode == GPIO.BOARD):
+            return GPIO.BOARD
+        else:
+            return -1
+
     @typeassert(int)
     def setmode(mode):
         time.sleep(1)
