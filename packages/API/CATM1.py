@@ -51,6 +51,7 @@ class CATM1:
         self.pwrPinNum = pwrPinNum
         self.statPinNum = statPinNum
         if GPIO.getmode() == -1:
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pwrPinNum, GPIO.OUT)
         GPIO.setup(self.statPinNum, GPIO.IN)

@@ -6,10 +6,10 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 from packages.API.WEB import WEB
 
-taskModePin = 15    # NRF - Task Mode Signal Pin (input)
-rpiOffPin = 29      # NRF - Work Completion Signal Pin (output)
-ltePwrPin = 21      # CAT.M1 Power Pin (output)
-lteStatPin = 23     # CAT.M1 Status Pin (input)
+taskModePin = 20    # NRF - Task Mode Signal Pin (input)
+rpiOffPin = 21      # NRF - Work Completion Signal Pin (output)
+ltePwrPin = 17      # CAT.M1 Power Pin (output)
+lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 print("NRF: Task Mode Pin  =", taskModePin)
 print("NRF: Raspi Off Pin  =", rpiOffPin)

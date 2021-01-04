@@ -10,6 +10,7 @@ class NRF:
         self.taskPinNum = taskPinNum
         self.offPinNum = offPinNum
         if GPIO.getmode() == -1:
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.taskPinNum, GPIO.IN)
         GPIO.setup(self.offPinNum, GPIO.OUT)
