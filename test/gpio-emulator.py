@@ -19,10 +19,10 @@ print("\n")
 
 print("CAT LTE Power Pin Test")
 lte = CATM1(serialPort='/dev/ttyAMA0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
-print("...connected", lte.getPwrPinNum, " Pin")
+print("...connected", lte.getPwrPinNum(), " Pin")
 print("\n")
 print("CAT LTE Status Pin Test")
-print("...connected", lte.getStatusPinNum, " Pin")
+print("...connected", lte.getStatusPinNum(), " Pin")
 
 nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
 print("\n")
