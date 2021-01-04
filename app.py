@@ -49,11 +49,11 @@ def basicMode ():
     
     if exitCode == 0:
         print("No event")
-        resCode, resText = web.post(TIMESTAMP, event=False, rssi, battery)
+        resCode, resText = web.post(TIMESTAMP, event=False, rssi=rssi, battery=battery)
         print(resCode, ":", resText)
     elif exitCode == 1:
         print("Event detected")
-        resCode, resText = web.post(TIMESTAMP, event=False, rssi, battery, IMAGEFILE)
+        resCode, resText = web.post(TIMESTAMP, event=False, rssi=rssi, battery=battery, imagefile=IMAGEFILE)
         print(resCode, ":", resText)
     elif exitCode == 2:
         print("Camera connection failed")
