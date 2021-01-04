@@ -25,21 +25,21 @@
     
 
 # Build
-~~~
-ino-on_AiCam $ chmod 755 build.sh
-ino-on_AiCam $ ./build.sh
-~~~
+```console
+pi@raspberrypi:~/ino-on_AiCam $ chmod 755 build.sh
+pi@raspberrypi:~/ino-on_AiCam $ ./build.sh
+```
 
 # Run
-~~~
-ino-on_AiCam $ python3 app.py
-~~~
+```console
+pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
+```
 
 # Test
 ### 촬영 및 검출
-~~~ 
-ino-on_AiCam/test $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
-~~~
+```console
+pi@raspberrypi:~/ino-on_AiCam/test $ python3 cam-yolo.py --out <string> --thr <float> <float> --resize <int>
+```
 * out
 > 출력된 이미지를 저장할 경로
 * thr(optional)
@@ -48,9 +48,9 @@ ino-on_AiCam/test $ python3 test/cam-yolo.py --out <string> --thr <float> <float
 > Yolov4 입력이미지 사이즈 (default = 416)
 
 ### CAT.M1 정보 확인
-~~~
-ino-on_AiCam/test $ python3 test/catm1.py
-~~~
+```console
+pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1.py
+```
 + 출력되는 정보
     + AT   
     + ATE0   
@@ -61,9 +61,9 @@ ino-on_AiCam/test $ python3 test/catm1.py
     + Phone Number   
 
 ### 라즈베리파이 GPIO 작동여부 
-~~~
-ino-on_AiCam/test $ python3 test/gpio-emulator.py
-~~~
+```console
+pi@raspberrypi:~/ino-on_AiCam/test $ python3 gpio-emulator.py
+```
 
 # Resources
 * [OpenCV](https://opencv.org/)
