@@ -4,9 +4,9 @@ import re
 import threading
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
-    from packages.GPIOEmulator.EmulatorGUI import GPIO
+    from packages.GPIOEmulator import EmulatorGUI as GPIO
 else:
-    import RPi.GPIO as GPIO # Block with dev
+    import RPi.GPIO as GPIO
 
 """
 AT 커맨드는 아래 사이트 참조하였음

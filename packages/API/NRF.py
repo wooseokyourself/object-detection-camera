@@ -1,7 +1,7 @@
 import time
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
-    from packages.EmulatorGUI import GPIO
+    from packages.GPIOEmulator import EmulatorGUI as GPIO
 else:
     import RPi.GPIO as GPIO # Block with dev
 
