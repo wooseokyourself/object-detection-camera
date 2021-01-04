@@ -5,10 +5,10 @@
 
 # Information
 ### GPIO Pin number (BCM)
-+ NRF, 작동상태 모드 확인: 15 input   
-+ NRF, 작업 완료 알림: 29 output   
-+ CAT.M1, 모뎀 파워: 21 output   
-+ CAT.M1, 모뎀 상태: 23 input   
++ NRF, 작동상태 모드 확인: 20 input   
++ NRF, 작업 완료 알림: 21 output   
++ CAT.M1, 모뎀 파워: 17 output   
++ CAT.M1, 모뎀 상태: 27 input   
 
 ※ 모든 핀 번호는 하드코딩 되어있음   
 
