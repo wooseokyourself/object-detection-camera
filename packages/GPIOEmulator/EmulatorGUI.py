@@ -356,20 +356,20 @@ class _GPIO:
     setModeDone = False
 
     #Extra functions
-    def checkModeValidator():
+    def checkModeValidator(self):
         if(GPIO.setModeDone == False):
             raise Exception('Setup your GPIO mode. Must be set to BCM')
 
     
     #GPIO LIBRARY Functions
-    def getmode():
+    def getmode(self):
         if(GPIO.setModeDone == True):
             return 11 # GPIO.BCM
         else:
             return -1
 
     @typeassert(int)
-    def setmode(mode):
+    def setmode(self, mode):
         time.sleep(1)
         if(mode == GPIO.BCM):
             GPIO.setModeDone = True
@@ -377,11 +377,11 @@ class _GPIO:
             GPIO.setModeDone = False
 
     @typeassert(bool)
-    def setwarnings(flag):
+    def setwarnings(self, flag):
         pass
 
     @typeassert(int,int,int,int)        
-    def setup(channel, state, initial=-1,pull_up_down=-1):
+    def setup(self, channel, state, initial=-1,pull_up_down=-1):
         global dictionaryPins
         
         GPIO.checkModeValidator()
@@ -425,7 +425,7 @@ class _GPIO:
         
 
     @typeassert(int,int)
-    def output(channel, outmode):
+    def output(self, channel, outmode):
         global dictionaryPins
         channel = str(channel)
         
@@ -456,7 +456,7 @@ class _GPIO:
 
 
     @typeassert(int)
-    def input(channel):
+    def input(self, channel):
         global dictionaryPins
         channel = str(channel)
 
@@ -480,7 +480,7 @@ class _GPIO:
 
 
     
-    def cleanup():
+    def cleanup(self):
         pass
        
 GPIO = _GPIO() # static object
