@@ -1,10 +1,10 @@
-import importlib
 import sys
-sys.path.append("../")
-Define = importlib.import_module("packages.Define")
+sys.path.append("..")
+from packages.Define import Define
 Define.GPIO_EMULATOR = True
-CATM1 = importlib.import_module("packages.API.CATM1")
-NRF = importlib.import_module("packages.API.NRF")
+from packages.API.CATM1 import CATM1
+from packages.API.NRF import NRF
+from packages.API.WEB import WEB
 
 taskModePin = 15    # NRF - Task Mode Signal Pin (input)
 rpiOffPin = 29      # NRF - Work Completion Signal Pin (output)

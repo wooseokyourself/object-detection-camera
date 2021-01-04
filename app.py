@@ -1,13 +1,12 @@
-import importlib
 import subprocess
 import json
 from datetime import datetime
 import random
-Define = importlib.import_module("packages.Define")
+from packages.Define import Define
 #Define.GPIO_EMULATOR = True
-CATM1 = importlib.import_module("packages.API.CATM1")
-NRF = importlib.import_module("packages.API.NRF")
-WEB = importlib.import_module("packages.API.WEB")
+from packages.API.CATM1 import CATM1
+from packages.API.NRF import NRF
+from packages.API.WEB import WEB
 
 TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 IMAGEFILE = TIMESTAMP + ".jpg"
