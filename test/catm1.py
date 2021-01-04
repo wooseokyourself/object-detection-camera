@@ -2,8 +2,8 @@ import sys
 sys.path.append("..")
 from packages.API.CATM1 import CATM1
 
-ltePwrPin = 21      # CAT.M1 Power Pin (output)
-lteStatPin = 23     # CAT.M1 Status Pin (input)
+ltePwrPin = 17      # CAT.M1 Power Pin (output)
+lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 node = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
 
