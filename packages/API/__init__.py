@@ -1,5 +1,3 @@
-''' 
-from CATM1 import CATM1
-from NRF import NRF
-from WEB import WEB
-''' 
+from . import CATM1
+from . import NRF
+from . import WEB

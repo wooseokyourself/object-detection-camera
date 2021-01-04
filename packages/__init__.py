@@ -1,5 +1,1 @@
-''' 
-import API
-import GPIOEmulator
-import Define
-''' 
+import . import Define
