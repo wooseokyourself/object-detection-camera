@@ -181,50 +181,50 @@ class CATM1:
                 return self.response
 
     # AT command methods
-    def getRSSI(self): # custom
+    def getRSSI(self, timeout=None): # custom
         ''' get RSSI number'''
-        data = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'])
+        data = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'], timeout)
         return data[:data.index(ATCmdList['RSSI']['REV'])]
 
-    def getIMEI(self):
+    def getIMEI(self, timeout=None):
         ''' get IMEI number'''
-        data = self.sendATCmd(ATCmdList['IMEI']['CMD'], ATCmdList['IMEI']['REV'])
+        data = self.sendATCmd(ATCmdList['IMEI']['CMD'], ATCmdList['IMEI']['REV'], timeout)
         return data[:data.index(ATCmdList['IMEI']['REV'])]
 
-    def getFirmwareInfo(self):
+    def getFirmwareInfo(self, timeout=None):
         ''' get FW version '''
-        data =  self.sendATCmd(ATCmdList['FWInfo']['CMD'], ATCmdList['FWInfo']['REV'])
+        data =  self.sendATCmd(ATCmdList['FWInfo']['CMD'], ATCmdList['FWInfo']['REV'], timeout)
         return data[:data.index(ATCmdList['FWInfo']['REV'])]
 
-    def getHardwareInfo(self):
+    def getHardwareInfo(self, timeout=None):
         ''' get modem model info '''
-        data = self.sendATCmd(ATCmdList['HWInfo']['CMD'], ATCmdList['HWInfo']['REV'])
+        data = self.sendATCmd(ATCmdList['HWInfo']['CMD'], ATCmdList['HWInfo']['REV'], timeout)
         return data[:data.index(ATCmdList['HWInfo']['REV'])]
 
-    def getPhoneNumberInfo(self):
+    def getPhoneNumberInfo(self, timeout=None):
         ''' get modem phone number '''
-        data = self.sendATCmd(ATCmdList['NumberInfo']['CMD'], ATCmdList['NumberInfo']['REV'])
+        data = self.sendATCmd(ATCmdList['NumberInfo']['CMD'], ATCmdList['NumberInfo']['REV'], timeout)
         return data[:data.index(ATCmdList['NumberInfo']['REV'])]
  
-    def attachNetwork(self, connect=True):
+    def attachNetwork(self, connect=True, timeout=10):
         ''' Activate/Deactivate a PDP Context '''
         if(connect):
-            return self.sendATCmd(ATCmdList['AttachNet']['CMD'], ATCmdList['AttachNet']['REV'], 10)
+            return self.sendATCmd(ATCmdList['AttachNet']['CMD'], ATCmdList['AttachNet']['REV'], timeout)
         else:
-            return self.sendATCmd(ATCmdList['DetachNet']['CMD'], ATCmdList['DetachNet']['REV'], 10)
+            return self.sendATCmd(ATCmdList['DetachNet']['CMD'], ATCmdList['DetachNet']['REV'], timeout)
     
-    def isAttachNetwork(self):
+    def isAttachNetwork(self, timeout=None):
         ''' True : LTE CAT.M1 Network attached, False : LTE CAT.M1 Network detached ''' 
-        data = self.sendATCmd(ATCmdList['IsAttachNet']['CMD'], ATCmdList['IsAttachNet']['REV'])
+        data = self.sendATCmd(ATCmdList['IsAttachNet']['CMD'], ATCmdList['IsAttachNet']['REV'], timeout)
         _str = ',1'
         if(data.find(_str)==-1):
             return False
         else:
             return True
 
-    def myIP(self):
+    def myIP(self, timeout=10):
         ''' get modem IP Address '''
-        data = self.sendATCmd(ATCmdList['myIP']['CMD'], ATCmdList['myIP']['REV'], 10)
+        data = self.sendATCmd(ATCmdList['myIP']['CMD'], ATCmdList['myIP']['REV'], timeout)
         _str = ',"'
         _len = len(data)-7
 
