@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../")
 from packages.API.CATM1 import CATM1
 
 ltePwrPin = 21      # CAT.M1 Power Pin (output)
