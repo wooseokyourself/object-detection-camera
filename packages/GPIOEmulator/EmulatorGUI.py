@@ -339,7 +339,7 @@ def drawBindUpdateButtonIn(gpioID,In):
     objBtn.bind("<ButtonRelease-1>", buttonClickRelease)
 
 
-class GPIO:
+class _GPIO:
 
   
     #constants
@@ -483,11 +483,4 @@ class GPIO:
     def cleanup():
         pass
        
-                
-            
-        
-        
-        
-
-        
-
+GPIO = _GPIO() # static object
