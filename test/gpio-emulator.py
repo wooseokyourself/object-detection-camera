@@ -8,8 +8,8 @@ from packages.API.WEB import WEB
 
 taskModePin = 20    # NRF - Task Mode Signal Pin (input)
 rpiOffPin = 21      # NRF - Work Completion Signal Pin (output)
-ltePwrPin = 5       # CAT.M1 Power Pin (output)
-lteStatPin = 13     # CAT.M1 Status Pin (input)
+ltePwrPin = 17       # CAT.M1 Power Pin (output)
+lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 print("NRF: Task Mode Pin  =", taskModePin)
 print("NRF: Raspi Off Pin  =", rpiOffPin)
