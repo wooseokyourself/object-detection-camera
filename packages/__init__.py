@@ -1,1 +1,1 @@
-import . import Define
+from . import Define
