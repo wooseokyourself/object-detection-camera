@@ -50,7 +50,7 @@ class CATM1:
         # Modem Power setup
         self.pwrPinNum = pwrPinNum
         self.statPinNum = statPinNum
-        if GPIO.getmode() == -1 or GPIO.getmode() == 10:
+        if GPIO.getmode() == -1:
             GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pwrPinNum, GPIO.OUT)
         GPIO.setup(self.statPinNum, GPIO.IN)

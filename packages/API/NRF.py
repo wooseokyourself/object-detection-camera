@@ -9,7 +9,7 @@ class NRF:
     def __init__(self, taskPinNum, offPinNum):
         self.taskPinNum = taskPinNum
         self.offPinNum = offPinNum
-        if GPIO.getmode() == -1 or GPIO.getmode() == 10:
+        if GPIO.getmode() == -1:
             GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.taskPinNum, GPIO.IN)
         GPIO.setup(self.offPinNum, GPIO.OUT)
