@@ -30,9 +30,10 @@ pi@raspberrypi:~ & sudo raspi-config
 ```
 1. Interface Options 선택   
 2. P6 Serial Port 선택
-3. "Would you like a login shell to be accessible over serial?" --> "No"
-4. "Would you like the serial port hardware to be enabled?" --> "Yes"
-
+```diff
+- 3. "Would you like a login shell to be accessible over serial?" --> "No"
+- 4. "Would you like the serial port hardware to be enabled?" --> "Yes"
+```
 # Build
 ```console
 pi@raspberrypi:~/ino-on_AiCam $ chmod 755 build.sh
