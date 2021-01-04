@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-from packages.Define import Define
+import packages.Define as Define
 Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
