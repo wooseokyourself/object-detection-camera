@@ -157,7 +157,7 @@ class CATM1:
         self.compose = str(command) + "\r"
         CATM1.ser.reset_input_buffer()
         CATM1.ser.write(self.compose.encode())
-        #print(self.compose)
+        print(self.compose)
     
     def sendATCmd(self, command, cmd_response, timeout=None):
         ''' Send AT command & Read command response ''' 
