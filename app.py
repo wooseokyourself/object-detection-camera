@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 import random
 import packages.Define as Define
+import RPi.GPIO
 #Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
