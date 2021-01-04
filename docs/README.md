@@ -26,19 +26,19 @@
 
 # Build
 ~~~
-$ chmod 755 build.sh
-$ ./build.sh
+ino-on_AiCam $ chmod 755 build.sh
+ino-on_AiCam $ ./build.sh
 ~~~
 
 # Run
 ~~~
-$ python3 app.py
+ino-on_AiCam $ python3 app.py
 ~~~
 
 # Test
 ### 촬영 및 검출
 ~~~ 
-$ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
+ino-on_AiCam/test $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 ~~~
 * out
 > 출력된 이미지를 저장할 경로
@@ -49,7 +49,7 @@ $ python3 test/cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 
 ### CAT.M1 정보 확인
 ~~~
-$ python3 test/catm1.py
+ino-on_AiCam/test $ python3 test/catm1.py
 ~~~
 + 출력되는 정보
     + AT   
@@ -62,7 +62,7 @@ $ python3 test/catm1.py
 
 ### 라즈베리파이 GPIO 작동여부 
 ~~~
-$ python3 test/gpio-emulator.py
+ino-on_AiCam/test $ python3 test/gpio-emulator.py
 ~~~
 
 # Resources
