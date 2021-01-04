@@ -159,7 +159,7 @@ class CATM1:
         CATM1.ser.write(self.compose.encode())
         #print(self.compose)
     
-    def sendATCmd(self, command, cmd_response, timeout = None):
+    def sendATCmd(self, command, cmd_response, timeout=None):
         ''' Send AT command & Read command response ''' 
         if(CATM1.ser.isOpen() == False):
             CATM1.ser.open()
