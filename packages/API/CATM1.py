@@ -161,6 +161,7 @@ class CATM1:
     
     def sendATCmd(self, command, cmd_response, timeout=None):
         ''' Send AT command & Read command response ''' 
+        print("send AT command: " + command + ", " + cmd_response)
         if(CATM1.ser.isOpen() == False):
             CATM1.ser.open()
 
