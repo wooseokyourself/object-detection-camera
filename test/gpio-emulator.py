@@ -18,7 +18,7 @@ print("CAT: LTE Status Pin =", lteStatPin)
 print("\n")
 
 print("CAT LTE Power Pin Test")
-lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+lte = CATM1(serialPort='/dev/ttyAMA0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
 print("...connected", lte.getPwrPinNum, " Pin")
 print("\n")
 print("CAT LTE Status Pin Test")
