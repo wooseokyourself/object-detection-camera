@@ -363,10 +363,8 @@ class GPIO:
     
     #GPIO LIBRARY Functions
     def getmode():
-        if(mode == GPIO.BCM):
-            return GPIO.BCM
-        elif(mode == GPIO.BOARD):
-            return GPIO.BOARD
+        if(GPIO.setModeDone == True):
+            return 11 # GPIO.BCM
         else:
             return -1
 
