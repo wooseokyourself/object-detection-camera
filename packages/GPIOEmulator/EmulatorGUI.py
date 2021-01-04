@@ -368,7 +368,7 @@ class _GPIO:
         else:
             return -1
 
-    @typeassert(_GPIO,int)
+    # @typeassert(int)
     def setmode(self, mode):
         time.sleep(1)
         if(mode == GPIO.BCM):
@@ -376,11 +376,11 @@ class _GPIO:
         else:
             GPIO.setModeDone = False
 
-    @typeassert(_GPIO,bool)
+    # @typeassert(bool)
     def setwarnings(self, flag):
         pass
 
-    @typeassert(_GPIO,int,int,int,int)        
+    # @typeassert(int,int,int,int)        
     def setup(self, channel, state, initial=-1,pull_up_down=-1):
         global dictionaryPins
         
@@ -424,7 +424,7 @@ class _GPIO:
         
         
 
-    @typeassert(_GPIO,int,int)
+    # @typeassert(int,int)
     def output(self, channel, outmode):
         global dictionaryPins
         channel = str(channel)
@@ -455,7 +455,7 @@ class _GPIO:
         drawGPIOOut(channel)
 
 
-    @typeassert(_GPIO,int)
+    # @typeassert(int)
     def input(self, channel):
         global dictionaryPins
         channel = str(channel)
