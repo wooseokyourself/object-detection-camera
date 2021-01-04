@@ -26,14 +26,13 @@
 ### Raspberry Pi Configuration
 + 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
 ```console
-pi@raspberrypi:~ & sudo raspi-config
+pi@raspberrypi:~ $ sudo raspi-config
 ```
 1. Interface Options 선택   
 2. P6 Serial Port 선택
-```diff
-- 3. "Would you like a login shell to be accessible over serial?" --> "No"
-- 4. "Would you like the serial port hardware to be enabled?" --> "Yes"
-```
+3. "Would you like a login shell to be accessible over serial?" --> **"No"**
+4. "Would you like the serial port hardware to be enabled?" --> **"Yes"**
+
 # Build
 ```console
 pi@raspberrypi:~/ino-on_AiCam $ chmod 755 build.sh
