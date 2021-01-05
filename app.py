@@ -41,7 +41,7 @@ def basicMode ():
         config = json.load(f)
         confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
         resize = config["YOLO"]["RESIZE"]
-        detector += confidence + " " + nms + " " + resize
+        detector += str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
 
