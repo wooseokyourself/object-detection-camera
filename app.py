@@ -17,7 +17,7 @@ ltePwrPin = 17       # CAT.M1 Power Pin (output)
 lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
-web = WEB(url="http://ino-on.umilevx.com/api/devices/events")
+web = WEB(url="http://ino-on.umilevx.com/api/devices/events/ino-on-0000")
 
 def adminMode ():
     """
