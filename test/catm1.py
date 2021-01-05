@@ -10,14 +10,15 @@ node = CATM1(serialPort='/dev/ttyAMA0', baudrate=115200, pwrPinNum=ltePwrPin, st
 print( "RPI3 Modem Power PIN: " + str(node.getPwrPinNum()) )
 print( "RPI3 Modem Status PIN: " + str(node.getStatusPinNum()) )
 
-print("AT: " + node.sendATCmd("AT", "OK\r\n", timeout=10))
-print("ATE0: " + node.sendATCmd("ATE0", "OK\r\n", timeout=10))
-print("IMEI: " + node.getIMEI(timeout=10)) 
-print("RSSI: " + node.getRSSI(timeout=10))
-print("FW Ver: " + node.getFirmwareInfo(timeout=10))
-print("HW model: " + node.getHardwareInfo(timeout=10))
-print("Phone Number: " + node.getPhoneNumberInfo(timeout=10))
+print("AT: " + node.sendATCmd("AT", "OK\r\n"))
+print("ATE0: " + node.sendATCmd("ATE0", "OK\r\n"))
+print("IMEI: " + node.getIMEI()) 
+print("RSSI: " + node.getRSSI())
+print("FW Ver: " + node.getFirmwareInfo())
+print("HW model: " + node.getHardwareInfo())
+print("Phone Number: " + node.getPhoneNumberInfo())
 time.sleep(2)
+node.pwrOffModem()
 
 #program End
 print("end")
