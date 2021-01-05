@@ -81,6 +81,7 @@ class CATM1:
     def pwrOnModem(self):
         print ("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
+        self.sendATCmd("AT", "OK\r\n") # Wait for turning on
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:

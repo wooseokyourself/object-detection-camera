@@ -9,9 +9,6 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 from packages.API.WEB import WEB
 
-TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-IMAGEFILE = TIMESTAMP + ".jpg"
-
 ### GPIO BCM ###
 taskModePin = 20    # NRF - Task Mode Signal Pin (input)
 rpiOffPin = 21      # NRF - Work Completion Signal Pin (output)
@@ -42,6 +39,8 @@ def basicMode ():
         confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
         resize = config["YOLO"]["RESIZE"]
         detector += confidence + " " + nms + " " + resize
+    TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    IMAGEFILE = TIMESTAMP + ".jpg"
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
 
