@@ -33,6 +33,47 @@ pi@raspberrypi:~ $ sudo raspi-config
 3. "Would you like a login shell to be accessible over serial?" --> **"No"**
 4. "Would you like the serial port hardware to be enabled?" --> **"Yes"**
 
+# Packages
+### GPIOEmulator
++ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
++ ~~~ app.py ~~~ 의 7번째 라인인 ~~~ Define.GPIO_EMULATOR = True ~~~ 의 주석을 해제하면 ~~~ app.py ~~~ 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
+
+### Define.py
++ CATM1, NRF 를 import 하기 전에 ~~~ Define.GPIO_EMULAOTR = True ~~~ 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 GPIOEmulaotr 를 import 한다.
+
+### API: NRF
++ NRF와의 GPIO 통신을 담당하는 클래스이다.
++ ~~~ NRF(taskPinNum, offPinNum) ~~~
+    + ~~~ taskPinNum ~~~: 작동상태 모드 확인 GPIO Pin Number
+    + ~~~ offPinNum ~~~: 작업 완료 알림 GPIO Pin Number
++ ~~~ isAdminMode(timeout): Bool ~~~
+    + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
++ ~~~ pwrOffPi(): Void ~~~
+    + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
+
+### API: CATM1
++ CAT.M1을 제어하는 클래스이다. 
++ ~~~ CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27) ~~~
+    + ~~~ serialPort ~~~: 라즈베리파이의 시리얼 포트 경로. 위 Raspberry Pi Configuration 을 진행할 경우 '/dev/ttyS0'이 생성된다.
++ ~~~ pwrOnModem(): Void ~~~
+    + CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
++ ~~~ pwrOffModem(): Void ~~~
+    + CAT.M1의 전원을 끈다.
++ ~~~ getRSSI(timeout=None): str ~~~
+    + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
+
+### API: WEB
++ 서버와 http 통신을 하기 위한 클래스이다.
++ ~~~ WEB(url) ~~~
+    + ~~~ url ~~~: 서버의 end point 경로이다.
++ ~~~ post(time, event, rssi, battery, imagefile=None): str ~~~
+    + 서버에 POST request를 진행하고 응답을 리턴한다.
+    + ~~~ time ~~~: 사진을 촬영한 시간이다.
+    + ~~~ event ~~~:  사진 내에서 객체가 검출된 여부이다.
+    + ~~~ rssi ~~~: CAT.M1의 RSSI값이다.
+    + ~~~ battery ~~~: NRF에 연결되어 공급받는 배터리의 상태이다.
+    + ~~~ imagefile ~~~: 서버에 전송할 이미지 파일의 경로이다.
+
 # Build
 ```console
 pi@raspberrypi:~/ino-on_AiCam $ chmod 755 build.sh
@@ -67,7 +108,6 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1.py
     + RSSI   
     + FW Ver   
     + HW model   
-    + Phone Number   
 
 ### 라즈베리파이 GPIO 작동여부 
 ```console
