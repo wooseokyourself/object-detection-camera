@@ -11,17 +11,6 @@
 + CAT.M1, 모뎀 상태: 27 input   
 
 ※ 모든 핀 번호는 하드코딩 되어있음   
-
-### Yolov4 Configuration (Json)
-+ `config/config.json`
-+ 각 필드의 의미는 다음과 같다.
-    + Object: `YOLO`
-        + Data: `CONFIDENCE_THRESHOLD` (default=0.4)
-        > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
-        + Data: `NMS_THRESHOLD` (default=0.5)
-        > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
-        + Data: `RESIZE` (default=416)
-        > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
     
 ### Raspberry Pi Configuration
 + 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
@@ -32,6 +21,18 @@ pi@raspberrypi:~ $ sudo raspi-config
 2. P6 Serial Port 선택
 3. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
 4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
+
+# Configuration
+### Yolov4 Configuration (Json)
++ `config/config.json`
++ 각 필드의 의미는 다음과 같다.
+    + Object: `YOLO`
+        + Data: `CONFIDENCE_THRESHOLD` (default=0.4)
+        > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
+        + Data: `NMS_THRESHOLD` (default=0.5)
+        > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
+        + Data: `RESIZE` (default=416)
+        > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
 
 # Packages
 ### GPIOEmulator
