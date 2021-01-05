@@ -85,6 +85,8 @@ pi@raspberrypi:~/ino-on_AiCam $ ./build.sh
 ```console
 pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
 ```
+Optional Argument: 
+`--mode MODE`          basic(일반모드만 실행), admin(관리자모드만 실행)
 
 # Test
 ### 촬영 및 검출
