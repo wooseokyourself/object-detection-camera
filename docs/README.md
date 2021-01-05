@@ -1,17 +1,9 @@
-# Dependencies
+# Requirements
+### Software Requirements
 - Raspbian with Python 3.3 or later
 - OpenCV 4.4 or later
 - CMake 2.8 or later
 
-# Information
-### GPIO Pin number (BCM)
-+ NRF, 작동상태 모드 확인: 20 input   
-+ NRF, 작업 완료 알림: 21 output   
-+ CAT.M1, 모뎀 파워: 17 output   
-+ CAT.M1, 모뎀 상태: 27 input   
-
-※ 모든 핀 번호는 하드코딩 되어있음   
-    
 ### Raspberry Pi Configuration
 + 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
 ```console
@@ -23,6 +15,14 @@ pi@raspberrypi:~ $ sudo raspi-config
 4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
 
 # Configuration
+### GPIO Pin number (BCM)
++ NRF, 작동상태 모드 확인: 20 input   
++ NRF, 작업 완료 알림: 21 output   
++ CAT.M1, 모뎀 파워: 17 output   
++ CAT.M1, 모뎀 상태: 27 input   
+
+※ 모든 핀 번호는 하드코딩 되어있음   
+
 ### Yolov4 Configuration (Json)
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
