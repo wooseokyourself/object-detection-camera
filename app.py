@@ -33,14 +33,14 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
+    TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    IMAGEFILE = TIMESTAMP + ".jpg"
     detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
     with open("config/config.json", "r") as f:
         config = json.load(f)
         confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
         resize = config["YOLO"]["RESIZE"]
         detector += confidence + " " + nms + " " + resize
-    TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    IMAGEFILE = TIMESTAMP + ".jpg"
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
 
