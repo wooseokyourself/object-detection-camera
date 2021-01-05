@@ -74,6 +74,8 @@ CAT.M1을 제어하는 클래스이다.
     + `rssi`: CAT.M1의 RSSI값이다.
     + `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.
     + `imagefile`: 서버에 전송할 이미지 파일의 경로이다.
++ POST의 서버 로그기록은 다음 링크에서 확인할 수 있다.
+> http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
 
 # Build
 ```console
