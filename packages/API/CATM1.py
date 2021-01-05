@@ -7,7 +7,6 @@ if Define.GPIO_EMULATOR == True:
     from packages.GPIOEmulator.EmulatorGUI import GPIO
 else:
     import RPi.GPIO as GPIO
-
 """
 AT 커맨드는 아래 사이트 참조하였음
 https://m2msupport.net/m2msupport/atcsq-signal-quality/
@@ -88,20 +87,10 @@ class CATM1:
         return self.statPinNum
 
     def pwrOnModem(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pwrPinNum, GPIO.OUT)
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        time.sleep(0.6)
-        GPIO.output(self.pwrPinNum, GPIO.LOW)
-        time.sleep(5)
 
     def pwrOffModem(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pwrPinNum, GPIO.OUT)
-        GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        time.sleep(0.8)
         GPIO.output(self.pwrPinNum, GPIO.LOW)
-        time.sleep(3)
 
     def resetModem(self):
         self.pwrOffModem()
