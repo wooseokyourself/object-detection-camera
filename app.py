@@ -41,7 +41,7 @@ def basicMode ():
         config = json.load(f)
         confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
         resize = config["YOLO"]["RESIZE"]
-        detector += conf + " " + nms + " " + resize
+        detector += confidence + " " + nms + " " + resize
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     
@@ -80,7 +80,7 @@ def main ():
         traceback.print_exc()
     finally:
         print("End process")
-        nrf.pwrOffPi()
+        # nrf.pwrOffPi()
         RPi.GPIO.cleanup()
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 
