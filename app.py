@@ -59,7 +59,7 @@ def basicMode ():
             if csq[rssiIdx].isdigit():
                 rssi += csq[rssiIdx]
             rssiIdx += 1
-        while berIdx != sep + 3
+        while berIdx != sep + 3:
             if csq[berIdx].isdigit():
                 ber += csq[berIdx]
             berIdx += 1
