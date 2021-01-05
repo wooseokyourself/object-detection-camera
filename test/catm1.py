@@ -16,7 +16,7 @@ print("IMEI: " + node.getIMEI())
 print("RSSI: " + node.getRSSI())
 print("FW Ver: " + node.getFirmwareInfo())
 print("HW model: " + node.getHardwareInfo())
-print("Phone Number: " + node.getPhoneNumberInfo())
+# print("Phone Number: " + node.getPhoneNumberInfo())
 time.sleep(2)
 node.pwrOffModem()
 
