@@ -13,14 +13,14 @@
 ※ 모든 핀 번호는 하드코딩 되어있음   
 
 ### Yolov4 Configuration (Json)
-+ config/config.json
++ `config/config.json`
 + 각 필드의 의미는 다음과 같다.
-    + Object: YOLO
-        + Data: CONFIDENCE_THRESHOLD (default=0.4)
+    + Object: `YOLO`
+        + Data: `CONFIDENCE_THRESHOLD` (default=0.4)
         > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
-        + Data: NMS_THRESHOLD (default=0.5)
+        + Data: `NMS_THRESHOLD` (default=0.5)
         > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
-        + Data: RESIZE (default=416)
+        + Data: `RESIZE` (default=416)
         > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
     
 ### Raspberry Pi Configuration
@@ -30,8 +30,8 @@ pi@raspberrypi:~ $ sudo raspi-config
 ```
 1. Interface Options 선택   
 2. P6 Serial Port 선택
-3. "Would you like a login shell to be accessible over serial?" --> **"No"**
-4. "Would you like the serial port hardware to be enabled?" --> **"Yes"**
+3. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
+4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
 
 # Packages
 ### GPIOEmulator
@@ -44,35 +44,35 @@ pi@raspberrypi:~ $ sudo raspi-config
 ### API: NRF
 NRF와의 GPIO 통신을 담당하는 클래스이다.
 + `NRF(taskPinNum, offPinNum)`
-    + `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
-    + `offPinNum`: 작업 완료 알림 GPIO Pin Number
+    > `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
+    > `offPinNum`: 작업 완료 알림 GPIO Pin Number
 + `isAdminMode(timeout): Bool`
-    + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
+    > NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
 + `pwrOffPi(): Void`
-    + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
+    > 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
 
 ### API: CATM1
 CAT.M1을 제어하는 클래스이다. 
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
-    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Configuration](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-configuration) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
+    > `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Configuration](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-configuration) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
 + `pwrOnModem(): Void`
-    + CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
+    > CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
 + `pwrOffModem(): Void`
-    + CAT.M1의 전원을 끈다.
+    > CAT.M1의 전원을 끈다.
 + `getRSSI(timeout=None): str`
-    + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
+    > CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
 
 ### API: WEB
 서버와 http 통신을 하기 위한 클래스이다.
 + `WEB(url)`
-    + `url`: 서버의 end point 경로이다.
+    > `url`: 서버의 end point 경로이다.
 + `post(time, event, rssi, battery, imagefile=None): str`
-    + 서버에 POST request를 진행하고 응답을 리턴한다.
-    + `time`: 사진을 촬영한 시간이다.
-    + `event`:  사진 내에서 객체가 검출된 여부이다.
-    + `rssi`: CAT.M1의 RSSI값이다.
-    + `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.
-    + `imagefile`: 서버에 전송할 이미지 파일의 경로이다.
+    > 서버에 POST request를 진행하고 응답을 리턴한다.
+    > `time`: 사진을 촬영한 시간이다.
+    > `event`:  사진 내에서 객체가 검출된 여부이다.
+    > `rssi`: CAT.M1의 RSSI값이다.
+    > `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.
+    > `imagefile`: 서버에 전송할 이미지 파일의 경로이다.
 
 # Build
 ```console
