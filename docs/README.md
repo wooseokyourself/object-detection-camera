@@ -36,10 +36,10 @@ pi@raspberrypi:~ $ sudo raspi-config
 # Packages
 ### GPIOEmulator
 + RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
-+ ~~~ app.py ~~~ 의 7번째 라인인 ~~~ Define.GPIO_EMULATOR = True ~~~ 의 주석을 해제하면 ~~~ app.py ~~~ 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
++ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
 
 ### Define.py
-+ CATM1, NRF 를 import 하기 전에 ~~~ Define.GPIO_EMULAOTR = True ~~~ 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 GPIOEmulaotr 를 import 한다.
++ CATM1, NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 GPIOEmulaotr 를 import 한다.
 
 ### API: NRF
 + NRF와의 GPIO 통신을 담당하는 클래스이다.
