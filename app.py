@@ -81,12 +81,13 @@ if __name__ == '__main__':
                 adminMode()
             else:
                 basicMode()
-        elif args.mode[0] is "basic":
-            basicMode()
-        elif args.mode[0] is "admin":
-            adminMode()
         else:
-            raise ValueError
+            if args.mode[0] is "basic":
+                basicMode()
+            elif args.mode[0] is "admin":
+                adminMode()
+            else:
+                raise ValueError
     except Exception as e:
         print("exception occured:", e)
     finally:
