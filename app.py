@@ -92,5 +92,6 @@ if __name__ == '__main__':
     finally:
         print("End process")
         # nrf.pwrOffPi()
-        RPi.GPIO.cleanup()
+        # RPi.GPIO.cleanup()
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
+        exit(0)
