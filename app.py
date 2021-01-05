@@ -72,19 +72,19 @@ def basicMode ():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", nargs=1, type=str, help="(optioanl) basic or admin")
+    parser.add_argument("--mode", type=str, help="(optioanl) basic or admin")
     args = parser.parse_args()
     try:
-        if args.mode[0] is None:
+        if args.mode is None:
             # Wait 5 seconds for get admin signal
             if nrf.isAdminMode(timeout=5):
                 adminMode()
             else:
                 basicMode()
         else:
-            if args.mode[0] is "basic":
+            if args.mode is "basic":
                 basicMode()
-            elif args.mode[0] is "admin":
+            elif args.mode is "admin":
                 adminMode()
             else:
                 raise ValueError
