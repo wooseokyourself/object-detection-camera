@@ -47,7 +47,7 @@ def basicMode ():
 
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
     lte.pwrOnModem()
-    rssi, battery = int(filter(str.isdigit, lte.getRSSI())), random.randrange(1, 100) # 배터리 부분 구현해야함    
+    rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함    
     
     if exitCode == 0:
         print("No event")
