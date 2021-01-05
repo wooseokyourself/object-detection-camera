@@ -5,7 +5,7 @@ class WEB:
     def __init__(self, url):
         self.endPoint = url
         
-    def post(time, event, rssi, battery, imagefile=None):
+    def post(self, time, event, rssi, battery, imagefile=None):
         data = {}
         if event == False:
             data = {"time":time, "event":str(0), "rssi":rssi, "battery":str(battery)}
