@@ -43,36 +43,36 @@ pi@raspberrypi:~ $ sudo raspi-config
 
 ### API: NRF
 + NRF와의 GPIO 통신을 담당하는 클래스이다.
-+ ~~~ NRF(taskPinNum, offPinNum) ~~~
-    + ~~~ taskPinNum ~~~: 작동상태 모드 확인 GPIO Pin Number
-    + ~~~ offPinNum ~~~: 작업 완료 알림 GPIO Pin Number
-+ ~~~ isAdminMode(timeout): Bool ~~~
++ `NRF(taskPinNum, offPinNum)`
+    + `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
+    + `offPinNum`: 작업 완료 알림 GPIO Pin Number
++ `isAdminMode(timeout): Bool`
     + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
-+ ~~~ pwrOffPi(): Void ~~~
++ `pwrOffPi(): Void`
     + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
 
 ### API: CATM1
 + CAT.M1을 제어하는 클래스이다. 
-+ ~~~ CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27) ~~~
-    + ~~~ serialPort ~~~: 라즈베리파이의 시리얼 포트 경로. 위 Raspberry Pi Configuration 을 진행할 경우 '/dev/ttyS0'이 생성된다.
-+ ~~~ pwrOnModem(): Void ~~~
++ `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
+    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 Raspberry Pi Configuration 을 진행할 경우 '/dev/ttyS0'이 생성된다.
++ `pwrOnModem(): Void`
     + CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
-+ ~~~ pwrOffModem(): Void ~~~
++ `pwrOffModem(): Void`
     + CAT.M1의 전원을 끈다.
-+ ~~~ getRSSI(timeout=None): str ~~~
++ `getRSSI(timeout=None): str`
     + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
 
 ### API: WEB
 + 서버와 http 통신을 하기 위한 클래스이다.
-+ ~~~ WEB(url) ~~~
-    + ~~~ url ~~~: 서버의 end point 경로이다.
-+ ~~~ post(time, event, rssi, battery, imagefile=None): str ~~~
++ `WEB(url)`
+    + `url`: 서버의 end point 경로이다.
++ `post(time, event, rssi, battery, imagefile=None): str`
     + 서버에 POST request를 진행하고 응답을 리턴한다.
-    + ~~~ time ~~~: 사진을 촬영한 시간이다.
-    + ~~~ event ~~~:  사진 내에서 객체가 검출된 여부이다.
-    + ~~~ rssi ~~~: CAT.M1의 RSSI값이다.
-    + ~~~ battery ~~~: NRF에 연결되어 공급받는 배터리의 상태이다.
-    + ~~~ imagefile ~~~: 서버에 전송할 이미지 파일의 경로이다.
+    + `time`: 사진을 촬영한 시간이다.
+    + `event`:  사진 내에서 객체가 검출된 여부이다.
+    + `rssi`: CAT.M1의 RSSI값이다.
+    + `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.
+    + `imagefile`: 서버에 전송할 이미지 파일의 경로이다.
 
 # Build
 ```console
