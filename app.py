@@ -70,10 +70,11 @@ def basicMode ():
     
     lte.pwrOffModem() # LTE power off
 
-def main ():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=str, help="(optioanl) basic or admin")
-    preMode = parser.parse_args().mode[0]
+    parser.add_argument("--mode", nargs=1, type=str, help="(optioanl) basic or admin")
+    args = parser.parse_args()
+    preMode = args.mode[0]
     try:
         if preMode is "basic":
             basicMode()
@@ -92,5 +93,3 @@ def main ():
         # nrf.pwrOffPi()
         RPi.GPIO.cleanup()
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
-
-main()
