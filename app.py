@@ -51,11 +51,11 @@ def basicMode ():
     
     if exitCode == 0:
         print("No event")
-        resCode, resText = web.post(TIMESTAMP, event=False, rssi=rssi, battery=battery)
+        resCode, resText = web.post(time=TIMESTAMP, event=False, rssi=rssi, battery=battery)
         print(resCode, ":", resText)
     elif exitCode == 1:
         print("Event detected")
-        resCode, resText = web.post(TIMESTAMP, event=False, rssi=rssi, battery=battery, imagefile=IMAGEFILE)
+        resCode, resText = web.post(time=TIMESTAMP, event=False, rssi=rssi, battery=battery, imagefile=IMAGEFILE)
         print(resCode, ":", resText)
     elif exitCode == 2:
         print("Camera connection failed")
@@ -87,6 +87,7 @@ if __name__ == '__main__':
             elif args.mode == "admin":
                 adminMode()
             else:
+                print("Invalid argument")
                 raise ValueError
     except Exception as e:
         print("exception occured:", e)
