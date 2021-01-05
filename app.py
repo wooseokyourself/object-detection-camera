@@ -4,7 +4,7 @@ from datetime import datetime
 import random
 import packages.Define as Define
 import RPi.GPIO
-#Define.GPIO_EMULATOR = True
+Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 from packages.API.WEB import WEB
@@ -45,7 +45,7 @@ def basicMode ():
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     
-    lte = CATM1(serialPort='/dev/ttyAMA0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
     rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함    
     
     if exitCode == 0:
