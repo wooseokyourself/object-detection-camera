@@ -5,6 +5,7 @@ import time
 import RPi.GPIO as GPIO
 
 node = CATM1()
+node.pwrOnModem()
 
 #Wait for the LTE Network to connect
 time.sleep(2)
