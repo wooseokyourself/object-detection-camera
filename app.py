@@ -44,8 +44,9 @@ def basicMode ():
         detector += confidence + " " + nms + " " + resize
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
-    
-    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin) # LTE power on
+
+    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+    lte.pwrOnModem()
     rssi, battery = lte.getRSSI(), random.randrange(1, 100) # 배터리 부분 구현해야함    
     
     if exitCode == 0:

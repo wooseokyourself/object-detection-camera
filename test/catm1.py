@@ -8,6 +8,7 @@ ltePwrPin = 17       # CAT.M1 Power Pin (output)
 lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 node = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+node.pwrOnModem()
 
 print( "RPI3 Modem Power PIN: " + str(node.getPwrPinNum()) )
 print( "RPI3 Modem Status PIN: " + str(node.getStatusPinNum()) )

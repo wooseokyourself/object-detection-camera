@@ -59,17 +59,9 @@ class CATM1:
         GPIO.setup(self.pwrPinNum, GPIO.OUT)
         GPIO.setup(self.statPinNum, GPIO.IN)
 
-		# Modem Power Power On Reset
         if(GPIO.input(self.statPinNum)==1):
             print("Reset Modem..")
             self.pwrOffModem()
-
-        print ("Start Modem..")
-        self.pwrOnModem()
-        if(GPIO.input(self.statPinNum) == 1):
-            print("Modem Ready..")
-        else:
-            print("Modem Not Ready..")
 
         self.compose = ""
         self.response = ""
@@ -87,7 +79,12 @@ class CATM1:
         return self.statPinNum
 
     def pwrOnModem(self):
+        print ("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
+        if(GPIO.input(self.statPinNum) == 1):
+            print("Modem Ready..")
+        else:
+            print("Modem Not Ready..")
 
     def pwrOffModem(self):
         GPIO.output(self.pwrPinNum, GPIO.LOW)
