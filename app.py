@@ -82,9 +82,9 @@ if __name__ == '__main__':
             else:
                 basicMode()
         else:
-            if args.mode is "basic":
+            if args.mode == "basic":
                 basicMode()
-            elif args.mode is "admin":
+            elif args.mode == "admin":
                 adminMode()
             else:
                 raise ValueError
