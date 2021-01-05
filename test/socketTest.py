@@ -9,6 +9,7 @@ node.pwrOnModem()
 
 #Wait for the LTE Network to connect
 time.sleep(2)
+print("Activate PDP Context: " + node.attachNetwork())
 while True:
     if node.isAttachNetwork():
         print("Network connect")
