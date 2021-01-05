@@ -1,5 +1,6 @@
-import sys
 import time
+import RPi.GPIO as GPIO
+import sys
 sys.path.append("..")
 from packages.API.CATM1 import CATM1
 
