@@ -77,7 +77,7 @@ def main ():
         else:
             basicMode()
     except Exception as e:
-        traceback.print_exc()
+        print("exception occured:", e)
     finally:
         print("End process")
         # nrf.pwrOffPi()
