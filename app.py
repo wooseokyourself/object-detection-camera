@@ -74,23 +74,23 @@ def main ():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", type=str, help="(optioanl) basic or admin")
     preMode = parser.parse_args().mode[0]
-try:
-    if preMode is "basic":
-        basicMode()
-    elif preMode is "admin":
-        adminMode()
-    else:
-        # Wait 5 seconds for get admin signal
-        if nrf.isAdminMode(timeout=5):
+    try:
+        if preMode is "basic":
+            basicMode()
+        elif preMode is "admin":
             adminMode()
         else:
-            basicMode()
-except Exception as e:
-    print("exception occured:", e)
-finally:
-    print("End process")
-    # nrf.pwrOffPi()
-    RPi.GPIO.cleanup()
-    # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
+            # Wait 5 seconds for get admin signal
+            if nrf.isAdminMode(timeout=5):
+                adminMode()
+            else:
+                basicMode()
+    except Exception as e:
+        print("exception occured:", e)
+    finally:
+        print("End process")
+        # nrf.pwrOffPi()
+        RPi.GPIO.cleanup()
+        # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
 
 main()
