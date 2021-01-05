@@ -4,7 +4,7 @@
 - OpenCV 4.4 or later
 - CMake 2.8 or later
 
-### Raspberry Pi Configuration
+### Raspberry Pi Serial Port
 + 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
 ```console
 pi@raspberrypi:~ $ sudo raspi-config
@@ -55,7 +55,7 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
 ### API: CATM1
 CAT.M1을 제어하는 클래스이다. 
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
-    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Configuration](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-configuration) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
+    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
 + `pwrOnModem(): Void`
     + CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
 + `pwrOffModem(): Void`
