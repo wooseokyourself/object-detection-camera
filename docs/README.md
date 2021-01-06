@@ -2,6 +2,7 @@
 + [Description](https://github.com/UmileVX/ino-on_AiCam#description)   
 + [Requirements](https://github.com/UmileVX/ino-on_AiCam#requirements)
     + [Software Requirements](https://github.com/UmileVX/ino-on_AiCam#software-requirements)
+    + [PIP3 Packages](https://github.com/UmileVX/ino-on_AiCam#pip3-packages)
     + [Setup Guide for Plain Raspberry Pi 4B](https://github.com/UmileVX/ino-on_AiCam#setup-guide-for-plain-raspberry-pi-4b)
 + [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
     + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
@@ -28,9 +29,16 @@
 
 # Requirements
 ## Software Requirements
-- Raspbian with Python 3.3 or later
-- OpenCV 4.4 or later
-- CMake 2.8 or later
++ Raspbian with Python 3.3 or later
++ CMake 2.8 or later 
++ OpenCV 4.4 or later  - [Instruction](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)
+    > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
+
+## PIP3 Packages
+```console
+pi@raspberrypi:~ $ pip3 install ifcfg
+pi@raspberrypi:~ $ pip3 install 
+```
 
 ## Setup Guide for Plain Raspberry Pi 4B
 ### 1. Serial Port
@@ -74,7 +82,8 @@ Y
 6. Enter 를 입력하여 라즈베리파이 재실행
 
 #### 2.2. PPP Enable
-+ 모뎀에 전원이 들어오면 PPP도 자동으로 활성화된다.
++ 모뎀에 전원이 들어와있어야 하며, ppp0 인터페이스도 활성화되어있어야 한다.
++ ppp0 인터페이스의 활성화 및 비활성화는 `sudo ifconfig ppp0 up`, `sudo ifconfig ppp0 down` 
 + 임의로 모뎀에 전원을 넣기 위해서는 `test/catm1PwrOf.py` 를 실행시키면 된다.
 + 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
 
