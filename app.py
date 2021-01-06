@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-import json
+import ifcfg, json
 from datetime import datetime
 import random
 import packages.Define as Define
@@ -34,6 +34,7 @@ def adminMode ():
     print("Web server on")
 
 def basicMode ():
+    ''' Capture, Detect '''
     TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     IMAGEFILE = TIMESTAMP + ".jpg"
     detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
@@ -45,10 +46,11 @@ def basicMode ():
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
 
+    ''' Power On Modem '''
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
     lte.pwrOnModem()
 
-    ''' Get RSSI and BER '''
+    ''' Get RSSI and BER by AT Command '''
     csq = lte.getRSSI()
     rssi, ber = "", ""
     sep = csq.find(",")
@@ -67,14 +69,21 @@ def basicMode ():
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   
     
+    isPPP = 'ppp0' in ifcfg.interfaces()
     if exitCode == 0:
         print("No event")
-        resCode, resText = web.post(TIMESTAMP, False, rssi, battery)
-        print(resCode, ":", resText)
+        if isPPP:
+            resCode, resText = web.post(TIMESTAMP, False, rssi, battery)
+            print(resCode, ":", resText)
+        else:
+            # AT Command for http request
     elif exitCode == 1:
         print("Event detected")
-        resCode, resText = web.post(TIMESTAMP, True, rssi, battery, imagefile=IMAGEFILE)
-        print(resCode, ":", resText)
+        if isPPP:
+            resCode, resText = web.post(TIMESTAMP, True, rssi, battery, imagefile=IMAGEFILE)
+            print(resCode, ":", resText)
+        else:
+            # AT Command for http request
     elif exitCode == 2:
         print("Camera connection failed")
     elif exitCode == 3:
