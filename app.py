@@ -91,11 +91,11 @@ def basicMode ():
         data = {"time":TIMESTAMP, "event":str(1), "rssi":rssi, "battery":str(battery), "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
 
     isPPP = 'ppp0' in ifcfg.interfaces()
-    if isPPP:
+    if isPPP: # POST from this process
         resCode, resText = web.post(URL, data)
         print(resCode, ":", resText)
-    else:
-        # AT Command for http request
+    else: # POST from CAT.M1 process
+        response = lte.post(URL, data) # response 가 None일 경우 예외던지기
     
     lte.pwrOffModem() # LTE power off
 

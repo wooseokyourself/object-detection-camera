@@ -2,6 +2,7 @@ import time
 import serial
 import re
 import threading
+import json
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
     from packages.GPIOEmulator.EmulatorGUI import GPIO
@@ -25,6 +26,19 @@ ATCmdList = {
     'CloseSCK' : {'CMD': "AT+QICLOSE=", 'REV': "\r\nOK\r\n"}, 
     'SendSCK' : {'CMD': "AT+QISENDEX=", 'REV': "\r\nSEND OK"},
     'ReceiveSCK' : {'CMD': "AT+QIRD=", 'REV': "\r\nOK\r\n"},
+
+    'ICSGP' : {'CMD': "AT+QICSGP=", 'REV': "\r\nOK\r\n"}, # <APN>
+    'IACT' : {'CMD': "AT+QIACT=", 'REV': "\r\nOK\r\n"}, 
+    'IDEACT' : {'CMD': "AT+QIDEACT=", 'REV': "\r\nOK\r\n"}, 
+    'HTTPCFG' : {'CMD': "AT+QHTTPCFG=", 'REV': "\r\nOK\r\n"},
+        # "requestheader",<request_header> ; Disable(0) or enable(1) to customize HTTP request header.
+    'SSLCFG' : {'CMD': "AT+QSSLCFG=", 'REV': ""}, 
+    'HTTPURL' : {'CMD': "AT+QHTTPURL=", 'REV': "\r\nCONNECT\r\n"},  # <URL_length> ; byte size
+    'HTTPPOST' : {'CMD': "AT+QHTTPPOST=", 'REV': "\r\nCONNECT\r\n"}, # <data_length> ; byte size
+    'HTTPPOSTFILE' : {'CMD': "AT+QHTTPPOSTFILE=", 'REV': ""}, 
+    'HTTPREAD' : {'CMD': "AT+QHTTPREAD=", 'REV': "\r\nCONNECT\r\n"}, 
+    'HTTPREADFILE' : {'CMD': "AT+QHTTPREADFILE=", 'REV': ""}, 
+    
 }
 
 IsRevModemData = False
@@ -260,6 +274,87 @@ class CATM1:
         else:
             return True
         
+    # HTTP request methods
+    def 
+    def post(self, url, data):
+        '''
+        http://www.dragino.com/downloads/downloads/NB-IoT/BG96/Quectel_BG96_HTTP%28S%29_AT_Commands_Manual_V1.0.pdf
+        위 사이트 보고 잘 해봐라,,
+        '''
+        
+        ''' 
+        BG96의 시리얼포트에는 AT command mode와 Data mode가 존재하는데, 
+        전자는 데이터를 AT command로 인식하고 후자는 AT command를 데이터로 인식함. 
+        QHTTPURL, QHTTPPOST, QHTTPREAD 가 실행되면 BG96의 시리얼포트는 데이터모드로 진입함.
+        "+++" 혹은 DTR을 pulling (AT&D1 이 먼저 셋업되어야함) 함으로써 데이터모드를 종료함.
+        데이터모드에서 "+++" 자체를 데이터로 인식하는 일이 없게하기 위해 다음 사항을 지켜야 함.
+            1) Do not input any character within 1s or longer before inputting "+++".
+            2) Input "+++" within 1s, and no other characters can be inputted during the time.
+            3) Do not input any character within 1s after "+++" has been inputted.
+        '''
+        
+        # Step 1. Configure <APN>, <username>, <password> in PDP context by AT+QICSGP.
+        # Step 2. Activate the PDP context by AT+QIACT.
+        # Step 3. Configure the PDP context ID and SSL context ID by AT+QHTTPCFG.
+        # Step 4. Configure SSL context parameters by AT+QSSLCFG.
+        # Step 5. Set HTTP URL by AT+QHTTPURL.
+        # Step 6. Send HTTP request.
+        # Step 7. Read HTTP response.
+        # Step 8. Deactivate the PDP context by AT+QIDEACT.
+
+        command, expected = ATCmdList['ICSGP']['CMD'] + '"contextid",1', ATCmdList['ICSGP']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print("Failed to configure PDP context ID as 1.")
+            return
+
+        command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print("Failed to configure PDP context 1.")
+            return
+
+        command, expected = ATCmdList['IACT']['CMD'] + '1', ATCmdList['IACT']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print("Failed to activate PDP context 1.")
+            return
+    
+        urlBytesLen = len(url.encode('utf-8'))
+        command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print "Failed to prepare for getting URL"
+            return
+        
+        if self.sendATCmd(url, "\r\nOK\r\n") == "Error":
+            print "Failed to send URL"
+            return
+        path = data['imagefile']
+        
+        jsonObj = json.dumps(data, indent=4)
+        dataBytesLen = 0 # json 데이터의 bytes size 구하기
+        command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print("Failed to prepare for getting POST request")
+            return
+        
+        if self.sendATCmd(jsonObj, "\r\nOK\r\n") == "Error":
+            print("Failed to send POST request")
+            return
+        
+        command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
+        response = self.sendATCmd(command, expected)
+        if response = "Error":
+            print("Failed to prepare for receiving POST response")
+            return
+        
+        return response # 다듬어서 내보내야겠지..
+        
+        '''
+        # Customize HTTP request header
+        command = ATCmdList['HTTPCFG']['CMD'] + '"responseheader",1'
+        if self.sendATCmd(command, ATCmdList['HTTPCFG']['REV']):
+            print "Failed to set HTTP config"
+            return
+        '''     
+
     # data type
     def sendSCKData(self, mySocket, data):
         ''' send UDP data 
