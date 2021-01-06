@@ -1,21 +1,21 @@
 + [Description](https://github.com/UmileVX/ino-on_AiCam#description)
 + [Requirements](https://github.com/UmileVX/ino-on_AiCam#requirements)
     + [Software Requirements](https://github.com/UmileVX/ino-on_AiCam#software-requirements)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
+    + [Setup Guide for Plain Raspberry Pi 4B](https://github.com/UmileVX/ino-on_AiCam#setup-guide-for-plain-raspberry-pi-4b)
 + [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
+    + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
+    + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AiCam#yolov4-configuration-json)
+    + [Server URL for HTTP Request](https://github.com/UmileVX/ino-on_AiCam#server-url-for-http-request)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
+    + [GPIOEmulator](https://github.com/UmileVX/ino-on_AiCam#gpioemulator)
+    + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
+    + [API: NRF](https://github.com/UmileVX/ino-on_AiCam#api-nrf)
+    + [API: CATM1](https://github.com/UmileVX/ino-on_AiCam#api-catm1)
+    + [API: WEB](https://github.com/UmileVX/ino-on_AiCam#api-web)
 + [Usage](https://github.com/UmileVX/ino-on_AiCam#usage)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
-    + [](https://github.com/UmileVX/ino-on_AiCam#)
+    + [Build](https://github.com/UmileVX/ino-on_AiCam#build)
+    + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
+    + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Resources](https://github.com/UmileVX/ino-on_AiCam#resources)
 
 ****
@@ -80,7 +80,7 @@ Y
 ****
 
 # Configuration
-## Raspberry Pi GPIO Pin number (BCM)
+## Raspberry Pi GPIO Pin Number (BCM)
 + 작동상태 모드 확인: 20 input   
     > HIGH: 관리자 모드 (admin)   
     > LOW: 일반 모드 (basic)
