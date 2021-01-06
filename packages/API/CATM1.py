@@ -275,7 +275,6 @@ class CATM1:
             return True
         
     # HTTP request methods
-    def 
     def post(self, url, data):
         '''
         http://www.dragino.com/downloads/downloads/NB-IoT/BG96/Quectel_BG96_HTTP%28S%29_AT_Commands_Manual_V1.0.pdf
