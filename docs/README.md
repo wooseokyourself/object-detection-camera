@@ -37,7 +37,6 @@
 ## PIP3 Packages
 ```console
 pi@raspberrypi:~ $ pip3 install ifcfg
-pi@raspberrypi:~ $ pip3 install 
 ```
 
 ## Setup Guide for Plain Raspberry Pi 4B
