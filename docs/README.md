@@ -81,9 +81,9 @@ Y
 6. Enter 를 입력하여 라즈베리파이 재실행
 
 #### 2.2. PPP Enable
-+ 모뎀에 전원이 들어와있어야 하며, ppp0 인터페이스도 활성화되어있어야 한다.
-+ ppp0 인터페이스의 활성화 및 비활성화는 `sudo ifconfig ppp0 up`, `sudo ifconfig ppp0 down` 
-+ 임의로 모뎀에 전원을 넣기 위해서는 `test/catm1PwrOf.py` 를 실행시키면 된다.
++ 모뎀 전원이 켜지면 PPP 인터페이스를 통해 네트워크에 접속할 수 있다.
++ 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
++ 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
 + 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
 
 ****
