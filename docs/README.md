@@ -83,17 +83,17 @@ Y
 # Configuration
 ## Raspberry Pi GPIO Pin Number (BCM)
 + 작동상태 모드 확인: 20 input   
-> HIGH: 관리자 모드 (admin)   
-> LOW: 일반 모드 (basic)
+    > HIGH: 관리자 모드 (admin)   
+    > LOW: 일반 모드 (basic)
 + 작업 완료 알림: 21 output   
-> HIGH: pi 작업 완료   
-> LOW: pi 작업 진행중
+    > HIGH: pi 작업 완료   
+    > LOW: pi 작업 진행중
 + CAT.M1 모뎀 전원 관리: 17 output
-> HIGH: 모뎀 전원 연결   
-> LOW: 모뎀 전원 차단
+    > HIGH: 모뎀 전원 연결   
+    > LOW: 모뎀 전원 차단
 + CAT.M1 모뎀 상태: 27 input
-> HIGH: 모뎀 인식   
-> LOW: 모뎀 미인식
+    > HIGH: 모뎀 인식   
+    > LOW: 모뎀 미인식
 
 ※ 모든 핀 번호는 하드코딩 되어있다.   
 
@@ -102,11 +102,11 @@ Y
 + 각 필드의 의미는 다음과 같다.
     + Object: `YOLO`
         + Data: `CONFIDENCE_THRESHOLD` (default=0.4)
-        > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
+            > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
         + Data: `NMS_THRESHOLD` (default=0.5)
-        > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
+            > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
         + Data: `RESIZE` (default=416)
-        > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
+            > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
 
 ## Server URL for HTTP Request
 + `http://ino-on.umilevx.com/api/devices/events/<device-id>`
@@ -182,11 +182,11 @@ pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 cam-yolo.py --out <string> --thr <float> <float> --resize <int>
 ```
 * out
-> 출력된 이미지를 저장할 경로
+    > 출력된 이미지를 저장할 경로
 * thr(optional)
-> Yolov4 confidence threshold (0-1) / NMS threshold (0-1) (default = 0.4 0.5)
+    > Yolov4 confidence threshold (0-1) / NMS threshold (0-1) (default = 0.4 0.5)
 * resize(optional)
-> Yolov4 입력이미지 사이즈 (default = 416)
+    > Yolov4 입력이미지 사이즈 (default = 416)
 
 ### 라즈베리파이 GPIO 작동여부 확인 
 ```console
