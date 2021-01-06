@@ -1,5 +1,5 @@
-+ [Description](https://github.com/UmileVX/ino-on_AiCam#description)
-+ [Requirements](https://github.com/UmileVX/ino-on_AiCam#requirements)
+```diff + [Description](https://github.com/UmileVX/ino-on_AiCam#description) ```
+```diff + [Requirements](https://github.com/UmileVX/ino-on_AiCam#requirements) ```
     + [Software Requirements](https://github.com/UmileVX/ino-on_AiCam#software-requirements)
     + [Setup Guide for Plain Raspberry Pi 4B](https://github.com/UmileVX/ino-on_AiCam#setup-guide-for-plain-raspberry-pi-4b)
 + [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
