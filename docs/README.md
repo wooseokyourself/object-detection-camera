@@ -53,8 +53,8 @@ pi@raspberrypi:~ $ sudo raspi-config
 5. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
 
 ### 2. PPP
+*** PPP 인터페이스를 이용할 경우 다음을 진행 ***
 #### 2.1. PPP Install
-** PPP 통신을 이용할 경우 다음을 진행 ***
 + PPP 설치 방법 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20PPP)_HandsON.pdf), device communication PORT 를 제외한 나머지 내용 동일)
 1. PPP 설치 파일 다운로드
 ```console
