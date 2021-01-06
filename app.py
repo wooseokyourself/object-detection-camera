@@ -8,7 +8,7 @@ import RPi.GPIO
 # Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
-from packages.API.WEB import WEB
+from packages.API import web
 
 ### GPIO BCM ###
 taskModePin = 20    # NRF - Task Mode Signal Pin (input)
@@ -17,7 +17,7 @@ ltePwrPin = 17       # CAT.M1 Power Pin (output)
 lteStatPin = 27     # CAT.M1 Status Pin (input)
 
 nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
-web = WEB(url="http://ino-on.umilevx.com/api/devices/events/ino-on-0000")
+URL="http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
 
 def adminMode ():
     """
@@ -45,6 +45,20 @@ def basicMode ():
         detector += str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
+    if exitCode == 0:
+        print("No event")
+    elif exitCode == 1:
+        print("Event detected")
+    elif exitCode == 2:
+        print("Camera connection failed")
+    elif exitCode == 3:
+        print("Writing output image failed")
+    elif exitCode == 4:
+        print("Load model failed")
+    elif exitCode == 5:
+        print("Inference failed")
+    else:
+        print("Invalid status")
 
     ''' Power On Modem '''
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
@@ -69,31 +83,19 @@ def basicMode ():
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   
     
-    isPPP = 'ppp0' in ifcfg.interfaces()
+    ''' POST '''
+    data = {}
     if exitCode == 0:
-        print("No event")
-        if isPPP:
-            resCode, resText = web.post(TIMESTAMP, False, rssi, battery)
-            print(resCode, ":", resText)
-        else:
-            # AT Command for http request
-    elif exitCode == 1:
-        print("Event detected")
-        if isPPP:
-            resCode, resText = web.post(TIMESTAMP, True, rssi, battery, imagefile=IMAGEFILE)
-            print(resCode, ":", resText)
-        else:
-            # AT Command for http request
-    elif exitCode == 2:
-        print("Camera connection failed")
-    elif exitCode == 3:
-        print("Writing output image failed")
-    elif exitCode == 4:
-        print("Load model failed")
-    elif exitCode == 5:
-        print("Inference failed")
+        data = {"time":TIMESTAMP, "event":str(0), "rssi":rssi, "battery":str(battery)}
     else:
-        print("Invalid status")
+        data = {"time":TIMESTAMP, "event":str(1), "rssi":rssi, "battery":str(battery), "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
+
+    isPPP = 'ppp0' in ifcfg.interfaces()
+    if isPPP:
+        resCode, resText = web.post(URL, data)
+        print(resCode, ":", resText)
+    else:
+        # AT Command for http request
     
     lte.pwrOffModem() # LTE power off
 
