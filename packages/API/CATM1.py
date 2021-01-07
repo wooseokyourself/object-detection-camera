@@ -367,13 +367,15 @@ class CATM1:
         recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
-        
+        '''
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         recv = self.sendATCmd(command, expected)
         print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
-            return
-        
+            command, expected = ATCmdList['IDEACT']['CMD'], ATCmdList['IDEACT']['REV']
+            
+            recv = self.sendATCmd
+        '''
         return recv # 다듬어서 내보내야겠지..
         
         '''
