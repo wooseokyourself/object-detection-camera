@@ -341,16 +341,15 @@ class CATM1:
         if self.sendATCmd(url, "\r\nOK\r\n") == "Error":
             print("Failed to send URL")
             return
-        path = data['imagefile']
-        
-        jsonObj = json.dumps(data, indent=4)
-        dataBytesLen = 0 # json 데이터의 bytes size 구하기
+
+        strData = json.dumps(data, indent=4).stringify()
+        dataBytesLen = len(strData.encode('utf-8'))
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         if self.sendATCmd(command, expected) == "Error":
             print("Failed to prepare for getting POST request")
             return
         
-        if self.sendATCmd(jsonObj, "\r\nOK\r\n") == "Error":
+        if self.sendATCmd(strData, "\r\nOK\r\n") == "Error":
             print("Failed to send POST request")
             return
         
