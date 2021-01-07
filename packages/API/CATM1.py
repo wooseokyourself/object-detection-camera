@@ -368,6 +368,25 @@ class CATM1:
             print "Failed to set HTTP config"
             return
         '''     
+        
+        fronturl, backurl = "", ""
+        idx = url.find("com/")
+        if idx == -1:
+            print("Failed to find '.com' in URL")
+            return
+        fronturl = url[: idx + 2] # http://ino-on.umilevx.com
+        backurl = url[idx + 3 :] # /api/devices/events/ino-on-0000
+
+        
+
+        "POST " + backurl + " HTTP/1.1\r\n" # 여기에 .php가 붙어야 할까?
+        "Host: " + fronturl + "\r\n" # 여기에 포트넘버가 붙어야 할까?
+        "Accept: */*\r\n" # 서버응답 모두 받기
+        "User-Agent: Ino-on AICamera\r\n" # 라즈베리파이
+        # "Connection: Keep-Alive\r\n" # 계속 연결유지, 이기능 필요없으니까 이 라인은 없어도 됨
+        "Content-Type: multipart/form-data" # multipart
+        "Content-Length: " + str(dataBytesLen) + "" # 헤더를 제외한 Body 길이
+        
 
     # data type
     def sendSCKData(self, mySocket, data):
