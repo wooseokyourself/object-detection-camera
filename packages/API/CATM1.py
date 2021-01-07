@@ -102,10 +102,11 @@ class CATM1:
         ''' get modem Status pin number '''
         return self.statPinNum
 
-    def pwrOnModem(self):
+    # 모뎀 전원을 켠 후 @wait 초 동안 대기
+    def pwrOnModem(self, wait=0):
         print ("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        self.sendATCmd("AT", "OK\r\n") # Wait for turning on
+        time.sleep(float(wait))
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:

@@ -61,7 +61,7 @@ def basicMode ():
 
     ''' Power On Modem '''
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
-    lte.pwrOnModem()
+    lte.pwrOnModem(wait=5)
 
     ''' Get RSSI and BER by AT Command '''
     rssi, ber = lte.getRSSI()
