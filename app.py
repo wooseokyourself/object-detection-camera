@@ -4,7 +4,7 @@ import ifcfg, requests, json
 from datetime import datetime
 import random
 import packages.Define as Define
-import RPi.GPIO
+import RPi.GPIO as GPIO
 # Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
@@ -63,8 +63,15 @@ def basicMode ():
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
     lte.pwrOnModem(wait=5)
 
+    ''' Check PPP interface is enabled '''
+    isPPP = 'ppp0' in ifcfg.interfaces()
+
     ''' Get RSSI and BER by AT Command '''
-    rssi, ber = lte.getRSSI()
+    rssi, ber = "", ""
+    if isPPP:
+        rssi, ber = "99", "99" # 이거 어떻게 구하지?
+    else:
+        lte.getRSSI()
     
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   
@@ -88,7 +95,7 @@ def basicMode ():
             "files": open("results/" + IMAGEFILE, 'rb')
             }
 
-    isPPP = 'ppp0' in ifcfg.interfaces()
+    
     if isPPP: # POST from this process
         response = requests.post(URL, json=data)
         resCode, resText = response.status_code, response.text
@@ -122,6 +129,6 @@ if __name__ == '__main__':
     finally:
         print("End process")
         # nrf.pwrOffPi()
-        # RPi.GPIO.cleanup()
+        RPi.GPIO.cleanup()
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
         exit(0)
