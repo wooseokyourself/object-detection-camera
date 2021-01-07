@@ -34,7 +34,7 @@ def adminMode ():
 
 def basicMode (isPPP):
     ''' Capture, Detect '''
-    TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    TIMESTAMP = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%.2f%z')
     IMAGEFILE = TIMESTAMP + ".jpg"
     detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
     with open("config/config.json", "r") as f:
