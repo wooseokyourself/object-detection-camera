@@ -85,7 +85,7 @@ def basicMode ():
             "rssi": (None, rssi), 
             "battery": (None, str(battery)), 
             "filename": (None, IMAGEFILE), 
-            "files": (None, "@results/" + IMAGEFILE)
+            "files": open("results/" + IMAGEFILE, 'rb')
             }
 
     isPPP = 'ppp0' in ifcfg.interfaces()
