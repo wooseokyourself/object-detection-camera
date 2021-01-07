@@ -358,7 +358,7 @@ class CATM1:
         strData = json.dumps(data, indent=4)
         dataBytesLen = len(strData.encode('utf-8'))
 
-        ''' Header '''
+        # Header
         fronturl, backurl = "", ""
         idx = url.find("com/")
         if idx == -1:
@@ -375,23 +375,21 @@ class CATM1:
             # "Content-Type: multipart/form-data\r\n" + # multipart
             "Content-Length: " + str(dataBytesLen) + "\r\n\r\n" # 헤더를 제외한 Body 길이
         )
-        headerBytesLen = len(header.encode('utf-8'))
-
+        headerBytesLen = len(header.encode('utf-8')) 
+        
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contextid",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure PDP context ID as 1."):
             return
         
-        '''
-        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",0', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
             return
-        '''
 
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"requestheader",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
-        if isError(recv, "Failed to set HTTP config"):
+        if isError(recv, "Failed to set HTTP Config for request header."):
             return
 
         command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
@@ -404,20 +402,20 @@ class CATM1:
         if isError(recv, "Failed to activate PDP context 1."):
             return
 
+        '''
         command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting URL"):
             return
-        
         recv = self.sendATCmd(url, "\r\nOK\r\n")
         if isError(recv, "Failed to send URL"):
             return
+        '''
 
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(headerBytesLen + dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting POST request"):
             return
-        
         recv = self.sendATCmd(header + strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
