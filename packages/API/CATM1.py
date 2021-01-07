@@ -364,7 +364,7 @@ class CATM1:
         if idx == -1:
             print("Failed to find '.com' in URL")
             return
-        fronturl = url[: idx + 2] # http://ino-on.umilevx.com
+        fronturl = url[: idx + 3] # http://ino-on.umilevx.com
         backurl = url[idx + 3 :] # /api/devices/events/ino-on-0000
         header = (
             "POST " + backurl + " HTTP/1.1\r\n" + # 여기에 .php가 붙어야 할까?
