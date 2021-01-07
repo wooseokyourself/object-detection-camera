@@ -43,6 +43,14 @@ ATCmdList = {
 
 IsRevModemData = False
 
+def isError(recv, why):
+    if recv == "Error":
+        print(why)
+        return True
+    else:
+        print(recv)
+        return False
+
 class CATM1:
     ser = None
     isConectSerial = False
@@ -318,53 +326,52 @@ class CATM1:
         # Step 8. Deactivate the PDP context by AT+QIDEACT.
 
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contextid",1', ATCmdList['HTTPCFG']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to configure PDP context ID as 1.")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to configure PDP context ID as 1."):
             return
         
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to configure content type as 'multipart/form-data'.")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
             return
 
         command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to configure APN.")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to configure APN."):
             return
 
         command, expected = ATCmdList['IACT']['CMD'] + '1', ATCmdList['IACT']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to activate PDP context 1.")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to activate PDP context 1."):
             return
     
         urlBytesLen = len(url.encode('utf-8'))
         command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to prepare for getting URL")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to prepare for getting URL"):
             return
         
-        if self.sendATCmd(url, "\r\nOK\r\n") == "Error":
-            print("Failed to send URL")
+        recv = self.sendATCmd(url, "\r\nOK\r\n")
+        if isError(recv, "Failed to send URL"):
             return
 
         strData = json.dumps(data, indent=4)
         dataBytesLen = len(strData.encode('utf-8'))
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
-        if self.sendATCmd(command, expected) == "Error":
-            print("Failed to prepare for getting POST request")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to prepare for getting POST request"):
             return
         
-        if self.sendATCmd(strData, "\r\nOK\r\n") == "Error":
-            print("Failed to send POST request")
+        recv = self.sendATCmd(strData, "\r\nOK\r\n")
+        if isError(recv, "Failed to send POST request"):
             return
         
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
-        response = self.sendATCmd(command, expected)
-        if response == "Error":
-            print("Failed to prepare for receiving POST response")
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to prepare for receiving POST response"):
             return
         
-        return response # 다듬어서 내보내야겠지..
+        return recv # 다듬어서 내보내야겠지..
         
         '''
         # Customize HTTP request header
