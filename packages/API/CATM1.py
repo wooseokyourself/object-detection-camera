@@ -356,10 +356,10 @@ class CATM1:
         if isError(recv, "Failed to configure PDP context ID as 1."):
             return
         
-        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
-        recv = self.sendATCmd(command, expected)
-        if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
-            return
+        # command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
+        # recv = self.sendATCmd(command, expected)
+        # if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
+        #     return
 
         command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
         recv = self.sendATCmd(command, expected)
@@ -391,7 +391,6 @@ class CATM1:
         recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
-        
         if self.readAdditionalATResponse() == True: 
             print(recv)
         
@@ -400,6 +399,8 @@ class CATM1:
         print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
             return
+        if self.readAdditionalATResponse() == True:
+            print(recv)
         
         return recv # 다듬어서 내보내야겠지..
         
