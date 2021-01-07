@@ -8,7 +8,7 @@ data = {
         "rssi": (None, "-31"), 
         "battery": (None, "1"), 
         "filename": (None, "example.jpg"), 
-        "files": (None, "@example.jpg")
+        "files": open("example.jpg", 'rb')
         }
 response = requests.post(URL, files=data)
 pprint(response)
