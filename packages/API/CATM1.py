@@ -370,6 +370,7 @@ class CATM1:
         
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         recv = self.sendATCmd(command, expected)
+        print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
             return
         
