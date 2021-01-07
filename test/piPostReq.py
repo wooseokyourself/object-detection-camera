@@ -2,6 +2,13 @@ import requests, json
 from pprint import pprint
 
 URL="http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
-data = {"time":(None, "0000-00-00_00:00:00"), "event":(None, "0"), "rssi":(None, "99"), "battery":(None, "0")}
+data = {
+        "time": (None, "0000-00-00_00:00:00"), 
+        "event": (None, "1"), 
+        "rssi": (None, "-31"), 
+        "battery": (None, "1"), 
+        "filename": (None, "example.jpg"), 
+        "files": (None, "@example.jpg")
+        }
 response = requests.post(URL, files=data)
 pprint(response)

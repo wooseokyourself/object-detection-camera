@@ -72,9 +72,21 @@ def basicMode ():
     ''' POST '''
     data = {}
     if exitCode == 0:
-        data = {"time":TIMESTAMP, "event":str(0), "rssi":rssi, "battery":str(battery)}
+        data = {
+            "time": (None, TIMESTAMP), 
+            "event": (None, "0"), 
+            "rssi": (None, rssi), 
+            "battery": (None, str(battery))
+            }
     else:
-        data = {"time":TIMESTAMP, "event":str(1), "rssi":rssi, "battery":str(battery), "filename":IMAGEFILE, "files":"@results/"+IMAGEFILE}
+        data = {
+            "time": (None, TIMESTAMP), 
+            "event": (None, "1"), 
+            "rssi": (None, rssi), 
+            "battery": (None, str(battery)), 
+            "filename": (None, IMAGEFILE), 
+            "files": (None, "@results/" + IMAGEFILE)
+            }
 
     isPPP = 'ppp0' in ifcfg.interfaces()
     if isPPP: # POST from this process
