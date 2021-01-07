@@ -61,7 +61,7 @@ def basicMode ():
 
     ''' Power On Modem '''
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
-    lte.pwrOnModem(wait=5)
+    lte.pwrOnModem(wait=10)
 
     ''' Check PPP interface is enabled '''
     isPPP = 'ppp0' in ifcfg.interfaces()
@@ -129,6 +129,6 @@ if __name__ == '__main__':
     finally:
         print("End process")
         # nrf.pwrOffPi()
-        RPi.GPIO.cleanup()
+        GPIO.cleanup()
         # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
         exit(0)
