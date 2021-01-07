@@ -2,6 +2,7 @@ import time
 import serial
 import re
 import threading
+import ifcfg
 import json
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
@@ -102,11 +103,15 @@ class CATM1:
         ''' get modem Status pin number '''
         return self.statPinNum
 
-    # 모뎀 전원을 켠 후 @wait 초 동안 대기
-    def pwrOnModem(self, wait=0):
+    # 모뎀 전원을 켠 후 PPP 활성화될때까지 대기
+    def pwrOnModem(self, isPPP=False):
         print ("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        time.sleep(float(wait))
+        ''' Check PPP interface is enabled '''
+        if isPPP:
+            while 'ppp0' in ifcfg.interfaces() == False:
+                pass
+            print("ppp0 enabled")
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:
