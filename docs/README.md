@@ -7,7 +7,7 @@
 + [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
     + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
     + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AiCam#yolov4-configuration-json)
-    + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AiCam#http-request-for-server)
+    + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AiCam#http-request-to-server)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
     + [GPIOEmulator](https://github.com/UmileVX/ino-on_AiCam#gpioemulator)
     + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
