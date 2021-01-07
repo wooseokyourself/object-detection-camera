@@ -32,7 +32,7 @@ def adminMode ():
     """
     print("Web server on")
 
-def basicMode ():
+def basicMode (wait=0):
     ''' Capture, Detect '''
     TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     IMAGEFILE = TIMESTAMP + ".jpg"
@@ -61,7 +61,7 @@ def basicMode ():
 
     ''' Power On Modem '''
     lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
-    lte.pwrOnModem(wait=10)
+    lte.pwrOnModem(wait=wait)
 
     ''' Check PPP interface is enabled '''
     isPPP = 'ppp0' in ifcfg.interfaces()
@@ -107,19 +107,23 @@ def basicMode ():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=str, help="(optioanl) basic or admin")
+    parser.add_argument("--t", type=int, help="(optional) sleep time after power on modem")
+    parser.add_argument("--m", type=str, help="(optioanl) basic or admin")
     args = parser.parse_args()
+    t = 0
+    if args.t is not None:
+        t = args.t
     try:
-        if args.mode is None:
+        if args.m is None:
             # Wait 5 seconds for get admin signal
             if nrf.isAdminMode(timeout=5):
                 adminMode()
             else:
-                basicMode()
+                basicMode(wait=t)
         else:
-            if args.mode == "basic":
-                basicMode()
-            elif args.mode == "admin":
+            if args.m == "basic":
+                basicMode(wait=t)
+            elif args.m == "admin":
                 adminMode()
             else:
                 print("Invalid argument")
