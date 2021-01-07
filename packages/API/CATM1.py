@@ -322,7 +322,7 @@ class CATM1:
             print("Failed to configure PDP context ID as 1.")
             return
         
-        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"content_type",3', ATCmdList['HTTPCFG']['REV']
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
         if self.sendATCmd(command, expected) == "Error":
             print("Failed to configure content type as 'multipart/form-data'.")
             return
