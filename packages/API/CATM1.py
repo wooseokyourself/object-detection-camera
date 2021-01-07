@@ -163,6 +163,30 @@ class CATM1:
                 print("Recv failed: " + response)
                 return False
 
+    def readAdditionalATResponse(self):
+        ''' 일정 시간 뒤에 들어오는 응답을 위해 대기 '''
+        timer = self.__getMillSec()
+        timeout = self.timeout
+        response = self.response
+
+        while True:
+            self.response = ""
+            while(CATM1.ser.inWaiting()):
+                try:
+                    self.response += CATM1.ser.read(CATM1.ser.inWaiting()).decode('utf-8', errors='ignore')
+                    #print("read response: " + self.response)
+                    response = self.response
+                    self.__delay(50)
+                except Exception as e:
+                    print(e)
+                    return False
+            if((self.__getMillSec() - timer) > timeout):
+                # error rasie
+                print("Recv failed: " + response)
+                return False
+            return True
+        
+
     def __sendATCmd(self, command):
         ''' Sending at AT command to module '''
         self.compose = ""
@@ -367,6 +391,9 @@ class CATM1:
         recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
+        
+        if self.readAdditionalATResponse() == True: 
+            print(recv)
         '''
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         recv = self.sendATCmd(command, expected)
