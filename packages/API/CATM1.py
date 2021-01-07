@@ -383,12 +383,12 @@ class CATM1:
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure PDP context ID as 1."):
             return
-        
-        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",0', ATCmdList['HTTPCFG']['REV']
+        '''
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
             return
-
+        '''
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"requestheader",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to set HTTP Config for request header."):
