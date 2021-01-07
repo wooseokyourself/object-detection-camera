@@ -82,7 +82,7 @@ def basicMode ():
         resCode, resText = response.status_code, response.text
         print(resCode, ":", resText)
     else: # POST from CAT.M1 process
-        response = lte.post(URL, data) # response 가 None일 경우 예외던지기
+        response = lte.post(URL, data) # 아직 많이 봐야함
     
     lte.pwrOffModem() # LTE power off
 
