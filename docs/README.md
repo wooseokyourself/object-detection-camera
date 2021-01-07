@@ -173,7 +173,7 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
     + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
 
 ## API: CATM1
-CAT.M1을 제어하는 클래스이다. 
+CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT command 메소드가 존재한다.
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
     + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
 + `pwrOnModem(): Void`
@@ -182,6 +182,8 @@ CAT.M1을 제어하는 클래스이다.
     + CAT.M1의 전원을 끈다.
 + `getRSSI(timeout=None): str`
     + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
++ `post(url, data): str, str` -- 구현중
+    + CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
 
 ****
 
