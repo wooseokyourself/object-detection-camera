@@ -13,6 +13,7 @@ AT 커맨드는 아래 사이트 참조하였음
 https://m2msupport.net/m2msupport/atcsq-signal-quality/
 """
 ATCmdList = {
+    # REV=ANY 일 경우 어떤 값을 읽더라도 에러로 처리하지 않음.
     'RSSI': {'CMD': "AT+CSQ", 'REV': "\r\nOK\r\n"}, # custom
     'IMEI': {'CMD': "AT+CGSN", 'REV': "\r\nOK\r\n"},
     'FWInfo': {'CMD': "AT+CGMR", 'REV': "\r\nOK\r\n"},
@@ -32,12 +33,13 @@ ATCmdList = {
     'IDEACT' : {'CMD': "AT+QIDEACT=", 'REV': "\r\nOK\r\n"}, 
     'HTTPCFG' : {'CMD': "AT+QHTTPCFG=", 'REV': "\r\nOK\r\n"},
         # "requestheader",<request_header> ; Disable(0) or enable(1) to customize HTTP request header.
-    'SSLCFG' : {'CMD': "AT+QSSLCFG=", 'REV': ""}, 
+    # POSTFILE은 데이터의 내용을 파일로부터 읽어서 보내고, 응답을 파일로 저장하는 명령.
+    'SSLCFG' : {'CMD': "AT+QSSLCFG=", 'REV': "ANY"}, 
     'HTTPURL' : {'CMD': "AT+QHTTPURL=", 'REV': "\r\nCONNECT\r\n"},  # <URL_length> ; byte size
     'HTTPPOST' : {'CMD': "AT+QHTTPPOST=", 'REV': "\r\nCONNECT\r\n"}, # <data_length> ; byte size
-    'HTTPPOSTFILE' : {'CMD': "AT+QHTTPPOSTFILE=", 'REV': ""}, 
+    'HTTPPOSTFILE' : {'CMD': "AT+QHTTPPOSTFILE=", 'REV': "\r\nOK\r\n"}, # <filepath>,<timeout> 
     'HTTPREAD' : {'CMD': "AT+QHTTPREAD=", 'REV': "\r\nCONNECT\r\n"}, 
-    'HTTPREADFILE' : {'CMD': "AT+QHTTPREADFILE=", 'REV': ""}, 
+    'HTTPREADFILE' : {'CMD': "AT+QHTTPREADFILE=", 'REV': "\r\nOK\r\n"}, # <filepath>,<timeout> 
     
 }
 
@@ -183,12 +185,12 @@ class CATM1:
         timer = self.__getMillSec()
 
         while True: 
-            if((self.__getMillSec() - timer) > timeout):
+            if (self.__getMillSec() - timer) > timeout:
                 # error rasie
                 print(command + " / Send failed ")
                 return "Error"
             
-            if(self.__readATResponse(cmd_response)):
+            if self.__readATResponse(cmd_response):
                 return self.response
 
     # AT command methods
@@ -359,8 +361,9 @@ class CATM1:
         dataBytesLen = len(strData.encode('utf-8'))
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         recv = self.sendATCmd(command, expected)
-        if isError(recv, "Failed to prepare for getting POST request"):
-            return
+        print(recv)
+        #if isError(recv, "Failed to prepare for getting POST request"):
+        #    return
         
         recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
