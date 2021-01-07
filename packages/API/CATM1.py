@@ -321,10 +321,15 @@ class CATM1:
         if self.sendATCmd(command, expected) == "Error":
             print("Failed to configure PDP context ID as 1.")
             return
+        
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"content_type",3', ATCmdList['HTTPCFG']['REV']
+        if self.sendATCmd(command, expected) == "Error":
+            print("Failed to configure content type as 'multipart/form-data'.")
+            return
 
         command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
         if self.sendATCmd(command, expected) == "Error":
-            print("Failed to configure PDP context 1.")
+            print("Failed to configure APN.")
             return
 
         command, expected = ATCmdList['IACT']['CMD'] + '1', ATCmdList['IACT']['REV']
@@ -369,6 +374,7 @@ class CATM1:
             return
         '''     
         
+        '''
         fronturl, backurl = "", ""
         idx = url.find("com/")
         if idx == -1:
@@ -386,7 +392,7 @@ class CATM1:
         # "Connection: Keep-Alive\r\n" # 계속 연결유지, 이기능 필요없으니까 이 라인은 없어도 됨
         "Content-Type: multipart/form-data" # multipart
         "Content-Length: " + str(dataBytesLen) + "" # 헤더를 제외한 Body 길이
-        
+        '''
 
     # data type
     def sendSCKData(self, mySocket, data):
