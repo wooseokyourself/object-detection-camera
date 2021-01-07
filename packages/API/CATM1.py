@@ -394,7 +394,7 @@ class CATM1:
         
         if self.readAdditionalATResponse() == True: 
             print(recv)
-        '''
+        
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         recv = self.sendATCmd(command, expected)
         print(recv)
@@ -402,7 +402,7 @@ class CATM1:
             command, expected = ATCmdList['IDEACT']['CMD'], ATCmdList['IDEACT']['REV']
             
             recv = self.sendATCmd
-        '''
+        
         return recv # 다듬어서 내보내야겠지..
         
         '''
