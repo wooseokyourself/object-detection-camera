@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-import ifcfg, json
+import ifcfg, requests, json
 from datetime import datetime
 import random
 import packages.Define as Define
@@ -8,7 +8,6 @@ import RPi.GPIO
 # Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
-from packages.API import web
 
 ### GPIO BCM ###
 taskModePin = 20    # NRF - Task Mode Signal Pin (input)
@@ -92,7 +91,8 @@ def basicMode ():
 
     isPPP = 'ppp0' in ifcfg.interfaces()
     if isPPP: # POST from this process
-        resCode, resText = web.post(URL, data)
+        response = requests.post(URL, json=data)
+        resCode, resText = response.status_code, response.text
         print(resCode, ":", resText)
     else: # POST from CAT.M1 process
         response = lte.post(URL, data) # response 가 None일 경우 예외던지기
