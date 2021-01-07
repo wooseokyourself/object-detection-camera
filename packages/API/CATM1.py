@@ -399,9 +399,7 @@ class CATM1:
         recv = self.sendATCmd(command, expected)
         print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
-            command, expected = ATCmdList['IDEACT']['CMD'], ATCmdList['IDEACT']['REV']
-            
-            recv = self.sendATCmd
+            return
         
         return recv # 다듬어서 내보내야겠지..
         
