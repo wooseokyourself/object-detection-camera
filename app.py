@@ -64,20 +64,7 @@ def basicMode ():
     lte.pwrOnModem()
 
     ''' Get RSSI and BER by AT Command '''
-    csq = lte.getRSSI()
-    rssi, ber = "", ""
-    sep = csq.find(",")
-    if sep != -1:
-        rssiIdx = sep - 2
-        berIdx = sep + 1
-        while rssiIdx != sep:
-            if csq[rssiIdx].isdigit():
-                rssi += csq[rssiIdx]
-            rssiIdx += 1
-        while berIdx != sep + 3:
-            if csq[berIdx].isdigit():
-                ber += csq[berIdx]
-            berIdx += 1
+    rssi, ber = lte.getRSSI()
     
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   

@@ -186,8 +186,24 @@ class CATM1:
     # AT command methods
     def getRSSI(self, timeout=None): # custom
         ''' get RSSI number'''
-        data = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'], timeout)
-        return data[:data.index(ATCmdList['RSSI']['REV'])]
+        recv = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'], timeout)
+        if recv == "Error":
+            return "Error", "Error"
+        csq = recv[:recv.index(ATCmdList['RSSI']['REV'])]
+        rssi, ber = "", ""
+        sep = csq.find(",")
+        if sep != -1:
+            rssiIdx = sep - 2
+            berIdx = sep + 1
+            while rssiIdx != sep:
+                if csq[rssiIdx].isdigit():
+                    rssi += csq[rssiIdx]
+                rssiIdx += 1
+            while berIdx != sep + 3:
+                if csq[berIdx].isdigit():
+                    ber += csq[berIdx]
+                berIdx += 1
+        return rssi, ber
 
     def getIMEI(self, timeout=None):
         ''' get IMEI number'''
