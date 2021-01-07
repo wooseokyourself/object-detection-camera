@@ -358,6 +358,7 @@ class CATM1:
         strData = json.dumps(data, indent=4)
         dataBytesLen = len(strData.encode('utf-8'))
 
+        '''
         # Header
         fronturl, backurl = "", ""
         idx = url.find("com/")
@@ -376,7 +377,8 @@ class CATM1:
             "Content-Length: " + str(dataBytesLen) + "\r\n\r\n" # 헤더를 제외한 Body 길이
         )
         headerBytesLen = len(header.encode('utf-8')) 
-        
+        '''
+
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contextid",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure PDP context ID as 1."):
@@ -402,7 +404,6 @@ class CATM1:
         if isError(recv, "Failed to activate PDP context 1."):
             return
 
-        '''
         command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting URL"):
@@ -410,13 +411,12 @@ class CATM1:
         recv = self.sendATCmd(url, "\r\nOK\r\n")
         if isError(recv, "Failed to send URL"):
             return
-        '''
 
-        command, expected = ATCmdList['HTTPPOST']['CMD'] + str(headerBytesLen + dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
+        command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting POST request"):
             return
-        recv = self.sendATCmd(header + strData, "\r\nOK\r\n")
+        recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
         # POST 데이터를 보낸 후 OK가 수신되면 그 이후에 추가로 AT response 가 더 들어올 수 있으니 시리얼포트 대기해야함.
