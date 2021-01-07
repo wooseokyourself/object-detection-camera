@@ -7,13 +7,12 @@
 + [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
     + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
     + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AiCam#yolov4-configuration-json)
-    + [Server URL for HTTP Request](https://github.com/UmileVX/ino-on_AiCam#server-url-for-http-request)
+    + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AiCam#http-request-for-server)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
     + [GPIOEmulator](https://github.com/UmileVX/ino-on_AiCam#gpioemulator)
     + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
     + [API: NRF](https://github.com/UmileVX/ino-on_AiCam#api-nrf)
     + [API: CATM1](https://github.com/UmileVX/ino-on_AiCam#api-catm1)
-    + [API: WEB](https://github.com/UmileVX/ino-on_AiCam#api-web)
 + [Usage](https://github.com/UmileVX/ino-on_AiCam#usage)
     + [Build](https://github.com/UmileVX/ino-on_AiCam#build)
     + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
@@ -116,9 +115,42 @@ Y
         + Data: `RESIZE` (default=416)
             > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
 
-## Server URL for HTTP Request
-+ `http://ino-on.umilevx.com/api/devices/events/<device-id>`
-+ `device-id` 는 아직 정해진 바가 없기에 임의로 `ino-on-0000`을 사용중이다.
+## HTTP Request to Server
++ URL
+    + HOST: `http://ino-on.umilevx.com/api/devices/events/<device-id>`
+    > `device-id` 는 아직 정해진 바가 없기에 임의로 `ino-on-0000`을 사용중이다.
+    + 서버 로그기록 확인: http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
+    > `YYYY-MM-DD` 는 현재날짜이다.
++ Format
+    + 이벤트가 있을 경우
+    ```
+    {
+        "time"="YYYY-MM-DD_HH:MM:SS"
+        "event"="1"
+        "rssi"="-31"
+        "battery"="97"
+        "filename"="image001.jpg"
+        "files"="@test_event.jpg"
+    }
+    ```
+    + 이벤트가 없을 경우 
+    ```
+    {
+        "time"="YYYY-MM-DD_HH:MM:SS"
+        "event"="0"
+        "rssi"="-31"
+        "battery"="97"
+    }
+    ```
+    > `time`: 사진을 촬영한 시간이다.   
+    > `event`:  사진 내에서 객체가 검출된 여부이다.   
+    > `rssi`: CAT.M1의 RSSI값이다.   
+    > `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.   
+    > `filename`: 서버에 저장될 이미지 파일의 서버 경로이다.   
+    > `files`: 전송할 이미지 파일의 로컬 경로이다.
++ Client
+    + 라즈베리파이에 `ppp0` 인터페이스가 활성화되어있으면 `ppp0`을 통하여 POST를 보내고, 아니라면 모뎀의 AT command로 보낸다.
+    > AT command 구현중..
 
 ****
 
@@ -150,20 +182,6 @@ CAT.M1을 제어하는 클래스이다.
     + CAT.M1의 전원을 끈다.
 + `getRSSI(timeout=None): str`
     + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
-
-## API: WEB
-서버와 http 통신을 하기 위한 클래스이다.
-+ `WEB(url)`
-    + `url`: 서버의 end point 경로이다.
-+ `post(time, event, rssi, battery, imagefile=None): str`
-    + 서버에 POST request를 진행하고 응답을 리턴한다.
-    + `time`: 사진을 촬영한 시간이다.
-    + `event`:  사진 내에서 객체가 검출된 여부이다.
-    + `rssi`: CAT.M1의 RSSI값이다.
-    + `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.
-    + `imagefile`: 서버에 전송할 이미지 파일의 경로이다.
-+ POST의 서버 로그기록은 다음 링크에서 확인할 수 있다.
-> http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
 
 ****
 
