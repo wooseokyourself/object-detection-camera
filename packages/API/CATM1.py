@@ -361,9 +361,8 @@ class CATM1:
         dataBytesLen = len(strData.encode('utf-8'))
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         recv = self.sendATCmd(command, expected)
-        print(recv)
-        #if isError(recv, "Failed to prepare for getting POST request"):
-        #    return
+        if isError(recv, "Failed to prepare for getting POST request"):
+            return
         
         recv = self.sendATCmd(strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
