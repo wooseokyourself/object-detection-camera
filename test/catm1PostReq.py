@@ -2,7 +2,7 @@ import sys, time
 sys.path.append("..")
 import json
 from packages.API.CATM1 import CATM1
-from RPi.GPIO import GPIO
+import RPi.GPIO as GPIO
 
 node = CATM1()
 node.pwrOnModem()
