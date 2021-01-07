@@ -342,7 +342,7 @@ class CATM1:
             print("Failed to send URL")
             return
 
-        strData = json.dumps(data, indent=4).stringify()
+        strData = json.dumps(data, indent=4)
         dataBytesLen = len(strData.encode('utf-8'))
         command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         if self.sendATCmd(command, expected) == "Error":
