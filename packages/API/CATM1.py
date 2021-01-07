@@ -372,7 +372,7 @@ class CATM1:
             "Accept: */*\r\n" + # 서버응답 모두 받기
             "User-Agent: Ino-on AICamera\r\n" + # 라즈베리파이
             # "Connection: Keep-Alive\r\n" + # 계속 연결유지, 이기능 필요없으니까 이 라인은 없어도 됨
-            "Content-Type: multipart/form-data\r\n" + # multipart
+            # "Content-Type: multipart/form-data\r\n" + # multipart
             "Content-Length: " + str(dataBytesLen) + "\r\n\r\n" # 헤더를 제외한 Body 길이
         )
         headerBytesLen = len(header.encode('utf-8'))
@@ -382,10 +382,12 @@ class CATM1:
         if isError(recv, "Failed to configure PDP context ID as 1."):
             return
         
+        '''
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
             return
+        '''
 
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"requestheader",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
