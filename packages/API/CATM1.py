@@ -317,7 +317,7 @@ class CATM1:
         # Step 7. Read HTTP response.
         # Step 8. Deactivate the PDP context by AT+QIDEACT.
 
-        command, expected = ATCmdList['ICSGP']['CMD'] + '"contextid",1', ATCmdList['ICSGP']['REV']
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contextid",1', ATCmdList['HTTPCFG']['REV']
         if self.sendATCmd(command, expected) == "Error":
             print("Failed to configure PDP context ID as 1.")
             return
