@@ -392,15 +392,27 @@ class CATM1:
         if isError(recv, "Failed to send POST request"):
             return
         if self.readAdditionalATResponse() == True: 
-            print(recv)
-        
+            print(self.response)
+        if self.readAdditionalATResponse() == True: 
+            print(self.response)
+        if self.readAdditionalATResponse() == True: 
+            print(self.response)
+        if self.readAdditionalATResponse() == True: 
+            print(self.response)
+
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         recv = self.sendATCmd(command, expected)
         print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
             return
         if self.readAdditionalATResponse() == True:
-            print(recv)
+            print(self.response)
+        if self.readAdditionalATResponse() == True:
+            print(self.response)
+        if self.readAdditionalATResponse() == True:
+            print(self.response)
+        if self.readAdditionalATResponse() == True:
+            print(self.response)
         
         return recv # 다듬어서 내보내야겠지..
         
