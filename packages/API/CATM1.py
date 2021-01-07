@@ -335,11 +335,11 @@ class CATM1:
         urlBytesLen = len(url.encode('utf-8'))
         command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
         if self.sendATCmd(command, expected) == "Error":
-            print "Failed to prepare for getting URL"
+            print("Failed to prepare for getting URL")
             return
         
         if self.sendATCmd(url, "\r\nOK\r\n") == "Error":
-            print "Failed to send URL"
+            print("Failed to send URL")
             return
         path = data['imagefile']
         
@@ -356,7 +356,7 @@ class CATM1:
         
         command, expected = ATCmdList['HTTPREAD']['CMD'] + "80", ATCmdList['HTTPREAD']['REV']
         response = self.sendATCmd(command, expected)
-        if response = "Error":
+        if response == "Error":
             print("Failed to prepare for receiving POST response")
             return
         
