@@ -97,7 +97,7 @@ def basicMode (wait=0):
 
     
     if isPPP: # POST from this process
-        response = requests.post(URL, json=data)
+        response = requests.post(URL, files=data)
         resCode, resText = response.status_code, response.text
         print(resCode, ":", resText)
     else: # POST from CAT.M1 process
@@ -133,6 +133,5 @@ if __name__ == '__main__':
     finally:
         print("End process")
         # nrf.pwrOffPi()
-        GPIO.cleanup()
-        # subprocess.call("sudo poweroff", shell=True) # shutdown raspi
+        # GPIO.cleanup()
         exit(0)
