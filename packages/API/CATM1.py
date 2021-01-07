@@ -351,6 +351,32 @@ class CATM1:
         # Step 7. Read HTTP response.
         # Step 8. Deactivate the PDP context by AT+QIDEACT.
 
+        ''' Size of URL '''
+        urlBytesLen = len(url.encode('utf-8'))
+
+        ''' Size of Data '''
+        strData = json.dumps(data, indent=4)
+        dataBytesLen = len(strData.encode('utf-8'))
+
+        ''' Header '''
+        fronturl, backurl = "", ""
+        idx = url.find("com/")
+        if idx == -1:
+            print("Failed to find '.com' in URL")
+            return
+        fronturl = url[: idx + 2] # http://ino-on.umilevx.com
+        backurl = url[idx + 3 :] # /api/devices/events/ino-on-0000
+        header = (
+            "POST " + backurl + " HTTP/1.1\r\n" + # 여기에 .php가 붙어야 할까?
+            "Host: " + fronturl + "\r\n" + # 여기에 포트넘버가 붙어야 할까?
+            "Accept: */*\r\n" + # 서버응답 모두 받기
+            "User-Agent: Ino-on AICamera\r\n" + # 라즈베리파이
+            # "Connection: Keep-Alive\r\n" + # 계속 연결유지, 이기능 필요없으니까 이 라인은 없어도 됨
+            "Content-Type: multipart/form-data\r\n" + # multipart
+            "Content-Length: " + str(dataBytesLen) + "\r\n\r\n" # 헤더를 제외한 Body 길이
+        )
+        headerBytesLen = len(header.encode('utf-8'))
+
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contextid",1', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure PDP context ID as 1."):
@@ -359,6 +385,11 @@ class CATM1:
         command, expected = ATCmdList['HTTPCFG']['CMD'] + '"contenttype",3', ATCmdList['HTTPCFG']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to configure content type as 'multipart/form-data'."):
+            return
+
+        command, expected = ATCmdList['HTTPCFG']['CMD'] + '"requestheader",1', ATCmdList['HTTPCFG']['REV']
+        recv = self.sendATCmd(command, expected)
+        if isError(recv, "Failed to set HTTP config"):
             return
 
         command, expected = ATCmdList['ICSGP']['CMD'] + '1,1,"internet.lte.cxn","","",1', ATCmdList['ICSGP']['REV']
@@ -370,8 +401,7 @@ class CATM1:
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to activate PDP context 1."):
             return
-    
-        urlBytesLen = len(url.encode('utf-8'))
+
         command, expected = ATCmdList['HTTPURL']['CMD'] + str(urlBytesLen) + ",80", ATCmdList['HTTPURL']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting URL"):
@@ -381,16 +411,17 @@ class CATM1:
         if isError(recv, "Failed to send URL"):
             return
 
-        strData = json.dumps(data, indent=4)
-        dataBytesLen = len(strData.encode('utf-8'))
-        command, expected = ATCmdList['HTTPPOST']['CMD'] + str(dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
+        command, expected = ATCmdList['HTTPPOST']['CMD'] + str(headerBytesLen + dataBytesLen) + ",80,80", ATCmdList['HTTPPOST']['REV']
         recv = self.sendATCmd(command, expected)
         if isError(recv, "Failed to prepare for getting POST request"):
             return
         
-        recv = self.sendATCmd(strData, "\r\nOK\r\n")
+        recv = self.sendATCmd(header + strData, "\r\nOK\r\n")
         if isError(recv, "Failed to send POST request"):
             return
+        # POST 데이터를 보낸 후 OK가 수신되면 그 이후에 추가로 AT response 가 더 들어올 수 있으니 시리얼포트 대기해야함.
+        # 그게 아래 readAdditionalATResponse() 네 번 호출. 한 번 호출에 5초 대기함.
+        # 이거 대기 충분히 안해주고 바로 HTTPREAD 를 보내면 703: http busy 에러 뜸
         if self.readAdditionalATResponse() == True: 
             print(self.response)
         if self.readAdditionalATResponse() == True: 
@@ -405,6 +436,8 @@ class CATM1:
         print(recv)
         if isError(recv, "Failed to prepare for receiving POST response"):
             return
+        # READ 명령을 보낸 후 CONNECT가 수신되면 그 이후에 http response가 수신되므로 그것 입력받기 위해 시리얼포트 대기해야함.
+        # 위와 동일하게 readAdditionalATResponse() 사용
         if self.readAdditionalATResponse() == True:
             print(self.response)
         if self.readAdditionalATResponse() == True:
@@ -416,33 +449,6 @@ class CATM1:
         
         return recv # 다듬어서 내보내야겠지..
         
-        '''
-        # Customize HTTP request header
-        command = ATCmdList['HTTPCFG']['CMD'] + '"responseheader",1'
-        if self.sendATCmd(command, ATCmdList['HTTPCFG']['REV']):
-            print "Failed to set HTTP config"
-            return
-        '''     
-        
-        '''
-        fronturl, backurl = "", ""
-        idx = url.find("com/")
-        if idx == -1:
-            print("Failed to find '.com' in URL")
-            return
-        fronturl = url[: idx + 2] # http://ino-on.umilevx.com
-        backurl = url[idx + 3 :] # /api/devices/events/ino-on-0000
-
-        
-
-        "POST " + backurl + " HTTP/1.1\r\n" # 여기에 .php가 붙어야 할까?
-        "Host: " + fronturl + "\r\n" # 여기에 포트넘버가 붙어야 할까?
-        "Accept: */*\r\n" # 서버응답 모두 받기
-        "User-Agent: Ino-on AICamera\r\n" # 라즈베리파이
-        # "Connection: Keep-Alive\r\n" # 계속 연결유지, 이기능 필요없으니까 이 라인은 없어도 됨
-        "Content-Type: multipart/form-data" # multipart
-        "Content-Length: " + str(dataBytesLen) + "" # 헤더를 제외한 Body 길이
-        '''
 
     # data type
     def sendSCKData(self, mySocket, data):
