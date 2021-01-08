@@ -104,7 +104,7 @@ def basicMode (isPPP):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n", type=int, help="(optional) '1' when using PPP")
+    parser.add_argument("--p", type=int, help="(optional) '1' when using PPP")
     parser.add_argument("--m", type=str, help="(optioanl) Do only 'basic' or 'admin'")
     args = parser.parse_args()
     isPPP = False

@@ -120,9 +120,9 @@ class CATM1:
     def pwrOffModem(self):
         GPIO.output(self.pwrPinNum, GPIO.LOW)
 
-    def resetModem(self):
+    def resetModem(self, isPPP=False):
         self.pwrOffModem()
-        self.pwrOnModem()
+        self.pwrOnModem(isPPP)
 
     def setIPAddress(self, ip):
         ''' set ip address'''
