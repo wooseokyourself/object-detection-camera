@@ -1,22 +1,13 @@
+from packages.Define import *
 import argparse
 import subprocess
 import ifcfg, requests, json
 from datetime import datetime
 import random
-import packages.Define as Define
 import RPi.GPIO as GPIO
 # Define.GPIO_EMULATOR = True
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
-
-### GPIO BCM ###
-taskModePin = 20    # NRF - Task Mode Signal Pin (input)
-rpiOffPin = 21      # NRF - Work Completion Signal Pin (output)
-ltePwrPin = 17       # CAT.M1 Power Pin (output)
-lteStatPin = 27     # CAT.M1 Status Pin (input)
-
-nrf = NRF(taskPinNum=taskModePin, offPinNum=rpiOffPin)
-URL="http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
 
 def adminMode ():
     """
@@ -41,6 +32,7 @@ def basicMode (isPPP):
         config = json.load(f)
         confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
         resize = config["YOLO"]["RESIZE"]
+        print(" confidence, nms, resize=", confidence, nms, resize)
         detector += str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
@@ -60,7 +52,7 @@ def basicMode (isPPP):
         print("Invalid status")
 
     ''' Power On Modem '''
-    lte = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+    lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
     lte.pwrOnModem(isPPP=isPPP)
 
     ''' Get RSSI and BER by AT Command '''
@@ -110,6 +102,7 @@ if __name__ == '__main__':
     isPPP = False
     if args.n is not None and args.n == 1:
         isPPP = True
+    nrf = NRF(taskPinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
     try:
         if args.m is None:
             # Wait 5 seconds for get admin signal

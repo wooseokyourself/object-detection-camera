@@ -2,12 +2,10 @@ import time
 import RPi.GPIO as GPIO
 import sys
 sys.path.append("..")
+from packages.Define import *
 from packages.API.CATM1 import CATM1
 
-ltePwrPin = 17       # CAT.M1 Power Pin (output)
-lteStatPin = 27     # CAT.M1 Status Pin (input)
-
-node = CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwrPinNum=ltePwrPin, statPinNum=lteStatPin)
+node = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
 node.pwrOnModem()
 
 print( "RPI3 Modem Power PIN: " + str(node.getPwrPinNum()) )

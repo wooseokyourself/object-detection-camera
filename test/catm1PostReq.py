@@ -1,13 +1,13 @@
 import sys, time
 sys.path.append("..")
 import json
+from packages.Define import *
 from packages.API.CATM1 import CATM1
 import RPi.GPIO as GPIO
 
-node = CATM1()
+node = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
 node.pwrOnModem()
 
-URL="http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
 data = {"time":"0000-00-00_00:00:00", "event":"0", "rssi":"99", "battery":"0"}
 
 try:
