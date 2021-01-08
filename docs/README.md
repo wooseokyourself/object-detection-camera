@@ -135,7 +135,7 @@ Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
     + 이벤트가 있을 경우
     ```
     {
-        "time"="YYYY-MM-DD_HH:MM:SS"
+        "time"="2021-01-08T13:41:21.046Z"
         "event"="1"
         "rssi"="-31"
         "battery"="97"
@@ -146,7 +146,7 @@ Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
     + 이벤트가 없을 경우 
     ```
     {
-        "time"="YYYY-MM-DD_HH:MM:SS"
+        "time"="2021-01-08T13:41:21.046Z"
         "event"="0"
         "rssi"="-31"
         "battery"="97"
