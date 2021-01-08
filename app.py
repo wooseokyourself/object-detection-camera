@@ -1,7 +1,12 @@
+import pathlib
+import os
+os.chdir(pathlib.Path(__file__).parent.absolute())
 from packages.Define import *
 import argparse
 import subprocess
-import ifcfg, requests, json
+import ifcfg
+import requests
+import json
 from datetime import datetime
 import random
 import RPi.GPIO as GPIO
