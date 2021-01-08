@@ -1,6 +1,5 @@
-import pathlib
-import os
-os.chdir(pathlib.Path(__file__).parent.parent.absolute())
+import sys 
+sys.path.append("../")
 import subprocess
 import argparse
 
