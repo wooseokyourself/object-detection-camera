@@ -1,5 +1,6 @@
-import sys, time
-sys.path.append("..")
+import pathlib
+import os
+os.chdir(pathlib.Path(__file__).parent.parent.absolute())
 import json
 from packages.Define import *
 from packages.API.CATM1 import CATM1

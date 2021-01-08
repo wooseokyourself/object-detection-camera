@@ -1,7 +1,8 @@
+import pathlib
+import os
+os.chdir(pathlib.Path(__file__).parent.parent.absolute())
 import time
 import RPi.GPIO as GPIO
-import sys
-sys.path.append("..")
 from packages.Define import *
 from packages.API.CATM1 import CATM1
 
