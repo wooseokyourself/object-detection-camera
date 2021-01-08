@@ -52,7 +52,7 @@ pi@raspberrypi:~ $ sudo raspi-config
 5. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
 
 ### 2. PPP
-*** PPP 인터페이스를 이용할 경우 다음을 진행 ***
+**PPP 인터페이스를 이용할 경우 다음을 진행**
 #### 2.1. PPP Install
 + PPP 설치 방법 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20PPP)_HandsON.pdf), device communication PORT 를 제외한 나머지 내용 동일)
 1. PPP 설치 파일 다운로드
@@ -144,7 +144,7 @@ Y
     ```
     > `time`: 사진을 촬영한 시간이다.   
     > `event`:  사진 내에서 객체가 검출된 여부이다.   
-    > `rssi`: CAT.M1의 RSSI값이다.   
+    > `rssi`: 모뎀의 RSSI값이다.   
     > `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.   
     > `filename`: 서버에 저장될 이미지 파일의 서버 경로이다.   
     > `files`: 전송할 이미지 파일의 로컬 경로이다.
@@ -173,17 +173,18 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
     + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
 
 ## API: CATM1
-CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT command 메소드가 존재한다.
+CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메소드가 존재한다.   
+**※ 주의: ppp0 인터페이스가 활성화되어있으면 AT Command 를 활용하는 메소드를 사용할 수 없다.**
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
     + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
-+ `pwrOnModem(): Void`
-    + CAT.M1의 전원을 켠다. 전원을 켠 뒤 AT Command가 입력될때까지 앱의 프로세스를 대기한다.
++ `pwrOnModem(isPPP=False): Void`
+    + CAT.M1의 전원을 켠다. `isPPP=True` 이면 시스템에 ppp0 인터페이스가 활성화될때까지 대기한 뒤 메소드가 종료된다.
 + `pwrOffModem(): Void`
     + CAT.M1의 전원을 끈다.
-+ `getRSSI(timeout=None): str`
-    + CAT.M1의 RSSI를 얻기 위해 AT+CSQ 요청을 보낸뒤 응답을 리턴한다.
++ `getRSSI(timeout=None): str, str`
+    + (AT Command) CAT.M1의 RSSI와 BER 값을 리턴한다.
 + `post(url, data): str, str` -- 구현중
-    + CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
+    + (AT Command) CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
 
 ****
 
@@ -197,11 +198,22 @@ pi@raspberrypi:~/ino-on_AiCam $ ./build.sh
 
 ## Run
 ```console
-pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
+pi@raspberrypi:~/ino-on_AiCam $ python3 app.py --p <PPP> --m <MODE> 
 ```
-+ Optional Argument
-    + `--mode MODE` (optional)
-    > basic(일반모드만 실행), admin(관리자모드만 실행)
++ Arguments
+    + `--p PPP` (optional)
+        > 1 일 경우 ppp0 인터페이스를 활용, 1이 아닐 경우 AT Command 를 활용.
+    + `--m MODE` (optional)
+        > basic(일반모드만 실행), admin(관리자모드만 실행)
+
+Examples
+```console
+pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
+# PPP 인터페이스 비활성화 및 완전한 기능 수행
+
+pi@raspberrypi:~/ino-on_AiCam $ python3 app.py --p 1 --m basic
+# PPP 인터페이스 활성화 및 Basic task 만 수행
+```
 
 ## Test
 
@@ -222,7 +234,7 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 gpio-emulator.py
 ```
 GPIOEmulator 를 사용하기 때문에 실제 GPIO 신호를 송수신하지 않는다.
 
-### CAT.M1 정보 확인
+### CAT.M1 정보 확인 (AT Command)
 ```console
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1Infos.py
 ```
@@ -246,7 +258,7 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1PwrOn.py
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1PwrOff.py
 ```
 
-### CAT.M1 네트워크 연결 확인
+### CAT.M1 네트워크 연결 확인 (AT Command)
 ```console
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 ```
