@@ -100,7 +100,7 @@ if __name__ == '__main__':
     parser.add_argument("--m", type=str, help="(optioanl) Do only 'basic' or 'admin'")
     args = parser.parse_args()
     isPPP = False
-    if args.n is not None and args.n == 1:
+    if args.p is not None and args.p == 1:
         isPPP = True
     nrf = NRF(taskPinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
     try:
