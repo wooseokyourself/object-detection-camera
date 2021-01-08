@@ -84,11 +84,12 @@ Does your carrier need username and password? [Y/n]
 What is your device communication PORT? (ttyS0/ttyUSB3/etc.)
 >> ttyS0
 Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
->> n
+>> Y # 이 부분을 n으로 할 경우, 본 소스코드에 PPP를 활성화하는 시스템함수를 구현해야한다.
 ```
 6. Enter 를 입력하여 라즈베리파이 재실행
 
 #### 2.2. PPP Enable/Disable
++ 위 설치의 옵션으로 인해, 모뎀 전원이 들어오면 PPP도 자동으로 활성화된다.
 + 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
 + 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
 + 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
