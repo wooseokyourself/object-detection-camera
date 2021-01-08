@@ -22,7 +22,15 @@
 ****
 
 # Description
+## Terms
+#### Basic mode (Basic task)
+사진을 촬영하고 포크레인을 검출한 뒤 결과값을 서버에 보내는 작업을 의미한다.
 
+#### Admin mode (Admin task)
+Acess point 를 활성화하고 관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.
+
+## Network
+Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 현재 앱에서 요청을 보내는 방법과 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
 
 ****
 
@@ -53,6 +61,7 @@ pi@raspberrypi:~ $ sudo raspi-config
 
 ### 2. PPP
 **PPP 인터페이스를 이용할 경우 다음을 진행**
+**※ 주의: PPP 인터페이스가 활성화되어있으면 AT Command 를 사용할 수 없다.**
 #### 2.1. PPP Install
 + PPP 설치 방법 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20PPP)_HandsON.pdf), device communication PORT 를 제외한 나머지 내용 동일)
 1. PPP 설치 파일 다운로드
@@ -102,7 +111,7 @@ Y
     > HIGH: 모뎀 인식   
     > LOW: 모뎀 미인식
 
-※ 모든 핀 번호는 하드코딩 되어있다.   
+※ 모든 핀 번호는 `API/Define.py` 에 하드코딩 되어있다.   
 
 ## Yolov4 Configuration (Json)
 + `config/config.json`
@@ -155,12 +164,20 @@ Y
 ****
 
 # Packages
-## GPIOEmulator
-+ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
-+ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
-
 ## Define
-+ CATM1, NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 GPIOEmulaotr 를 import 한다.
+**상수들이 정의된 곳이다.**
++ `GPIO_EMULATOR`: Bool
+    > API.CATM1, API.NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 [GPIOEmulaotr](https://github.com/UmileVX/ino-on_AiCam#gpioemulator) 를 import 한다.
++ `TASK_MODE_PIN`: int
+    > 작동상태 모드 확인 핀
++ `RPI_OFF_PIN`: int
+    > 작업 완료 알림 핀
++ `MODEM_PWR_PIN`: int
+    > 모뎀 전원 관리 핀
++ `MODEM_STAT_PIN`: int
+    > 모뎀 상태 핀
++ `MODEM_SER_PORT`: str
+    > 모뎀 시리얼포트 경로
 
 ## API: NRF
 NRF와의 GPIO 통신을 담당하는 클래스이다.
@@ -174,7 +191,6 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
 
 ## API: CATM1
 CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메소드가 존재한다.   
-**※ 주의: ppp0 인터페이스가 활성화되어있으면 AT Command 를 활용하는 메소드를 사용할 수 없다.**
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
     + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
 + `pwrOnModem(isPPP=False): Void`
@@ -185,6 +201,10 @@ CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메�
     + (AT Command) CAT.M1의 RSSI와 BER 값을 리턴한다.
 + `post(url, data): str, str` -- 구현중
     + (AT Command) CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
+
+## GPIOEmulator
++ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
++ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
 
 ****
 
