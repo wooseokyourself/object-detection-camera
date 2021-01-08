@@ -38,7 +38,7 @@ Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 ## Software Requirements
 + Raspbian with Python 3.3 or later with PIP3
 + CMake 2.8 or later 
-+ OpenCV 4.4 or later  - [Instruction(=`install-opencv.sh`)](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)
++ OpenCV 4.4 or later  - [Instruction](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)(=`install-opencv.sh`)
     > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
 
 ## PIP3 Packages
@@ -63,7 +63,7 @@ pi@raspberrypi:~ $ sudo raspi-config
 **PPP 인터페이스를 이용할 경우 다음을 진행**
 **※ 주의: PPP 인터페이스가 활성화되어있으면 AT Command 를 사용할 수 없다.**
 #### 2.1. PPP Install
-+ PPP 설치 방법 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20PPP)_HandsON.pdf), device communication PORT 를 제외한 나머지 내용 동일)
++ PPP 설치 방법 ([reference](https://github.com/sixfab/Sixfab_PPP_Installer))
 1. PPP 설치 파일 다운로드
 ```console
 pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/install.sh
@@ -80,16 +80,16 @@ pi@raspberrypi:~ $ sudo ./install.sh
 5. 기타 설정을 다음과 같이 입력
 ```
 Does your carrier need username and password? [Y/n]
-n
+>> n
 What is your device communication PORT? (ttyS0/ttyUSB3/etc.)
-ttyS0
+>> ttyS0
 Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
-Y
+>> n
 ```
 6. Enter 를 입력하여 라즈베리파이 재실행
 
-#### 2.2. PPP Enable
-+ 모뎀 전원이 켜지면 `ifconfig`를 통해 `ppp0` 인터페이스가 잡히는 것을 확인할 수 있다. 반대로 모뎀 전원이 꺼지면 `ppp0` 인터페이스가 비활성화된다.
+#### 2.2. PPP Enable/Disable
++ 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
 + 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
 + 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
 + 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
@@ -99,8 +99,8 @@ Y
 # Configuration
 ## Raspberry Pi GPIO Pin Number (BCM)
 + 작동상태 모드 확인: 20 input   
-    > HIGH: 관리자 모드 (admin)   
-    > LOW: 일반 모드 (basic)
+    > HIGH: Admin mode   
+    > LOW: Basic mode
 + 작업 완료 알림: 21 output   
     > HIGH: pi 작업 완료   
     > LOW: pi 작업 진행중
