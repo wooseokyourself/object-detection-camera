@@ -103,11 +103,12 @@ def basicMode (isPPP):
                 response = requests.post(URL, files=data)
                 resCode, resText = response.status_code, response.text
                 print(resCode, ":", resText)
+                break
             else: # POST from CAT.M1 process
                 response = lte.post(URL, data) # 아직 많이 봐야함
+                break
         except requests.exceptions.RequestException as e:
             print(e)
-        break
             
         
     ''' Power Off Modem '''
