@@ -102,13 +102,19 @@ def basicMode (isPPP):
             "filename": (None, IMAGEFILE), 
             "files": open("results/" + IMAGEFILE, 'rb')
             }
-    if isPPP: # POST from this process
-        response = requests.post(URL, files=data)
-        resCode, resText = response.status_code, response.text
-        print(resCode, ":", resText)
-    else: # POST from CAT.M1 process
-        response = lte.post(URL, data) # 아직 많이 봐야함
-    
+    while True:
+        try:
+            if isPPP: # POST from this process
+                response = requests.post(URL, files=data)
+                resCode, resText = response.status_code, response.text
+                print(resCode, ":", resText)
+            else: # POST from CAT.M1 process
+                response = lte.post(URL, data) # 아직 많이 봐야함
+        except requests.exceptions.RequestException as e:
+            print(e)
+        break
+            
+        
     ''' Power Off Modem '''
     lte.disablePpp()
     lte.pwrOffModem()
