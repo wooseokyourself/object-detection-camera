@@ -121,14 +121,13 @@ class CATM1:
         self.__delay(500)
         _, _ = self.getRSSI()
         '''
-        
+
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:
             print("Modem Not Ready..")
 
     def pwrOffModem(self):
-        self.disablePpp()
         GPIO.output(self.pwrPinNum, GPIO.LOW)
 
     def enablePpp(self):
