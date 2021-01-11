@@ -128,13 +128,13 @@ class CATM1:
         GPIO.output(self.pwrPinNum, GPIO.LOW)
 
     def enablePpp(self):
-        subprocess.run("sudo pon", shell=True)
+        subprocess.call(['sudo', 'pon'])
         while 'ppp0' in ifcfg.interfaces() == False:
             pass
         print("ppp0 enabled")
     
     def disablePpp(self):
-        subprocess.run("sudo poff -a", shell=True)
+        subprocess.call(['sudo', 'poff', '-a'])
 
     def setIPAddress(self, ip):
         ''' set ip address'''
