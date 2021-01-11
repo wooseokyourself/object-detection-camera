@@ -4,6 +4,7 @@ import re
 import threading
 import ifcfg
 import json
+import subprocess
 import packages.Define as Define
 if Define.GPIO_EMULATOR == True:
     from packages.GPIOEmulator.EmulatorGUI import GPIO
@@ -95,6 +96,10 @@ class CATM1:
         self.ipAddress = ""
         self.portNum = ""
 
+        ''' Infos for user '''
+        self.rssi = "99"
+        self.ber = "99"
+
     def getPwrPinNum(self):
         ''' get modem Power pin number '''
         return self.pwrPinNum
@@ -103,15 +108,17 @@ class CATM1:
         ''' get modem Status pin number '''
         return self.statPinNum
 
-    # 모뎀 전원을 켠 후 PPP 활성화될때까지 대기
-    def pwrOnModem(self, isPPP=False):
-        print ("Start Modem..")
+    # 모뎀 전원을 켠 후 정상적인 RSSI가 수신될때까지 대기
+    def pwrOnModem(self):
+        print("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        ''' Check PPP interface is enabled '''
-        if isPPP:
-            while 'ppp0' in ifcfg.interfaces() == False:
-                pass
-            print("ppp0 enabled")
+        self.disablePpp()
+        while self.rssi == "99":
+            print(" Wait for a signal reception")
+            self.__delay(500)
+            _, _ = self.getRSSI()
+        self.__delay(500)
+        _, _ = self.getRSSI()
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:
@@ -120,9 +127,14 @@ class CATM1:
     def pwrOffModem(self):
         GPIO.output(self.pwrPinNum, GPIO.LOW)
 
-    def resetModem(self, isPPP=False):
-        self.pwrOffModem()
-        self.pwrOnModem(isPPP)
+    def enablePpp(self):
+        subprocess.run("sudo pon", shell=True)
+        while 'ppp0' in ifcfg.interfaces() == False:
+            pass
+        print("ppp0 enabled")
+    
+    def disablePpp(self):
+        subprocess.run("sudo poff -a", shell=True)
 
     def setIPAddress(self, ip):
         ''' set ip address'''
@@ -224,7 +236,7 @@ class CATM1:
                 return self.response
 
     # AT command methods
-    def getRSSI(self, timeout=None): # custom
+    def getRSSI(self, timeout=None):
         ''' get RSSI number'''
         recv = self.sendATCmd(ATCmdList['RSSI']['CMD'], ATCmdList['RSSI']['REV'], timeout)
         if recv == "Error":
@@ -243,6 +255,7 @@ class CATM1:
                 if csq[berIdx].isdigit():
                     ber += csq[berIdx]
                 berIdx += 1
+        self.rssi, self.ber = rssi, ber
         return rssi, ber
 
     def getIMEI(self, timeout=None):

@@ -65,18 +65,18 @@ def basicMode (isPPP):
 
     ''' Power On Modem '''
     lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
-    lte.pwrOnModem(isPPP=isPPP)
+    lte.pwrOnModem()
 
     ''' Get RSSI and BER by AT Command '''
-    rssi, ber = "", ""
-    if isPPP:
-        rssi, ber = "99", "99" # 이거 어떻게 구하지?
-    else:
-        lte.getRSSI()
+    rssi, ber = lte.rssi, lte.ber
     
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   
     
+    ''' Activate PPP '''
+    if isPPP:
+        lte.enablePpp()
+
     ''' POST '''
     data = {}
     if exitCode == 0:
@@ -95,8 +95,6 @@ def basicMode (isPPP):
             "filename": (None, IMAGEFILE), 
             "files": open("results/" + IMAGEFILE, 'rb')
             }
-
-    
     if isPPP: # POST from this process
         response = requests.post(URL, files=data)
         resCode, resText = response.status_code, response.text
@@ -104,7 +102,9 @@ def basicMode (isPPP):
     else: # POST from CAT.M1 process
         response = lte.post(URL, data) # 아직 많이 봐야함
     
-    lte.pwrOffModem() # LTE power off
+    ''' Power Off Modem '''
+    lte.disablePpp()
+    lte.pwrOffModem()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
