@@ -112,7 +112,7 @@ Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
     > HIGH: 모뎀 인식   
     > LOW: 모뎀 미인식
 
-※ 모든 핀 번호는 `API/Define.py` 에 하드코딩 되어있다.   
+※ 모든 핀 번호는 `packages/Define.py` 에 정의되어있다.   
 
 ## Yolov4 Configuration (Json)
 + `config/config.json`
