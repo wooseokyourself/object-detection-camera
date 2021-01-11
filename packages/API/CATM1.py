@@ -111,11 +111,10 @@ class CATM1:
     # 모뎀 전원을 켠 후 정상적인 RSSI가 수신될때까지 대기
     def pwrOnModem(self):
         print("Start Modem..")
-        self.disablePpp()
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
-        self.disablePpp()
         while self.rssi == "99":
             print(" Wait for a signal reception")
+            self.disablePpp()
             self.__delay(500)
             _, _ = self.getRSSI()
         self.__delay(500)
