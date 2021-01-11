@@ -4,6 +4,7 @@ os.chdir(pathlib.Path(__file__).parent.absolute())
 from packages.Define import *
 import argparse
 import subprocess
+import ifcfg
 import requests
 import json
 from datetime import datetime
