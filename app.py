@@ -29,16 +29,19 @@ def adminMode ():
     print("Web server on")
 
 def basicMode (isPPP):
+    ''' Read configuration '''
+    f = open("config/config.json", "r")
+    config = json.load(f)
+    URL = config["SERVER"]["URL"] + config["SERVER"]["ENDPOINT"] + config["DEVICE"]["ID"]
+    confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
+    resize = config["YOLO"]["RESIZE"]
+    f.close()
+    
     ''' Capture, Detect '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
     IMAGEFILE = TIMESTAMP + ".jpg"
     detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
-    with open("config/config.json", "r") as f:
-        config = json.load(f)
-        confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
-        resize = config["YOLO"]["RESIZE"]
-        print(" confidence, nms, resize=", confidence, nms, resize)
-        detector += str(confidence) + " " + str(nms) + " " + str(resize)
+    detector += str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     if exitCode == 0:
