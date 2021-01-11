@@ -40,8 +40,12 @@ def basicMode (isPPP):
     ''' Capture, Detect '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
     IMAGEFILE = TIMESTAMP + ".jpg"
-    detector = "./build/detector model/yolov4-custom_best.weights model/yolov4-custom.cfg model/classes.names results/" + IMAGEFILE + " "
-    detector += str(confidence) + " " + str(nms) + " " + str(resize)
+    detector = "./build/detector "\
+            + "model/yolov4-custom_best.weights "\
+            + "model/yolov4-custom.cfg "\
+            + "model/classes.names "\
+            + "results/" + IMAGEFILE\
+            + " " + str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
     exitCode = process.returncode
     if exitCode == 0:
