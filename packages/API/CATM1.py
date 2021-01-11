@@ -108,10 +108,11 @@ class CATM1:
         ''' get modem Status pin number '''
         return self.statPinNum
 
-    # 모뎀 전원을 켠 후 정상적인 RSSI가 수신될때까지 대기
     def pwrOnModem(self):
         print("Start Modem..")
         GPIO.output(self.pwrPinNum, GPIO.HIGH)
+        '''
+        # 모뎀 전원을 켠 후 정상적인 RSSI가 수신될때까지 대기
         while self.rssi == "99":
             print(" Wait for a signal reception")
             self.disablePpp()
@@ -119,6 +120,7 @@ class CATM1:
             _, _ = self.getRSSI()
         self.__delay(500)
         _, _ = self.getRSSI()
+        '''
         if(GPIO.input(self.statPinNum) == 1):
             print("Modem Ready..")
         else:
