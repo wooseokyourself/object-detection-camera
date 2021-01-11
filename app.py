@@ -1,7 +1,6 @@
 import pathlib
 import os
 os.chdir(pathlib.Path(__file__).parent.absolute())
-import socket
 from packages.Define import *
 import argparse
 import subprocess
@@ -78,11 +77,6 @@ def basicMode (isPPP):
         while 'ppp0' in ifcfg.interfaces() == False:
             print("Wait for ppp activation...")
             pass
-
-    ''' Wait until network connection '''
-    while socket.gethostbyname(socket.gethostname()) == "127.0.0.1":
-        print("Wait for network connection...")
-        pass
 
     ''' POST '''
     data = {}
