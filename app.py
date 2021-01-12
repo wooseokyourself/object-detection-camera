@@ -15,12 +15,7 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 
 def adminMode ():
-    """
-    #
-    # Web server on here
-    #
-    """
-    print("Web server on")
+    subprocess.run("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
 
 def basicMode (isPPP):
     ''' Read configuration '''
