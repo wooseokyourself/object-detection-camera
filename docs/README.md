@@ -8,15 +8,15 @@
     + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
     + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AiCam#yolov4-configuration-json)
     + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AiCam#http-request-to-server)
++ [Usage](https://github.com/UmileVX/ino-on_AiCam#usage)
+    + [Build](https://github.com/UmileVX/ino-on_AiCam#build)
+    + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
+    + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
     + [GPIOEmulator](https://github.com/UmileVX/ino-on_AiCam#gpioemulator)
     + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
     + [API: NRF](https://github.com/UmileVX/ino-on_AiCam#api-nrf)
     + [API: CATM1](https://github.com/UmileVX/ino-on_AiCam#api-catm1)
-+ [Usage](https://github.com/UmileVX/ino-on_AiCam#usage)
-    + [Build](https://github.com/UmileVX/ino-on_AiCam#build)
-    + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
-    + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Resources](https://github.com/UmileVX/ino-on_AiCam#resources)
 
 ****
@@ -27,18 +27,21 @@
 사진을 촬영하고 포크레인을 검출한 뒤 결과값을 서버에 보내는 작업을 의미한다.
 
 #### Admin mode (Admin task)
-Acess point 를 활성화하고 관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.
+관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.
 
 ## Network
 Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
 
 ## Basic Mode
-1. 사진을 촬영하고 분석
+1. 사진을 촬영하고 분석 (ai-cam 디렉토리 소스코드)
 2. 모뎀 전원 연결
 3. RSSI와 배터리 값 얻기
 4. PPP 연결 대기
 5. 네트워크 연결 대기 후 POST
 6. 모뎀 전원 종료
+
+## Admin Mode
+1. 웹서버 실행 (webapp 디렉토리 소스코드)
 
 ****
 
@@ -185,51 +188,6 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 
 ****
 
-# Packages
-## Define
-**상수들이 정의된 곳이다.**
-+ `GPIO_EMULATOR`: Bool
-    > API.CATM1, API.NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 [GPIOEmulaotr](https://github.com/UmileVX/ino-on_AiCam#gpioemulator) 를 import 한다.
-+ `TASK_MODE_PIN`: int
-    > 작동상태 모드 확인 핀
-+ `RPI_OFF_PIN`: int
-    > 작업 완료 알림 핀
-+ `MODEM_PWR_PIN`: int
-    > 모뎀 전원 관리 핀
-+ `MODEM_STAT_PIN`: int
-    > 모뎀 상태 핀
-+ `MODEM_SER_PORT`: str
-    > 모뎀 시리얼포트 경로
-
-## API: NRF
-NRF와의 GPIO 통신을 담당하는 클래스이다.
-+ `NRF(taskPinNum, offPinNum)`
-    + `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
-    + `offPinNum`: 작업 완료 알림 GPIO Pin Number
-+ `isAdminMode(timeout): Bool`
-    + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
-+ `pwrOffPi(): Void`
-    + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
-
-## API: CATM1
-CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메소드가 존재한다.   
-+ `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
-    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
-+ `pwrOnModem(isPPP=False): Void`
-    + CAT.M1의 전원을 켠다. `isPPP=True` 이면 시스템에 ppp0 인터페이스가 활성화될때까지 대기한 뒤 메소드가 종료된다.
-+ `pwrOffModem(): Void`
-    + CAT.M1의 전원을 끈다.
-+ `getRSSI(timeout=None): str, str`
-    + (AT Command) CAT.M1의 RSSI와 BER 값을 리턴한다.
-+ `post(url, data): str, str` -- 구현중
-    + (AT Command) CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
-
-## GPIOEmulator
-+ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
-+ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
-
-****
-
 # Usage
 
 ## Build
@@ -304,6 +262,51 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1PwrOff.py
 ```console
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 ```
+
+****
+
+# Packages
+## Define
+**상수들이 정의된 곳이다.**
++ `GPIO_EMULATOR`: Bool
+    > API.CATM1, API.NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 [GPIOEmulaotr](https://github.com/UmileVX/ino-on_AiCam#gpioemulator) 를 import 한다.
++ `TASK_MODE_PIN`: int
+    > 작동상태 모드 확인 핀
++ `RPI_OFF_PIN`: int
+    > 작업 완료 알림 핀
++ `MODEM_PWR_PIN`: int
+    > 모뎀 전원 관리 핀
++ `MODEM_STAT_PIN`: int
+    > 모뎀 상태 핀
++ `MODEM_SER_PORT`: str
+    > 모뎀 시리얼포트 경로
+
+## API: NRF
+NRF와의 GPIO 통신을 담당하는 클래스이다.
++ `NRF(taskPinNum, offPinNum)`
+    + `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
+    + `offPinNum`: 작업 완료 알림 GPIO Pin Number
++ `isAdminMode(timeout): Bool`
+    + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
++ `pwrOffPi(): Void`
+    + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
+
+## API: CATM1
+CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메소드가 존재한다.   
++ `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
+    + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.
++ `pwrOnModem(isPPP=False): Void`
+    + CAT.M1의 전원을 켠다. `isPPP=True` 이면 시스템에 ppp0 인터페이스가 활성화될때까지 대기한 뒤 메소드가 종료된다.
++ `pwrOffModem(): Void`
+    + CAT.M1의 전원을 끈다.
++ `getRSSI(timeout=None): str, str`
+    + (AT Command) CAT.M1의 RSSI와 BER 값을 리턴한다.
++ `post(url, data): str, str` -- 구현중
+    + (AT Command) CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
+
+## GPIOEmulator
++ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
++ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
 
 ****
 

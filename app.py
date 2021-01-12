@@ -30,9 +30,9 @@ def basicMode (isPPP):
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
     IMAGEFILE = TIMESTAMP + ".jpg"
     detector = "./build/detector "\
-            + "model/yolov4-custom_best.weights "\
-            + "model/yolov4-custom.cfg "\
-            + "model/classes.names "\
+            + "ai-cam/model/yolov4-custom_best.weights "\
+            + "ai-cam/model/yolov4-custom.cfg "\
+            + "ai-cam/model/classes.names "\
             + "results/" + IMAGEFILE\
             + " " + str(confidence) + " " + str(nms) + " " + str(resize)
     process = subprocess.run(detector, capture_output=True, shell=True)
