@@ -12,20 +12,29 @@
             "conditions": [
                 ['OS=="linux"', {
                     'include_dirs': [
-                        '/usr/include'
+                        '/usr/include',
+                        '/usr/local/include',
+                        '/usr/local/include/opencv4'
                         ],
                     'link_settings': {
-                        'library_dirs': ['/usr/share/lib']
+                        'library_dirs': [
+                            '/usr/share/lib', 
+                            '/usr/local/include/opencv4'
+                            ]
                     },
                     'cflags!': ['-fno-exceptions'],
                     'cflags_cc!': ['-fno-rtti', '-fno-exceptions']
                 }],
                 ['OS=="mac"', {
                     'include_dirs': [
-                        '/opt/local/include'
+                        '/opt/local/include',
+                        '/usr/local/Cellar/opencv/4.5.0_5/include/opencv4'
                         ],
                     'link_settings': {
-                        'library_dirs': ['/opt/local/lib']
+                        'library_dirs': [
+                            '/opt/local/lib', 
+                            '/usr/local/Cellar/opencv/4.5.0_5/lib'
+                            ]
                     },
                     'xcode_settings': {
                         'MACOSX_DEPLOYMENT_TARGET' : '10.7',
