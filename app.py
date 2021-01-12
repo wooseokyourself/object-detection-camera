@@ -17,12 +17,6 @@ from packages.API.NRF import NRF
 def adminMode ():
     """
     #
-    # Wifi power on here
-    #
-    """
-    print("Wifi power on")
-    """
-    #
     # Web server on here
     #
     """
