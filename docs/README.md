@@ -111,7 +111,9 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 + 라즈베리파이에서 localhost 웹에 접속하면 라즈베리파이의 시스템 정보 등과 함께 RaspAP 설정 가능
     + ID: admin / Password: secret
     + 좌측의 Hotspot 메뉴에 들어가서 Stop/Start hotspot 버튼을 클릭하며 외부의 와이파이 접속을 허용할 수 있음. (이를 코드레벨에서 컨트롤하는 방법은 아직 찾지 못함)
-+ 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe / IP: 10.3.141.1
++ 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
+    + 게이트웨이: 10.3.141.1
+    + 웹서버에 접속할 경우: 10.3.141.1:4000
 
 #### 2.2. PPP Enable/Disable
 + 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
