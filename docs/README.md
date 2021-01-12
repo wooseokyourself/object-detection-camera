@@ -56,7 +56,7 @@ Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 ```console
 pi@raspberrypi:~ $ pip3 install ifcfg
 pi@raspberrypi:~ $ pip3 install numpy
-pi@raspberrypi:~ $ pip3 install opencv-contrib-python
+pi@raspberrypi:~ $ pip3 install opencv-python
 pi@raspberrypi:~ $ pip3 install imutils
 ```
 
