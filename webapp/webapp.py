@@ -1,5 +1,3 @@
-
-
 from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
