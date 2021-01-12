@@ -44,7 +44,7 @@ Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 
 # Requirements
 ## Software Requirements
-+ Raspbian with Python 3.3 or later with PIP3
++ Raspbian with Python 3.5 or later with PIP3
 + CMake 2.8 or later 
 + OpenCV 4.4 or later  - [Instruction](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)(=`install-opencv.sh`)
     > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
@@ -52,6 +52,9 @@ Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 ## PIP3 Packages
 ```console
 pi@raspberrypi:~ $ pip3 install ifcfg
+pi@raspberrypi:~ $ pip3 install numpy
+pi@raspberrypi:~ $ pip3 install opencv-contrib-python
+pi@raspberrypi:~ $ pip3 install imutils
 ```
 
 ## Setup Guide for Plain Raspberry Pi 4B
