@@ -33,7 +33,7 @@ def basicMode (lte, isPPP):
     IMAGEFILE = TIMESTAMP + ".jpg"
     resWidth = int(resize)
     resHeight = int(float(resWidth / 4) * 3)
-    subprocess.run("raspistill -w " + resWidth + " -h " + resHeight + " -t 10 -o results/" + IMAGEFILE, shell=True)
+    subprocess.run("raspistill -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o results/" + IMAGEFILE, shell=True)
 
     ''' Detect '''
     detector = "./build/detector "\
