@@ -15,9 +15,10 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 
 def adminMode ():
+    subprocess.run("sudo systemctl start hostapd.service")
     subprocess.run("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
 
-def basicMode (isPPP):
+def basicMode (lte, isPPP):
     ''' Read configuration '''
     f = open("config/config.json", "r")
     config = json.load(f)
@@ -51,10 +52,6 @@ def basicMode (isPPP):
         print("Inference failed")
     else:
         print("Invalid status")
-
-    ''' Power On Modem '''
-    lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
-    lte.pwrOnModem()
 
     ''' Get RSSI and BER by AT Command '''
     rssi, ber = lte.rssi, lte.ber
@@ -98,13 +95,9 @@ def basicMode (isPPP):
                 break
         except requests.exceptions.RequestException as e:
             print(e)
-            
-        
-    ''' Power Off Modem '''
-    lte.disablePpp()
-    lte.pwrOffModem()
 
 if __name__ == '__main__':
+    subprocess.run("sudo systemctl stop hostapd.service", shell=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("--p", type=int, help="(optional) '1' when using PPP")
     parser.add_argument("--m", type=str, help="(optioanl) Do only 'basic' or 'admin'")
@@ -113,16 +106,21 @@ if __name__ == '__main__':
     if args.p is not None and args.p == 1:
         isPPP = True
     nrf = NRF(taskPinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
+
+    ''' Power On Modem '''
+    lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
+    lte.pwrOnModem()
+
     try:
         if args.m is None:
             # Wait 5 seconds for get admin signal
             if nrf.isAdminMode(timeout=5):
                 adminMode()
             else:
-                basicMode(isPPP)
+                basicMode(lte, isPPP)
         else:
             if args.m == "basic":
-                basicMode(isPPP)
+                basicMode(lte, isPPP)
             elif args.m == "admin":
                 adminMode()
             else:
@@ -132,6 +130,9 @@ if __name__ == '__main__':
         print("exception occured:", e)
     finally:
         print("End process")
+        ''' Power Off Modem '''
+        lte.disablePpp()
+        lte.pwrOffModem()
         # nrf.pwrOffPi()
         # GPIO.cleanup()
         exit(0)
