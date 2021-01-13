@@ -7,6 +7,7 @@ import subprocess
 import ifcfg
 import requests
 import json
+import time
 from datetime import datetime
 import random
 import RPi.GPIO as GPIO
@@ -98,6 +99,7 @@ def basicMode (lte, isPPP):
                 break
         except requests.exceptions.RequestException as e:
             print(e)
+            time.sleep(2.5)
 
 if __name__ == '__main__':
     subprocess.run("sudo systemctl stop hostapd.service", shell=True)
