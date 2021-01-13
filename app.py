@@ -15,7 +15,7 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 
 def adminMode ():
-    subprocess.run("sudo systemctl start hostapd.service")
+    subprocess.run("sudo systemctl start hostapd.service", shell=True)
     subprocess.run("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
 
 def basicMode (lte, isPPP):
