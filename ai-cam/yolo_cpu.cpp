@@ -32,9 +32,32 @@ Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const 
 
 bool Yolo_cpu::detect (const string imagePath) {
     bool isDetected = false;
+
+    //MARK: Read image
     Mat frame = imread(imagePath);
+    Assert(!frame.empty(), FAILURE_READING);
     vector<Mat> outs;
 
+    //MARK: Do inference
+    netPreProcess(frame);
+    net.forward(outs, outNames);
+    if (netPostProcess(frame, outs) != 0)
+        isDetected = true;
+
+    //MARK: Write result image
+    bool isWritten = false;
+    try {
+        isWritten = imwrite(imagePath, frame);
+    }
+    catch (const Exception& e) {
+        Assert(false, FAILUER_WRITING);
+    }
+    Assert(isWritten, FAILURE_WRITING);
+
+    return isDetected;
+}
+
+void Yolo_cpu::netPreProcess (Mat& frame) {
     //MARK: Add padding to image
     if (frame.rows != frame.cols) {
         int length = frame.cols > frame.rows ? frame.cols : frame.rows;
@@ -52,29 +75,6 @@ bool Yolo_cpu::detect (const string imagePath) {
         }
     }
 
-    netPreProcess(frame);
-    net.forward(outs, outNames);
-    if (netPostProcess(frame, outs) != 0)
-        isDetected = true;
-
-    //MARK: Get elapsed time
-    vector<double> layersTimes;
-    double freq = getTickFrequency() / 1000;
-    double t = net.getPerfProfile(layersTimes) / freq;
-    
-    //MARK: Remove padding from image
-    frame = frame(Range(this->padSize.height, frame.rows), Range(0, frame.cols));
-
-    string labelInferTime = format("Inference time: %.2f ms", t);
-    putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
-
-    imwrite(imagePath, frame);
-    
-    printf("Inference time: %.2f ms\n", t);
-    return isDetected;
-}
-
-void Yolo_cpu::netPreProcess (Mat& frame) {
     //MARK: Prepare for inference
     static Mat blob = blobFromImage(frame, 
                                     1, // scalarfactor: double
@@ -184,5 +184,18 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
             putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.5, Scalar());
         }
     }
+
+    //MARK: Get elapsed time
+    vector<double> layersTimes;
+    double freq = getTickFrequency() / 1000;
+    double t = net.getPerfProfile(layersTimes) / freq;
+    
+    //MARK: Remove padding from image
+    frame = frame(Range(this->padSize.height, frame.rows), Range(0, frame.cols));
+
+    //MARK: Put the text for inference time
+    string labelInferTime = format("Inference time: %.2f ms", t);
+    putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
+    printf("Inference time: %.2f ms\n", t);
     return excavatorCount;
 }

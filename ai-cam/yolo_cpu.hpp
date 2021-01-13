@@ -20,7 +20,7 @@ using namespace dnn;
 enum STATUS {
     SUCCESS_EVENT_FALSE     = 0,
     SUCCESS_EVENT_TRUE      = 1,
-    FAILURE_CAMERA          = 2,
+    FAILURE_READING         = 2,
     FAILURE_WRITING         = 3,
     FAILURE_MODEL_LOADING   = 4,
     FAILURE_INFERENCE       = 5

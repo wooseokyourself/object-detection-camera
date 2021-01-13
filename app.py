@@ -47,13 +47,13 @@ def basicMode (lte, isPPP):
     elif exitCode == 1:
         print("Event detected")
     elif exitCode == 2:
-        print("Camera connection failed")
+        print("Reading input image failed")
     elif exitCode == 3:
         print("Writing output image failed")
     elif exitCode == 4:
         print("Load model failed")
     elif exitCode == 5:
-        print("Inference failed")
+        print("Inference failed") # C++에 아직 에러처리 구현 안 되어 있음
     else:
         print("Invalid status")
 
