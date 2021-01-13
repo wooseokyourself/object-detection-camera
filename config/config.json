@@ -11,6 +11,6 @@
     "YOLO": {
         "CONFIDENCE_THRESHOLD": "0.4",
         "NMS_THRESHOLD": "0.7",
-        "RESIZE": "640"
+        "RESIZE": "608"
     }
 }

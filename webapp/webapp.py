@@ -12,6 +12,7 @@ import argparse
 import datetime
 import imutils
 import time
+import json
 from imutils.video import VideoStream
 import imutils.encodings as encodings
 import cv2
@@ -29,10 +30,17 @@ def submit(confidence_threshold=None, nms_threshold=None, resize=None):
         print(request.form['confidence_threshold'])
         print(request.form['nms_threshold'])
         print(request.form['resize'])
+        
     return render_template('index.html')
 
 @app.route('/')
 def index():
+    f = open("config/config.json", "r")
+    config = json.load(f)
+    confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
+    resize = config["YOLO"]["RESIZE"]
+    f.close()
+    ''' 여기에서 conf, nms, resize 를 웹 상의 UI에 집어넣어야함. '''
     return render_template('index.html')
 
 def readFrame(frameCount):
