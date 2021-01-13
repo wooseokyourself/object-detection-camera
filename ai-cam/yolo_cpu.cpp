@@ -6,13 +6,13 @@ void Assert (bool condition, int status) {
 }
 
 Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH, const float _confThreshold, const float _nmsThreshold, const int _resize) {
-        this->MODEL_PATH = _MODEL_PATH;
-        this->NETWORK_PATH = _NETWORK_PATH;
-        this->CLASSES_PATH = _CLASSES_PATH;
+    this->MODEL_PATH = _MODEL_PATH;
+    this->NETWORK_PATH = _NETWORK_PATH;
+    this->CLASSES_PATH = _CLASSES_PATH;
 
-        this->confThreshold = _confThreshold;
-        this->nmsThreshold = _nmsThreshold;
-        this->resize = _resize;
+    this->confThreshold = _confThreshold;
+    this->nmsThreshold = _nmsThreshold;
+    this->resize = _resize;
 
     try {
         this->net = readNet(MODEL_PATH, NETWORK_PATH);
@@ -30,10 +30,9 @@ Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const 
     }
 }
 
-bool Yolo_cpu::detect (const string outputImagePath) {
+bool Yolo_cpu::detect (const string imagePath) {
     bool isDetected = false;
-    Mat frame;
-    frame = getCam();
+    Mat frame = imread(imagePath);
     vector<Mat> outs;
 
     //MARK: Add padding to image
@@ -69,24 +68,10 @@ bool Yolo_cpu::detect (const string outputImagePath) {
     string labelInferTime = format("Inference time: %.2f ms", t);
     putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
 
-    imwrite(outputImagePath, frame);
+    imwrite(imagePath, frame);
     
     printf("Inference time: %.2f ms\n", t);
     return isDetected;
-}
-
-Mat Yolo_cpu::getCam () {
-    Mat frame;
-    try {
-        VideoCapture cap;
-        cap.open(0);
-        cap >> frame;
-        cap.release();
-    }
-    catch (Exception& e) {
-        Assert(false, FAILURE_CAMERA);
-    }
-    return frame;
 }
 
 void Yolo_cpu::netPreProcess (Mat& frame) {

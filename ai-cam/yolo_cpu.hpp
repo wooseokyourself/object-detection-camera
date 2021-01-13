@@ -43,10 +43,9 @@ private:
     
 public:
     Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH, const float _confThreshold, const float _nmsThreshold, const int _resize);
-    bool detect (const string outputImagePath); /** returns which the excavator was detected or not */
+    bool detect (const string imagePath); /** returns which the excavator was detected or not */
 
 private:
-    Mat getCam ();
     void netPreProcess (Mat& frame);
     int netPostProcess (Mat& frame, const vector<Mat> outs); /** returns the number of detected excavators */
 };

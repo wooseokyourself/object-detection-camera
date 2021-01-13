@@ -27,9 +27,12 @@ def basicMode (lte, isPPP):
     resize = config["YOLO"]["RESIZE"]
     f.close()
     
-    ''' Capture, Detect '''
+    ''' Capture '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
     IMAGEFILE = TIMESTAMP + ".jpg"
+    subprocess.run("raspistill -t 10 -o results/" + IMAGEFILE, shell=True)
+
+    ''' Detect '''
     detector = "./build/detector "\
             + "ai-cam/model/yolov4-custom_best.weights "\
             + "ai-cam/model/yolov4-custom.cfg "\
