@@ -50,7 +50,7 @@ bool Yolo_cpu::detect (const string imagePath) {
         isWritten = imwrite(imagePath, frame);
     }
     catch (const Exception& e) {
-        Assert(false, FAILUER_WRITING);
+        Assert(false, FAILURE_WRITING);
     }
     Assert(isWritten, FAILURE_WRITING);
 
