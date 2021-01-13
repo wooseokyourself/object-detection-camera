@@ -24,5 +24,5 @@ int main(int argc, char* argv[]) {
     
     Yolo_cpu yolo(modelPath, networkPath, classesPath, confThreshold, nmsThreshold, resize);
     if (yolo.detect(imagePath))   exit(SUCCESS_EVENT_TRUE);
-    else                                exit(SUCCESS_EVENT_FALSE);
+    else                          exit(SUCCESS_EVENT_FALSE);
 }

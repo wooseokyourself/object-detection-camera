@@ -140,6 +140,7 @@ if __name__ == '__main__':
         ''' Power Off Modem '''
         lte.disablePpp()
         lte.pwrOffModem()
-        # nrf.pwrOffPi()
-        # GPIO.cleanup()
+        nrf.pwrOffPi()
+        time.sleep(2)
+        GPIO.cleanup()
         exit(0)
