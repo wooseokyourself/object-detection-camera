@@ -31,7 +31,9 @@ def basicMode (lte, isPPP):
     ''' Capture '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
     IMAGEFILE = TIMESTAMP + ".jpg"
-    subprocess.run("raspistill -t 10 -o results/" + IMAGEFILE, shell=True)
+    resWidth = int(resize)
+    resHeight = int(float(resWidth / 4) * 3)
+    subprocess.run("raspistill -w " + resWidth + " -h " + resHeight + " -t 10 -o results/" + IMAGEFILE, shell=True)
 
     ''' Detect '''
     detector = "./build/detector "\
