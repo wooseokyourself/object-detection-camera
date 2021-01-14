@@ -4,7 +4,7 @@
 <div class="jumbotron">
   <h1>Ino-On Device Settings</h1>
   <form method="POST" action="/submit">
-    <h5>Confidence Threshold</h5>
+    <h5>Confidence Threshold: {{confidence}}</h5>
     <select name="confidence_threshold">
       <option value="0.1">0.1</option>
       <option value="0.2">0.2</option>
@@ -16,7 +16,7 @@
       <option value="0.8">0.8</option>
       <option value="0.9">0.9</option>
     </select>
-    <h5>NMS Threshold</h5>
+    <h5>NMS Threshold: {{nms}}</h5>
     <select name="nms_threshold">
       <option value="0.1">0.1</option>
       <option value="0.2">0.2</option>
@@ -28,7 +28,7 @@
       <option value="0.8">0.8</option>
       <option value="0.9">0.9</option>
     </select>
-    <h5>Resize</h5>
+    <h5>Resize: {{resize}}</h5>
     <select name="resize">
       <option value="416">416</option>
       <option value="608">608</option>

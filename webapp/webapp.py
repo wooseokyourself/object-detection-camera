@@ -26,22 +26,26 @@ time.sleep(2.0)
 @app.route('/submit', methods=['POST'])
 def submit(confidence_threshold=None, nms_threshold=None, resize=None):
     if request.method == 'POST':
-        ''' 아래 값들을 config.json 에 넣는 코드 구현해야함 '''
-        print(request.form['confidence_threshold'])
-        print(request.form['nms_threshold'])
-        print(request.form['resize'])
-        
+        f = open("config/config.json", "r")
+        config = json.load(f)
+        f.close()
+        config["YOLO"]["CONFIDENCE_THRESHOLD"] = request.form['confidence_threshold']
+        config["YOLO"]["NMS_THRESHOLD"] = request.form['nms_threshold']
+        config["YOLO"]["RESIZE"] = request.form['resize']
+        f = open("config/config.json", "w")
+        json.dump(config, f)
+        f.close()
     return render_template('index.html')
 
 @app.route('/')
 def index():
     f = open("config/config.json", "r")
     config = json.load(f)
+    f.close()
     confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
     resize = config["YOLO"]["RESIZE"]
-    f.close()
     ''' 여기에서 conf, nms, resize 를 웹 상의 UI에 집어넣어야함. '''
-    return render_template('index.html')
+    return render_template('index.html', confidence=confidence, nms=nms, resize=resize)
 
 def readFrame(frameCount):
     global vs, outputFrame, lock
