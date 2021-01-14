@@ -99,6 +99,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     vector<float> confidences;
     vector<Rect> boxes;
     if (outLayerType == "DetectionOutput") {
+        std::cout << "DetectionOutput" << std::endl;
         // Network produces output blob with a shape 1x1xNx7 where N is a number of
         // detections and an every detection is a vector of values
         // [batchId, classId, confidence, left, top, right, bottom]
@@ -121,6 +122,8 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                         width  = right - left + 1;
                         height = bottom - top + 1;
                     }
+                    if (width * height >= (frame.cols * frame.rows) / 2)
+                        continue;
                     classIds.push_back((int)(data[i + 1]) - 1);  // Skip 0th background class id.
                     boxes.push_back(Rect(left, top, width, height));
                     confidences.push_back(confidence);
@@ -129,6 +132,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
         }
     }
     else if (outLayerType == "Region") {
+        std::cout << "Region" << std::endl;
         for (size_t i = 0; i < outs.size(); ++i) {
             // Network produces output blob with a shape NxC where N is a number of
             // detected objects and C is a number of classes + 4 where the first 4
@@ -140,13 +144,14 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                 double confidence;
                 minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
                 if (confidence > this->confThreshold) {
-                    int centerX = (int)(data[0] * frame.cols);
-                    int centerY = (int)(data[1] * frame.rows);
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
+                    if (width * height >= (frame.cols * frame.rows) / 2)
+                        continue;
+                    int centerX = (int)(data[0] * frame.cols);
+                    int centerY = (int)(data[1] * frame.rows);
                     int left = centerX - width / 2;
                     int top = centerY - height / 2;
-
                     classIds.push_back(classIdPoint.x);
                     confidences.push_back((float)confidence);
                     boxes.push_back(Rect(left, top, width, height));
