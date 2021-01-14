@@ -122,7 +122,9 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                         width  = right - left + 1;
                         height = bottom - top + 1;
                     }
-                    if (width * height >= (frame.cols * frame.rows) / 2)
+                    if (width * height >= (frame.cols * frame.rows) / 2
+                        || width >= frame.cols * 2 / 3
+                        || height >= frame.cols * 2 / 3)
                         continue;
                     classIds.push_back((int)(data[i + 1]) - 1);  // Skip 0th background class id.
                     boxes.push_back(Rect(left, top, width, height));
@@ -146,7 +148,9 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                 if (confidence > this->confThreshold) {
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
-                    if (width * height >= (frame.cols * frame.rows) / 2)
+                    if (width * height >= (frame.cols * frame.rows) / 2
+                        || width >= frame.cols * 2 / 3
+                        || height >= frame.cols * 2 / 3)
                         continue;
                     int centerX = (int)(data[0] * frame.cols);
                     int centerY = (int)(data[1] * frame.rows);
