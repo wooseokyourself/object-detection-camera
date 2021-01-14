@@ -166,11 +166,11 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
     + Object: `YOLO`
-        + Data: `CONFIDENCE_THRESHOLD` (default=0.4)
+        + Data: `CONFIDENCE_THRESHOLD`
             > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
-        + Data: `NMS_THRESHOLD` (default=0.5)
-            > 0 - 1 사이의 부동소수점. 낮을수록 중복 검출 증가
-        + Data: `RESIZE` (default=416)
+        + Data: `NMS_THRESHOLD`
+            > 0 - 1 사이의 부동소수점. 높을수록 중복 검출 증가
+        + Data: `RESIZE`
             > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
 
 ## HTTP Request to Server
