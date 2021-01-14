@@ -20,7 +20,7 @@ import cv2
 outputFrame = None
 lock = threading.Lock()
 app = Flask(__name__)
-vs = VideoStream(usePiCamera=1, framerate=10).start()
+vs = VideoStream(usePiCamera=1, framerate=6).start()
 time.sleep(2.0)
 
 @app.route('/submit', methods=['POST'])
@@ -35,7 +35,9 @@ def submit(confidence_threshold=None, nms_threshold=None, resize=None):
         f = open("config/config.json", "w")
         json.dump(config, f)
         f.close()
-    return render_template('index.html')
+    return render_template('index.html', confidence=request.form['confidence_threshold'],
+                                         nms=request.form['nms_threshold'],
+                                         resize=request.form['resize'])
 
 @app.route('/')
 def index():
@@ -51,7 +53,7 @@ def readFrame(frameCount):
     global vs, outputFrame, lock
     while True:
         frame = vs.read()
-        frame = imutils.resize(frame, width=400)
+        frame = imutils.resize(frame, width=1280)
         timestamp = datetime.datetime.now()
         cv2.putText(frame, timestamp.strftime(
 			"%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
