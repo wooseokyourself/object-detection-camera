@@ -139,8 +139,8 @@ if __name__ == '__main__':
         print("End process")
         ''' Power Off Modem '''
         lte.disablePpp()
-        lte.pwrOffModem()
+        # lte.pwrOffModem()
         nrf.pwrOffPi()
         time.sleep(2)
-        GPIO.cleanup()
+        # GPIO.cleanup()
         exit(0)
