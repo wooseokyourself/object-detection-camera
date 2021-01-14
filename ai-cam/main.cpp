@@ -16,11 +16,9 @@ int main(int argc, char* argv[]) {
     const string networkPath = string(argv[2]);
     const string classesPath = string(argv[3]);
     const string imagePath = string(argv[4]);
-    int resize = 416;
-    float confThreshold = 0.4, nmsThreshold = 0.5;
-    if (argc == 6)  resize = atoi(argv[5]);
-    if (argc == 7)  confThreshold = atof(argv[6]);
-    if (argc == 8)  nmsThreshold = atof(argv[7]);
+    const float confThreshold = atoi(argv[5]);
+    const float nmsThreshold = atof(argv[6]);
+    const int resize = atof(argv[7]);
     
     Yolo_cpu yolo(modelPath, networkPath, classesPath, confThreshold, nmsThreshold, resize);
     if (yolo.detect(imagePath))   exit(SUCCESS_EVENT_TRUE);
