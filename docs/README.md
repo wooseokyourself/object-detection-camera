@@ -52,8 +52,17 @@ Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 + OpenCV 4.4 or later  - [Instruction](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)(=`install-opencv.sh`)
     > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
 
+Raspberry Pi OS Lite 일 경우 다음도 추가로 설치해야 함
+```console
+pi@raspberrypi:~ % sudo apt-get install libilmbase-dev libopenexr-dev libgstreamer1.0-dev
+```
+
 ## PIP3 Packages
 ```console
+pi@raspberrypi:~ % pip3 install RPi.GPIO    # for OS Lite
+pi@raspberrypi:~ % pip3 install picamera    # for OS Lite
+pi@raspberrypi:~ % pip3 install pyserial    # for OS Lite
+pi@raspberrypi:~ % pip3 install flask       # for OS Lite
 pi@raspberrypi:~ $ pip3 install ifcfg
 pi@raspberrypi:~ $ pip3 install numpy
 pi@raspberrypi:~ $ pip3 install opencv-python
@@ -61,17 +70,26 @@ pi@raspberrypi:~ $ pip3 install imutils
 ```
 
 ## Setup Guide for Plain Raspberry Pi 4B
-### 1. Serial Port
-**시리얼 포트 경로는 다음을 사용: /dev/ttyS0**
-+ 시리얼 포트 설정 방법 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
-1. `raspi-config` 실행
+### 1. raspi-config
 ```console
 pi@raspberrypi:~ $ sudo raspi-config
 ```
-2. Interface Options 선택   
-3. P6 Serial Port 선택
-4. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
-5. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
++ 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
+**본 프로젝트의 시리얼 포트 경로: /dev/ttyS0**
+1. Interface Options 선택   
+2. P6 Serial Port 선택
+3. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
+4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
+
++ 부팅시 자동 로그인 설정
+1. System Options 선택
+2. S5 Boot / Auto Login 선택
+3. B2 Console Autologin 혹은 B4 Desktop Autologin 선택
+
++ 부팅시 프로그램 자동 실행 설정 (모든 Requirements 들을 설치 후 제일 마지막에 설정)
+1. `~/.profile` 파일에 다음을 입력
+```python3 ino-on_AiCamera/app.py --p 1```
+
 
 ### 2. PPP
 **PPP 인터페이스를 이용할 경우 다음을 진행**
@@ -98,9 +116,20 @@ Does your carrier need username and password? [Y/n]
 What is your device communication PORT? (ttyS0/ttyUSB3/etc.)
 >> ttyS0
 Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
->> n
+>> Y
 ```
 6. Enter 를 입력하여 라즈베리파이 재실행
+**만약 wlan이 인터페이스에 없다면 다음을 입력하여 wlan의 block 풀기**
+```console
+pi@raspberrypi:~ $ sudo rfkill unblock wlan
+```
+
+#### 2.2. PPP Enable/Disable
++ 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
++ 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
++ 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
++ 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
+
 
 ### 3. RaspAP
 #### 3.1. RaspAP Install
@@ -110,16 +139,9 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 ```
 + 라즈베리파이에서 localhost 웹에 접속하면 라즈베리파이의 시스템 정보 등과 함께 RaspAP 설정 가능
     + ID: admin / Password: secret
-    + 좌측의 Hotspot 메뉴에 들어가서 Stop/Start hotspot 버튼을 클릭하며 외부의 와이파이 접속을 허용할 수 있음. (이를 코드레벨에서 컨트롤하는 방법은 아직 찾지 못함)
 + 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
     + 게이트웨이: 10.3.141.1
     + 웹서버에 접속할 경우: 10.3.141.1:4000
-
-#### 2.2. PPP Enable/Disable
-+ 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
-+ 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
-+ 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
-+ 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
 
 ****
 
