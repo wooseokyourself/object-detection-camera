@@ -99,7 +99,6 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     vector<float> confidences;
     vector<Rect> boxes;
     if (outLayerType == "Region") {
-        std::cout << "Region" << std::endl;
         for (size_t i = 0; i < outs.size(); ++i) {
             float* data = (float*)outs[i].data;
             for (int j = 0; j < outs[i].rows; ++j, data += outs[i].cols) {
@@ -168,6 +167,6 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     //MARK: Put the text for inference time
     string labelInferTime = format("Inference time: %.2f ms", t);
     putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
-    printf("Inference time: %.2f ms\n", t);
+    // printf("Inference time: %.2f ms\n", t);
     return excavatorCount;
 }
