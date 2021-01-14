@@ -98,47 +98,9 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     vector<int> classIds;
     vector<float> confidences;
     vector<Rect> boxes;
-    if (outLayerType == "DetectionOutput") {
-        std::cout << "DetectionOutput" << std::endl;
-        // Network produces output blob with a shape 1x1xNx7 where N is a number of
-        // detections and an every detection is a vector of values
-        // [batchId, classId, confidence, left, top, right, bottom]
-        for (size_t k = 0; k < outs.size(); k++) {
-            float* data = (float*)outs[k].data;
-            for (size_t i = 0; i < outs[k].total(); i += 7) {
-                float confidence = data[i + 2];
-                if (confidence > this->confThreshold) {
-                    int left   = (int)data[i + 3];
-                    int top    = (int)data[i + 4];
-                    int right  = (int)data[i + 5];
-                    int bottom = (int)data[i + 6];
-                    int width  = right - left + 1;
-                    int height = bottom - top + 1;
-                    if (width <= 2 || height <= 2) {
-                        left   = (int)(data[i + 3] * frame.cols);
-                        top    = (int)(data[i + 4] * frame.rows);
-                        right  = (int)(data[i + 5] * frame.cols);
-                        bottom = (int)(data[i + 6] * frame.rows);
-                        width  = right - left + 1;
-                        height = bottom - top + 1;
-                    }
-                    if (width * height >= (frame.cols * frame.rows) / 2
-                        || width >= frame.cols * 2 / 3
-                        || height >= frame.cols * 2 / 3)
-                        continue;
-                    classIds.push_back((int)(data[i + 1]) - 1);  // Skip 0th background class id.
-                    boxes.push_back(Rect(left, top, width, height));
-                    confidences.push_back(confidence);
-                }
-            }
-        }
-    }
-    else if (outLayerType == "Region") {
+    if (outLayerType == "Region") {
         std::cout << "Region" << std::endl;
         for (size_t i = 0; i < outs.size(); ++i) {
-            // Network produces output blob with a shape NxC where N is a number of
-            // detected objects and C is a number of classes + 4 where the first 4
-            // numbers are [center_x, center_y, width, height]
             float* data = (float*)outs[i].data;
             for (int j = 0; j < outs[i].rows; ++j, data += outs[i].cols) {
                 Mat scores = outs[i].row(j).colRange(5, outs[i].cols);
@@ -148,6 +110,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                 if (confidence > this->confThreshold) {
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
+                    // Take a limit on size of the detecting boxes.
                     if (width * height >= (frame.cols * frame.rows) / 2
                         || width >= frame.cols * 2 / 3
                         || height >= frame.cols * 2 / 3)
