@@ -23,10 +23,10 @@ def basicMode (lte, isPPP):
     ''' Read configuration '''
     f = open("config/config.json", "r")
     config = json.load(f)
+    f.close()
     URL = config["SERVER"]["URL"] + config["SERVER"]["ENDPOINT"] + config["DEVICE"]["ID"]
     confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
     resize = config["YOLO"]["RESIZE"]
-    f.close()
     
     ''' Capture '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
