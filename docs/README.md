@@ -33,15 +33,19 @@
 Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
 
 ## Basic Mode
-1. 사진을 촬영하고 분석 (ai-cam 디렉토리 소스코드)
-2. 모뎀 전원 연결
-3. RSSI와 배터리 값 얻기
-4. PPP 연결 대기
-5. 네트워크 연결 대기 후 POST
-6. 모뎀 전원 종료
+1. 모뎀 전원 연결
+2. 사진 촬영 (raspistill 사용)
+3. 사진 분석 (ai-cam 디렉토리 소스코드)
+4. ~~RSSI와 배터리 값 얻기~~
+5. PPP 연결 대기
+6. 네트워크 연결 대기 후 POST
+7. 모뎀 전원 종료
+8. NRF에게 종료신호 송신
 
 ## Admin Mode
-1. 웹서버 실행 (webapp 디렉토리 소스코드)
+1. 모뎀 전원 연결
+2. 웹서버 실행 (webapp 디렉토리 소스코드)
+3. NRF에게 종료신호 송신
 
 ****
 
@@ -92,7 +96,7 @@ pi@raspberrypi:~ $ sudo raspi-config
 
 
 ### 2. PPP
-**PPP 인터페이스를 이용할 경우 다음을 진행**
+**PPP 인터페이스를 이용할 경우 다음을 진행**   
 **※ 주의: PPP 인터페이스가 활성화되어있으면 AT Command 를 사용할 수 없다.**
 #### 2.1. PPP Install
 + PPP 설치 방법 ([reference](https://github.com/sixfab/Sixfab_PPP_Installer))
