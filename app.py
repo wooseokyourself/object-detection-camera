@@ -19,7 +19,7 @@ def adminMode ():
     subprocess.run("sudo systemctl start hostapd.service", shell=True)
     subprocess.run("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
 
-def basicMode (lte, isPPP):
+def normalMode (lte, isPPP):
     ''' Read configuration '''
     f = open("config/config.json", "r")
     config = json.load(f)
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     subprocess.run("sudo systemctl stop hostapd.service", shell=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("--p", type=int, help="(optional) '1' when using PPP")
-    parser.add_argument("--m", type=str, help="(optioanl) Do only 'basic' or 'admin'")
+    parser.add_argument("--m", type=str, help="(optioanl) Do only 'normal' or 'admin'")
     args = parser.parse_args()
     isPPP = False
     if args.p is not None and args.p == 1:
@@ -124,10 +124,10 @@ if __name__ == '__main__':
             if nrf.isAdminMode(timeout=5):
                 adminMode()
             else:
-                basicMode(lte, isPPP)
+                normalMode(lte, isPPP)
         else:
-            if args.m == "basic":
-                basicMode(lte, isPPP)
+            if args.m == "normal":
+                normalMode(lte, isPPP)
             elif args.m == "admin":
                 adminMode()
             else:

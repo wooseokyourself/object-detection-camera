@@ -23,16 +23,16 @@
 
 # Description
 ## Terms
-#### Basic mode (Basic task)
+#### Normal mode (Normal task)
 사진을 촬영하고 포크레인을 검출한 뒤 결과값을 서버에 보내는 작업을 의미한다.
 
 #### Admin mode (Admin task)
 관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.
 
 ## Network
-Basic mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
+Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
 
-## Basic Mode
+## Normal Mode
 1. 모뎀 전원 연결
 2. 사진 촬영 (raspistill 사용)
 3. 사진 분석 (ai-cam 디렉토리 소스코드)
@@ -153,7 +153,7 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 ## Raspberry Pi GPIO Pin Number (BCM)
 + 작동상태 모드 확인: 20 input   
     > HIGH: Admin mode   
-    > LOW: Basic mode
+    > LOW: Normal mode
 + 작업 완료 알림: 21 output   
     > HIGH: pi 작업 완료   
     > LOW: pi 작업 진행중
@@ -232,15 +232,15 @@ pi@raspberrypi:~/ino-on_AiCam $ python3 app.py --p <PPP> --m <MODE>
     + `--p PPP` (optional)
         > 1 일 경우 ppp0 인터페이스를 활용, 1이 아닐 경우 AT Command 를 활용.
     + `--m MODE` (optional)
-        > basic(일반모드만 실행), admin(관리자모드만 실행)
+        > normal(일반모드만 실행), admin(관리자모드만 실행)
 
 Examples
 ```console
 pi@raspberrypi:~/ino-on_AiCam $ python3 app.py
 # PPP 인터페이스 비활성화 및 완전한 기능 수행
 
-pi@raspberrypi:~/ino-on_AiCam $ python3 app.py --p 1 --m basic
-# PPP 인터페이스 활성화 및 Basic task 만 수행
+pi@raspberrypi:~/ino-on_AiCam $ python3 app.py --p 1 --m normal
+# PPP 인터페이스 활성화 및 Normal task 만 수행
 ```
 
 ## Test

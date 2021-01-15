@@ -20,7 +20,7 @@ class NRF:
                 return True
             elapsed = time.time() - startTime
             if elapsed < timeout:
-                print(" Basic mode will starts after", int(timeout - elapsed + 1), "secs...", self.taskPinNum, "PIN waits for admin mode.")
+                print(" Normal mode will starts after", int(timeout - elapsed + 1), "secs...", self.taskPinNum, "PIN waits for admin mode.")
                 time.sleep(1)
             else:
                 return False
