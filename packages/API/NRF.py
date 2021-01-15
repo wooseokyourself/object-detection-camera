@@ -13,17 +13,11 @@ class NRF:
         GPIO.setup(self.taskPinNum, GPIO.IN)
         GPIO.setup(self.offPinNum, GPIO.OUT)
 
-    def isAdminMode(self, timeout):
-        startTime = time.time()
-        while True:
-            if GPIO.input(self.taskPinNum) == True:
-                return True
-            elapsed = time.time() - startTime
-            if elapsed < timeout:
-                print(" Normal mode will starts after", int(timeout - elapsed + 1), "secs...", self.taskPinNum, "PIN waits for admin mode.")
-                time.sleep(1)
-            else:
-                return False
+    def isAdminMode(self):
+        if GPIO.input(self.taskPinNum) == True:
+            return True
+        else:
+            return False
         
     def pwrOffPi(self):
         GPIO.output(self.offPinNum, GPIO.HIGH)

@@ -125,7 +125,7 @@ if __name__ == '__main__':
     try:
         if args.m is None:
             # Wait 5 seconds for get admin signal
-            if nrf.isAdminMode(timeout=5):
+            if nrf.isAdminMode():
                 adminMode(nrf)
             else:
                 normalMode(lte, isPPP)
