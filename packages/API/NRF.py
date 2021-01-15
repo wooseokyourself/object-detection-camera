@@ -6,15 +6,15 @@ else:
     import RPi.GPIO as GPIO # Block with dev
 
 class NRF:
-    def __init__(self, taskPinNum, offPinNum):
-        self.taskPinNum = taskPinNum
+    def __init__(self, modePinNum, offPinNum):
+        self.modePinNum = modePinNum
         self.offPinNum = offPinNum
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.taskPinNum, GPIO.IN)
+        GPIO.setup(self.modePinNum, GPIO.IN)
         GPIO.setup(self.offPinNum, GPIO.OUT)
 
     def isAdminMode(self):
-        if GPIO.input(self.taskPinNum) == True:
+        if GPIO.input(self.modePinNum) == True:
             return True
         else:
             return False

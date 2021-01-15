@@ -116,7 +116,7 @@ if __name__ == '__main__':
     isPPP = False
     if args.p is not None and args.p == 1:
         isPPP = True
-    nrf = NRF(taskPinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
+    nrf = NRF(modePinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
 
     ''' Power On Modem '''
     lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)

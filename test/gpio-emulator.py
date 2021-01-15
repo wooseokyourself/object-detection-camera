@@ -19,7 +19,7 @@ print("CAT LTE Status Pin Test")
 print("...connected", lte.getStatusPinNum(), " Pin")
 lte.pwrOnModem()
 
-nrf = NRF(taskPinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
+nrf = NRF(modePinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
 print("\n")
 print("NRF Task Mode Pin Test")
 print("Press", TASK_MODE_PIN, " Pin in 5 secs")

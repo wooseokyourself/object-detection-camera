@@ -311,8 +311,8 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 
 ## API: NRF
 NRF와의 GPIO 통신을 담당하는 클래스이다.
-+ `NRF(taskPinNum, offPinNum)`
-    + `taskPinNum`: 작동상태 모드 확인 GPIO Pin Number
++ `NRF(modePinNum, offPinNum)`
+    + `modePinNum`: 작동상태 모드 확인 GPIO Pin Number
     + `offPinNum`: 작업 완료 알림 GPIO Pin Number
 + `isAdminMode(timeout): Bool`
     + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
