@@ -146,6 +146,11 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 + 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
     + 게이트웨이: 10.3.141.1
     + 웹서버에 접속할 경우: 10.3.141.1:4000
++ 라즈베리파이 부팅시, RaspAP를 초기화하는데 약 12초가 소요된다. 관리자모드일때만 RaspAP를 활성화하면 되므로, 부팅 시 RaspAP의 초기화를 진행하지 않기 위해 다음을 입력한다.
+```console
+pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
+```
+관리자모드일때 ```sudo systemctl start raspapd.service``` 스크립트를 실행하는 코딩은 되어 있다.
 
 ### 4. Boot Up Setting
 ~/.profile 파일의 제일 하단에 본 프로그램의 app.py 를 실행시키는 스크립트를 넣는다.
