@@ -147,6 +147,9 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
     + 게이트웨이: 10.3.141.1
     + 웹서버에 접속할 경우: 10.3.141.1:4000
 
+### 4. Boot Up Setting
+~/.profile 파일의 제일 하단에 본 프로그램의 app.py 를 실행시키는 스크립트를 넣는다.
+
 ****
 
 # Configuration
