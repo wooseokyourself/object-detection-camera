@@ -91,8 +91,8 @@ pi@raspberrypi:~ $ sudo raspi-config
 3. B2 Console Autologin 혹은 B4 Desktop Autologin 선택
 
 + 부팅시 프로그램 자동 실행 설정 (모든 Requirements 들을 설치 후 제일 마지막에 설정)
-1. `~/.profile` 파일에 다음을 입력
-```python3 ino-on_AiCamera/app.py --p 1```
+`~/.profile` 파일에 다음을 입력   
+```python3 ~/ino-on_AiCamera/app.py --p 1```
 
 
 ### 2. PPP
@@ -120,9 +120,9 @@ Does your carrier need username and password? [Y/n]
 What is your device communication PORT? (ttyS0/ttyUSB3/etc.)
 >> ttyS0
 Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
->> Y
-```
-6. Enter 를 입력하여 라즈베리파이 재실행
+>> Y   
+
+6. Enter 를 입력하여 라즈베리파이 재실행   
 **만약 wlan이 인터페이스에 없다면 다음을 입력하여 wlan의 block 풀기**
 ```console
 pi@raspberrypi:~ $ sudo rfkill unblock wlan
@@ -152,9 +152,6 @@ pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh
 pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh --action stop
 ```
 위 스크립트는 ```hostapd, dnsmasq, dhcpcd``` 를 모두 활성화하거나 비활성화하는 원리이다. 그러나 ```hostapd```만을 활성화/비활성화하는 것 만으로도 RaspAP를 제어할 수 있음을 확인하였기에, 나는 파이썬 코드에서 ```sudo systemctl <start/stop> hostapd.service``` 를 이용하여 RaspAP를 제어하였다.  
-
-### 4. Boot Up Setting
-~/.profile 파일의 제일 하단에 본 프로그램의 app.py 를 실행시키는 스크립트를 넣는다.
 
 ****
 
