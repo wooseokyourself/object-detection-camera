@@ -15,9 +15,13 @@ import RPi.GPIO as GPIO
 from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 
-def adminMode ():
+def adminMode (nrf):
     subprocess.run("sudo systemctl start hostapd.service", shell=True)
-    subprocess.run("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
+    webProcess = subprocess.Popen("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
+    while nrf.isAdminMode():
+        time.sleep(5)
+    time.sleep(2)
+    webProcess.terminate() # 웹 종료
 
 def normalMode (lte, isPPP):
     ''' Read configuration '''
@@ -122,14 +126,14 @@ if __name__ == '__main__':
         if args.m is None:
             # Wait 5 seconds for get admin signal
             if nrf.isAdminMode(timeout=5):
-                adminMode()
+                adminMode(nrf)
             else:
                 normalMode(lte, isPPP)
         else:
             if args.m == "normal":
                 normalMode(lte, isPPP)
             elif args.m == "admin":
-                adminMode()
+                adminMode(nrf)
             else:
                 print("Invalid argument")
                 raise ValueError
@@ -137,10 +141,9 @@ if __name__ == '__main__':
         print("exception occured:", e)
     finally:
         print("End process")
-        ''' Power Off Modem '''
         lte.disablePpp()
-        # lte.pwrOffModem()
-        nrf.pwrOffPi()
+        lte.pwrOffModem()
+        # nrf.pwrOffPi()
         time.sleep(2)
         # GPIO.cleanup()
         exit(0)
