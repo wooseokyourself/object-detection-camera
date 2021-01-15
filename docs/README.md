@@ -146,11 +146,12 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 + 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
     + 게이트웨이: 10.3.141.1
     + 웹서버에 접속할 경우: 10.3.141.1:4000
-+ 라즈베리파이 부팅시, RaspAP를 초기화하는데 약 12초가 소요된다. 관리자모드일때만 RaspAP를 활성화하면 되므로, 부팅 시 RaspAP의 초기화를 진행하지 않기 위해 다음을 입력한다.
++ RaspAP의 활성화/비활성화 스크립트는 다음과 같다.
 ```console
-pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
+pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh
+pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh --action stop
 ```
-관리자모드일때 ```sudo systemctl start raspapd.service``` 스크립트를 실행하는 코딩은 되어 있다.
+위 스크립트는 ```hostapd, dnsmasq, dhcpcd``` 를 모두 활성화하거나 비활성화하는 원리이다. 그러나 ```hostapd```만을 활성화/비활성화하는 것 만으로도 RaspAP를 제어할 수 있음을 확인하였기에, 나는 파이썬 코드에서 ```sudo systemctl <start/stop> hostapd.service``` 를 이용하여 RaspAP를 제어하였다.  
 
 ### 4. Boot Up Setting
 ~/.profile 파일의 제일 하단에 본 프로그램의 app.py 를 실행시키는 스크립트를 넣는다.
