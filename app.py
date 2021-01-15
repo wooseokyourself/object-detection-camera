@@ -16,7 +16,7 @@ from packages.API.CATM1 import CATM1
 from packages.API.NRF import NRF
 
 def adminMode (nrf):
-    subprocess.run("sudo systemctl start hostapd.service", shell=True)
+    subprocess.run("sudo systemctl start raspapd.service", shell=True)
     webProcess = subprocess.Popen("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
     while nrf.isAdminMode():
         time.sleep(5)
@@ -108,7 +108,6 @@ def normalMode (lte, isPPP):
             time.sleep(2.5)
 
 if __name__ == '__main__':
-    subprocess.run("sudo systemctl stop hostapd.service", shell=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("--p", type=int, help="(optional) '1' when using PPP")
     parser.add_argument("--m", type=str, help="(optioanl) Do only 'normal' or 'admin'")
