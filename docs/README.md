@@ -317,7 +317,7 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
 + `NRF(modePinNum, offPinNum)`
     + `modePinNum`: 작동상태 모드 확인 GPIO Pin Number
     + `offPinNum`: 작업 완료 알림 GPIO Pin Number
-+ `isAdminMode(timeout): Bool`
++ `isAdminMode(): Bool`
     + NRF의 작동상태 모드 핀을 확인하여 현재 앱이 실행해야 할 모드가 admin이면 True를, 아니면 False를 리턴한다.
 + `pwrOffPi(): Void`
     + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
