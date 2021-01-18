@@ -1,5 +1,3 @@
-GPIO_EMULATOR = False
-
 ### GPIO BCM ###
 TASK_MODE_PIN = 20    # NRF - Task Mode Signal Pin (input)
 RPI_OFF_PIN = 21      # NRF - Work Completion Signal Pin (output)

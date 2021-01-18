@@ -13,7 +13,6 @@
     + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
     + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
-    + [GPIOEmulator](https://github.com/UmileVX/ino-on_AiCam#gpioemulator)
     + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
     + [API: NRF](https://github.com/UmileVX/ino-on_AiCam#api-nrf)
     + [API: CATM1](https://github.com/UmileVX/ino-on_AiCam#api-catm1)
@@ -263,12 +262,6 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 cam-yolo.py --out <string> --thr <f
 * resize(optional)
     > Yolov4 입력이미지 사이즈 (default = 416)
 
-### 라즈베리파이 GPIO 작동여부 확인 
-```console
-pi@raspberrypi:~/ino-on_AiCam/test $ python3 gpio-emulator.py
-```
-GPIOEmulator 를 사용하기 때문에 실제 GPIO 신호를 송수신하지 않는다.
-
 ### CAT.M1 정보 확인 (AT Command)
 ```console
 pi@raspberrypi:~/ino-on_AiCam/test $ python3 catm1Infos.py
@@ -303,8 +296,6 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 # Packages
 ## Define
 **상수들이 정의된 곳이다.**
-+ `GPIO_EMULATOR`: Bool
-    > API.CATM1, API.NRF 를 import 하기 전에 `Define.GPIO_EMULAOTR = True` 를 먼저 진행하면 CATM1과 NRF는 RPi.GPIO 대신 [GPIOEmulaotr](https://github.com/UmileVX/ino-on_AiCam#gpioemulator) 를 import 한다.
 + `TASK_MODE_PIN`: int
     > 작동상태 모드 확인 핀
 + `RPI_OFF_PIN`: int
@@ -339,13 +330,8 @@ CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메�
 + `post(url, data): str, str` -- 구현중
     + (AT Command) CAT.M1을 통해 POST 요청을 보낸 뒤 응답 코드, 응답 텍스트를 리턴한다.
 
-## GPIOEmulator
-+ RPi.GPIO를 wrapping 하는 GUI 에뮬레이터. GPIO들이 시퀀스에 따라 잘 동작하는지 확인할때 사용한다.
-+ `app.py` 의 7번째 라인인 `Define.GPIO_EMULATOR = True` 의 주석을 해제하면 `app.py` 실행시 라즈베리파이의 GPIO가 에뮬레이터와 연결된다. 이 때 GPIO는 물리적인 기능을 하지 않고 GUI 상에서 입력/출력 여부만을 보여준다.
-
 ****
 
 # Resources
 * [OpenCV](https://opencv.org/)
-* [GPIOEmulator](https://sourceforge.net/projects/pi-gpio-emulator/)
 * [CATM1](https://github.com/codezoo-ltd/CAT.M1_RaspberryPi/)

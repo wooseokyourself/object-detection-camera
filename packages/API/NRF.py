@@ -1,9 +1,6 @@
 import time
 import packages.Define as Define
-if Define.GPIO_EMULATOR == True:
-    from packages.GPIOEmulator.EmulatorGUI import GPIO
-else:
-    import RPi.GPIO as GPIO # Block with dev
+import RPi.GPIO as GPIO
 
 class NRF:
     def __init__(self, modePinNum, offPinNum):

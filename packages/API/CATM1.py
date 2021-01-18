@@ -6,10 +6,7 @@ import ifcfg
 import json
 import subprocess
 import packages.Define as Define
-if Define.GPIO_EMULATOR == True:
-    from packages.GPIOEmulator.EmulatorGUI import GPIO
-else:
-    import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 """
 AT 커맨드는 아래 사이트 참조하였음
 https://m2msupport.net/m2msupport/atcsq-signal-quality/
