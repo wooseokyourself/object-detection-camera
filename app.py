@@ -14,6 +14,13 @@ from packages.Define import *
 from packages.CATM1 import CATM1
 from packages.NRF import NRF
 
+### GPIO BCM ###
+TASK_MODE_PIN = 20    # NRF - Task Mode Signal Pin (input)
+RPI_OFF_PIN = 21      # NRF - Work Completion Signal Pin (output)
+MODEM_PWR_PIN = 17    # CAT.M1 Power Pin (output)
+MODEM_STAT_PIN = 27   # CAT.M1 Status Pin (input)
+MODEM_SER_PORT = "/dev/ttyS0"
+
 def adminMode (nrf):
     subprocess.run("sudo systemctl start hostapd.service", shell=True)
     webProcess = subprocess.Popen("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)

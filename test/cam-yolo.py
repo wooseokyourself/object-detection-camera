@@ -17,7 +17,7 @@ resize = 416
 if args.resize is not None:
     resize = args.resize[0]
 
-detector = "./../build/detector ../model/yolov4-custom_best.weights ../model/yolov4-custom.cfg ../model/classes.names " + outp + " " + conf + " " + nms + " " + resize
+detector = "./../build/detector ../ai-cam/model/yolov4-custom_best.weights ../ai-cam/model/yolov4-custom.cfg ../ai-cam/model/classes.names " + outp + " " + conf + " " + nms + " " + resize
 
 process = subprocess.run(detector, capture_output=True, shell=True)
 exitCode = process.returncode

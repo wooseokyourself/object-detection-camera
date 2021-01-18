@@ -13,7 +13,6 @@
     + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
     + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
-    + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
     + [NRF](https://github.com/UmileVX/ino-on_AiCam#nrf)
     + [CATM1](https://github.com/UmileVX/ino-on_AiCam#catm1)
 + [Resources](https://github.com/UmileVX/ino-on_AiCam#resources)
@@ -170,7 +169,7 @@ pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh --action stop
     > HIGH: 모뎀 인식   
     > LOW: 모뎀 미인식
 
-※ 모든 핀 번호는 `packages/Define.py` 에 정의되어있다.   
+※ 모든 핀 번호는 `app.py` 에 정의되어있다.   
 
 ## Yolov4 Configuration (Json)
 + `config/config.json`
@@ -294,18 +293,6 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 ****
 
 # Packages
-## Define
-**상수들이 정의된 곳이다.**
-+ `TASK_MODE_PIN`: int
-    > 작동상태 모드 확인 핀
-+ `RPI_OFF_PIN`: int
-    > 작업 완료 알림 핀
-+ `MODEM_PWR_PIN`: int
-    > 모뎀 전원 관리 핀
-+ `MODEM_STAT_PIN`: int
-    > 모뎀 상태 핀
-+ `MODEM_SER_PORT`: str
-    > 모뎀 시리얼포트 경로
 
 ## NRF
 NRF와의 GPIO 통신을 담당하는 클래스이다.
