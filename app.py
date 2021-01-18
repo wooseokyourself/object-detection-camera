@@ -10,7 +10,6 @@ import time
 from datetime import datetime
 import random
 import RPi.GPIO as GPIO
-from packages.Define import *
 from packages.CATM1 import CATM1
 from packages.NRF import NRF
 
