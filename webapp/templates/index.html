@@ -3,6 +3,9 @@
 {% block body %}
 <div class="jumbotron">
   <h1>Ino-On Device Settings</h1>
+  <form action="/terminate">
+    <button type="terminate">관리자모드 종료</button>
+  </form>
   <form method="POST" action="/submit">
     <h5>Confidence Threshold: {{confidence}}</h5>
     <select name="confidence_threshold">
