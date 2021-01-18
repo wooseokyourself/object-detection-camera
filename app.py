@@ -22,7 +22,6 @@ MODEM_SER_PORT = "/dev/ttyS0"
 
 def adminMode (nrf):
     subprocess.run("sudo systemctl start hostapd.service", shell=True)
-    # webProcess = subprocess.Popen("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000", shell=True)
     webProcess = subprocess.Popen(["python3", "webapp/webapp.py", "--ip", "0.0.0.0", "--port", "4000"])
     while nrf.isAdminMode():
         time.sleep(5)
