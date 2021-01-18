@@ -23,12 +23,6 @@ app = Flask(__name__)
 vs = VideoStream(usePiCamera=1, framerate=6).start()
 time.sleep(2.0)
 
-def terminateServer():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError("Not running with the Werkzeug Server")
-    func()
-
 def readFrame(frameCount):
     global vs, outputFrame, lock
     while True:
@@ -52,11 +46,6 @@ def generate():
                 continue
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
 			bytearray(encodedImage) + b'\r\n')
-
-@app.route('/terminate')
-def terminate():
-    terminateServer()
-    return "Server shutting down..."
 
 @app.route('/submit', methods=['POST'])
 def submit(confidence_threshold=None, nms_threshold=None, resize=None):
