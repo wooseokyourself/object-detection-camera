@@ -54,6 +54,7 @@ Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 + Raspbian with Python 3.5 or later with PIP3
 + CMake 2.8 or later 
 + OpenCV 4.4 or later  - [Instruction](https://qengineering.eu/install-opencv-4.4-on-raspberry-64-os.html)(=`install-opencv.sh`)
+    > `opencv-contrib` 는 필요없음   
     > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
 
 Raspberry Pi OS Lite 일 경우 다음도 추가로 설치해야 함
