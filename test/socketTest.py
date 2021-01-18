@@ -1,7 +1,7 @@
 import sys 
 sys.path.append("../")
 from packages.Define import *
-from packages.API.CATM1 import CATM1
+from packages.CATM1 import CATM1
 import time 
 import RPi.GPIO as GPIO
 

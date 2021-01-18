@@ -14,8 +14,8 @@
     + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
 + [Packages](https://github.com/UmileVX/ino-on_AiCam#packages)
     + [Define](https://github.com/UmileVX/ino-on_AiCam#define)
-    + [API: NRF](https://github.com/UmileVX/ino-on_AiCam#api-nrf)
-    + [API: CATM1](https://github.com/UmileVX/ino-on_AiCam#api-catm1)
+    + [NRF](https://github.com/UmileVX/ino-on_AiCam#nrf)
+    + [CATM1](https://github.com/UmileVX/ino-on_AiCam#catm1)
 + [Resources](https://github.com/UmileVX/ino-on_AiCam#resources)
 
 ****
@@ -307,7 +307,7 @@ pi@raspberrypi:~/ino-on_AiCam/test $ python3 socketTest.py
 + `MODEM_SER_PORT`: str
     > 모뎀 시리얼포트 경로
 
-## API: NRF
+## NRF
 NRF와의 GPIO 통신을 담당하는 클래스이다.
 + `NRF(modePinNum, offPinNum)`
     + `modePinNum`: 작동상태 모드 확인 GPIO Pin Number
@@ -317,7 +317,7 @@ NRF와의 GPIO 통신을 담당하는 클래스이다.
 + `pwrOffPi(): Void`
     + 앱을 종료해도 된다는 신호를 NRF에게 보낸다.
 
-## API: CATM1
+## CATM1
 CAT.M1을 제어하는 클래스이다. 아래 외에도 많은 AT Command 메소드가 존재한다.   
 + `CATM1(serialPort='/dev/ttyS0', baudrate=115200, pwePinNum=17, statPinNum=27)`
     + `serialPort`: 라즈베리파이의 시리얼 포트 경로. 위 [Raspberry Pi Serial Port](https://github.com/UmileVX/ino-on_AiCam#serial-port) 을 진행할 경우 '/dev/ttyS0'이 생성된다.

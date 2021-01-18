@@ -1,5 +1,4 @@
 import time
-import packages.Define as Define
 import RPi.GPIO as GPIO
 
 class NRF:

@@ -1,7 +1,6 @@
 import pathlib
 import os
 os.chdir(pathlib.Path(__file__).parent.absolute())
-from packages.Define import *
 import argparse
 import subprocess
 import ifcfg
@@ -11,8 +10,9 @@ import time
 from datetime import datetime
 import random
 import RPi.GPIO as GPIO
-from packages.API.CATM1 import CATM1
-from packages.API.NRF import NRF
+from packages.Define import *
+from packages.CATM1 import CATM1
+from packages.NRF import NRF
 
 def adminMode (nrf):
     subprocess.run("sudo systemctl start hostapd.service", shell=True)

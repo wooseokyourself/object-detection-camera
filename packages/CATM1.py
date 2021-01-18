@@ -5,7 +5,6 @@ import threading
 import ifcfg
 import json
 import subprocess
-import packages.Define as Define
 import RPi.GPIO as GPIO
 """
 AT 커맨드는 아래 사이트 참조하였음
