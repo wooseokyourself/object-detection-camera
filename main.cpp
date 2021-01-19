@@ -10,9 +10,9 @@ using namespace std;
 const int TASK_MODE_PIN = 20;
 const int RPI_OFF_PIN = 21;
 
-const string WEIGHT = "bin/model/yolov4-";
-const string CFG = "bin/model/";
-const string NAMES = "bin/model";
+const string WEIGHT = "bin/model/yolov4-custom_best.weights";
+const string CFG = "bin/model/yolov4-custom.cfg";
+const string NAMES = "bin/model/classes.names";
 const float CONF_THRESH = 0.4;
 const float NMS_THRESH = 0.5;
 const float RESIZE = 416;
