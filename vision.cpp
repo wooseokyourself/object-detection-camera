@@ -1,76 +1,73 @@
-#include "yolo_cpu.hpp"
+#include "vision.hpp"
 
-void Assert (bool condition, int status) {
-    if (!condition)
-        exit(status);
+void
+capture (Mat& frame, const int& resize) {
+    try {
+        VideoCapture cap;
+        cap.open(0);
+        cap.set(CAP_PROP_FRAME_WIDTH, resize);
+        cap.set(CAP_PROP_FRAME_HEIGHT, int((float(resize) / 4) * 3));
+        cap >> frame;
+        cap.release();
+    }
+    catch (Exception& e) {
+        __Assert(false, FAILURE_READING);
+    }
 }
 
-Yolo_cpu::Yolo_cpu (const string _MODEL_PATH, const string _NETWORK_PATH, const string _CLASSES_PATH, const float _confThreshold, const float _nmsThreshold, const int _resize) {
-    this->MODEL_PATH = _MODEL_PATH;
-    this->NETWORK_PATH = _NETWORK_PATH;
-    this->CLASSES_PATH = _CLASSES_PATH;
-
-    this->confThreshold = _confThreshold;
-    this->nmsThreshold = _nmsThreshold;
-    this->resize = _resize;
-
+bool
+detect (const string& frame,
+        const string& weight, 
+        const string& cfg, 
+        const string& names, 
+        const float& conf, 
+        const float& nms, 
+        const int& resize) {
+    Net net;
+    vector<cv::String> outNames;
+    vector<string> classes;
+    Size padSize;
     try {
-        this->net = readNet(MODEL_PATH, NETWORK_PATH);
-        this->net.setPreferableBackend(DNN_BACKEND_OPENCV);
-        this->net.setPreferableTarget(DNN_TARGET_CPU);
-        this->outNames = net.getUnconnectedOutLayersNames();
+        net = readNet(weight, cfg);
+        net.setPreferableBackend(DNN_BACKEND_OPENCV);
+        net.setPreferableTarget(DNN_TARGET_CPU);
+        outNames = net.getUnconnectedOutLayersNames();
 
         ifstream ifs(CLASSES_PATH.c_str());
         string line;
         while (std::getline(ifs, line))
-            this->classes.push_back(line);
+            classes.push_back(line);
     }
     catch (Exception& e) {
-        Assert(false, FAILURE_MODEL_LOADING);
+        __Assert(false, FAILURE_MODEL_LOADING);
     }
-}
 
-bool Yolo_cpu::detect (const string imagePath) {
     bool isDetected = false;
-
-    //MARK: Read image
-    Mat frame = imread(imagePath);
-    Assert(!frame.empty(), FAILURE_READING);
-    vector<Mat> outs;
-
-    //MARK: Do inference
-    netPreProcess(frame);
+    __netPreProcess(frame);
     net.forward(outs, outNames);
-    if (netPostProcess(frame, outs) != 0)
+    if (__netPostProcess(frame, outs) != 0)
         isDetected = true;
-
-    //MARK: Write result image
-    bool isWritten = false;
-    try {
-        isWritten = imwrite(imagePath, frame);
-    }
-    catch (const Exception& e) {
-        Assert(false, FAILURE_WRITING);
-    }
-    Assert(isWritten, FAILURE_WRITING);
-
     return isDetected;
 }
 
-void Yolo_cpu::netPreProcess (Mat& frame) {
+void
+__netPreProcess (Mat& frame, 
+                 Size& padSize, 
+                 const int& resize, 
+                 Net& net) {
     //MARK: Add padding to image
     if (frame.rows != frame.cols) {
         int length = frame.cols > frame.rows ? frame.cols : frame.rows;
         if (frame.cols < length) {
-            this->padSize.width = length - frame.cols;
-            this->padSize.height = length;
-            Mat pad(this->padSize, frame.type(), Scalar(255, 255, 255));
+            padSize.width = length - frame.cols;
+            padSize.height = length;
+            Mat pad(padSize, frame.type(), Scalar(255, 255, 255));
             hconcat(pad, frame, frame);
         }
         else {
-            this->padSize.width = length;
-            this->padSize.height = length - frame.rows;
-            Mat pad(this->padSize, frame.type(), Scalar(255, 255, 255));
+            padSize.width = length;
+            padSize.height = length - frame.rows;
+            Mat pad(padSize, frame.type(), Scalar(255, 255, 255));
             vconcat(pad, frame, frame);
         }
     }
@@ -78,7 +75,7 @@ void Yolo_cpu::netPreProcess (Mat& frame) {
     //MARK: Prepare for inference
     static Mat blob = blobFromImage(frame, 
                                     1, // scalarfactor: double
-                                    Size(this->resize, this->resize),
+                                    Size(resize, resize),
                                     Scalar(), 
                                     true, // swapRB: bool
                                     false, 
@@ -90,7 +87,14 @@ void Yolo_cpu::netPreProcess (Mat& frame) {
                  Scalar()); // mean: Scalar
 }
 
-int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
+int
+__netPostProcess (Mat& frame, 
+                  const Size& padSize, 
+                  Net& net, 
+                  const vector<Mat>& outs, 
+                  const float& conf, 
+                  const float& nms, 
+                  const vector<string>& classes) {
     int excavatorCount = 0;
     static vector<int> outLayers = net.getUnconnectedOutLayers();
     static string outLayerType = net.getLayer(outLayers[0])->type;
@@ -106,7 +110,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
                 Point classIdPoint;
                 double confidence;
                 minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
-                if (confidence > this->confThreshold) {
+                if (confidence > confThreshold) {
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
                     // Take a limit on size of the detecting boxes.
@@ -130,7 +134,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
 
     //MARK: Draw rectangle
     vector<int> indices;
-    NMSBoxes(boxes, confidences, this->confThreshold, this->nmsThreshold, indices);
+    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
     for (size_t i = 0; i < indices.size(); ++i) {   
         int idx = indices[i];
         if (classIds[idx] == 0) { // Draw rectangle if class is for excavator.
@@ -145,7 +149,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
             rectangle(frame, Point(left, top), Point(right, bottom), Scalar(0, 255, 0));
             string label = format("%.2f", confidences[idx]);
             if (!classes.empty()) {
-                Assert(classId < (int)classes.size(), FAILURE_MODEL_LOADING);
+                __Assert(classId < (int)classes.size(), FAILURE_MODEL_LOADING);
                 label = classes[classId] + ": " + label;
             }
             int baseLine;
@@ -162,7 +166,7 @@ int Yolo_cpu::netPostProcess (Mat& frame, const vector<Mat> outs) {
     double t = net.getPerfProfile(layersTimes) / freq;
     
     //MARK: Remove padding from image
-    frame = frame(Range(this->padSize.height, frame.rows), Range(0, frame.cols));
+    frame = frame(Range(padSize.height, frame.rows), Range(0, frame.cols));
 
     //MARK: Put the text for inference time
     string labelInferTime = format("Inference time: %.2f ms", t);

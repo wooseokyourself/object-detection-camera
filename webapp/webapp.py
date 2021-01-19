@@ -23,30 +23,6 @@ app = Flask(__name__)
 vs = VideoStream(usePiCamera=1, framerate=6).start()
 time.sleep(2.0)
 
-def readFrame(frameCount):
-    global vs, outputFrame, lock
-    while True:
-        frame = vs.read()
-        frame = imutils.resize(frame, width=600)
-        timestamp = datetime.datetime.now()
-        cv2.putText(frame, timestamp.strftime(
-			"%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
-			cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
-        with lock:
-            outputFrame = frame.copy()
-    
-def generate():
-    global outputFrame, lock
-    while True:
-        with lock:
-            if outputFrame is None:
-                continue
-            (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
-            if not flag:
-                continue
-        yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
-			bytearray(encodedImage) + b'\r\n')
-
 @app.route('/submit', methods=['POST'])
 def submit(confidence_threshold=None, nms_threshold=None, resize=None):
     if request.method == 'POST':
@@ -72,6 +48,30 @@ def index():
     resize = config["YOLO"]["RESIZE"]
     ''' 여기에서 conf, nms, resize 를 웹 상의 UI에 집어넣어야함. '''
     return render_template('index.html', confidence=confidence, nms=nms, resize=resize)
+
+def readFrame(frameCount):
+    global vs, outputFrame, lock
+    while True:
+        frame = vs.read()
+        frame = imutils.resize(frame, width=600)
+        timestamp = datetime.datetime.now()
+        cv2.putText(frame, timestamp.strftime(
+			"%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
+			cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        with lock:
+            outputFrame = frame.copy()
+    
+def generate():
+    global outputFrame, lock
+    while True:
+        with lock:
+            if outputFrame is None:
+                continue
+            (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
+            if not flag:
+                continue
+        yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
+			bytearray(encodedImage) + b'\r\n')
 
 @app.route("/videoFeed")
 def videoFeed():
