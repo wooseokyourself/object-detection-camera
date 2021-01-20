@@ -16,6 +16,7 @@ const string NAMES = "bin/model/classes.names";
 const float CONF_THRESH = 0.4;
 const float NMS_THRESH = 0.5;
 const float RESIZE = 416;
+const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
 
 template <class Precision> string
 getISOCurrentTimestamp() {
@@ -46,11 +47,11 @@ main (void) {
             char* imgBuffPtr = &imgBuffer[0];
             long imgBuffSize = imgBuffer.size();
 
-            http::postImage(TIMESTAMP, 31, 99, imgBuffPtr, imgBuffSize);
+            http::postImage(URL, TIMESTAMP, 31, 99, imgBuffPtr, imgBuffSize);
         }
         else {
             // SEND MULTIPART/FORM-DATA HERE
-            http::postWithoutImage(TIMESTAMP, 31, 99);
+            http::postWithoutImage(URL, TIMESTAMP, 31, 99);
         }
     }
 

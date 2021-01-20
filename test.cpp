@@ -1,4 +1,24 @@
-#include "http.hpp"
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <curl/curl.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/dnn.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include "date.h"
+
+using namespace std;
+using namespace cv;
+
+template <class Precision> string
+getISOCurrentTimestamp() {
+    auto now = chrono::system_clock::now();
+    return date::format("%FT%TZ", date::floor<Precision>(now));
+}
 
 bool
 postImage (const string& url, 
@@ -19,7 +39,7 @@ postImage (const string& url,
     curl_formadd(&formpost,
                  &lastptr,
                  CURLFORM_COPYNAME, "time",
-                 CURLFORM_COPYCONTENTS, time,
+                 CURLFORM_COPYCONTENTS, time.c_str(),
                  CURLFORM_END);
 
     curl_formadd(&formpost,
@@ -31,20 +51,20 @@ postImage (const string& url,
     curl_formadd(&formpost,
                  &lastptr,
                  CURLFORM_COPYNAME, "rssi",
-                 CURLFORM_COPYCONTENTS, str(rssi),
+                 CURLFORM_COPYCONTENTS, to_string(rssi).c_str(),
                  CURLFORM_END);
 
     curl_formadd(&formpost,
                  &lastptr,
                  CURLFORM_COPYNAME, "battery",
-                 CURLFORM_COPYCONTENTS, str(battery),
+                 CURLFORM_COPYCONTENTS, to_string(battery).c_str(),
                  CURLFORM_END);
 
     /* Fill in the filename field */
     curl_formadd(&formpost,
                 &lastptr,
                 CURLFORM_COPYNAME, "filename",
-                CURLFORM_COPYCONTENTS, time + ".jpg",
+                CURLFORM_COPYCONTENTS, (time + ".jpg").c_str(),
                 CURLFORM_END);
 
     /* Fill in the file upload field */
@@ -62,7 +82,7 @@ postImage (const string& url,
     headerlist = curl_slist_append(headerlist, buf);
     if(curl) {
     /* what URL that receives this POST */
-    curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     if ( (argc == 2) && (!strcmp(argv[1], "noexpectheader")) )
         /* only disable 100-continue header if explicitly requested */
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist);
@@ -86,10 +106,14 @@ postImage (const string& url,
     return true; // 이거 고치기
 }
 
-bool
-postWithoutImage (const string& url, 
-                  const string& time,
-                  const int& rssi,
-                  const int& battery) {
-    return false;
+int main (void) {
+    const string TIMESTAMP = getISOCurrentTimestamp<chrono::milliseconds>();
+    const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
+    Mat frame = imread("example.jpg");
+    vector<uchar> imgBuffer;
+    cv::imencode(".jpg", frame, imgBuffer);
+    char* imgBuffPtr = &imgBuffer[0];
+    long imgBuffSize = imgBuffer.size();
+    postImage(URL, TIMESTAMP, 31, 99, imgBuffPtr, imgBuffSize);
+    return 0;
 }

@@ -11,14 +11,16 @@ using namespace std;
 namespace http {
 
 bool
-postImage (const string& time,
+postImage (const string& url, 
+           const string& time,
            const int& rssi,
            const int& battery, 
            const char* imgBuffPtr, 
            const long& imgBuffSize);
 
 bool
-postWithoutImage (const string& time,
+postWithoutImage (const string& url, 
+                  const string& time,
                   const int& rssi,
                   const int& battery);
 
