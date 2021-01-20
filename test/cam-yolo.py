@@ -5,8 +5,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description="cam and yolo test")
 parser.add_argument("--out", type=str, help="output image path", required=True)
-parser.add_argument("--thr", nargs=2, type=str, help="conf/nms threshold (default= 0.4 0.5)")
-parser.add_argument("--resize", type=str, help="resize (default=416)")
+parser.add_argument("--thr", nargs=2, type=float, help="conf/nms threshold (default= 0.4 0.5)")
+parser.add_argument("--resize", type=int, help="resize (default=416)")
 args = parser.parse_args()
 
 outp = args.out[0]
@@ -17,10 +17,10 @@ resize = 416
 if args.resize is not None:
     resize = args.resize[0]
     
-resWidth = int(resize)
+resWidth = resize
 resHeight = int(float(resWidth / 4) * 3)
 subprocess.run("raspistill -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o " + outp, shell=True)
-detector = "./../build/detector ../ai-cam/model/yolov4-custom_best.weights ../ai-cam/model/yolov4-custom.cfg ../ai-cam/model/classes.names " + outp + " " + conf + " " + nms + " " + resize
+detector = "./../build/detector ../ai-cam/model/yolov4-custom_best.weights ../ai-cam/model/yolov4-custom.cfg ../ai-cam/model/classes.names " + outp + " " + str(conf) + " " + str(nms) + " " + str(resize)
 
 process = subprocess.run(detector, capture_output=True, shell=True)
 exitCode = process.returncode
