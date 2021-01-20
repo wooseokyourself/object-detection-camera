@@ -15,7 +15,7 @@ if args.thr is not None:
     conf, nms = args.thr[0], args.thr[1]
 resize = "416"
 if args.resize is not None:
-    resize = args.resize[0]
+    resize = args.resize
     
 resWidth = int(resize)
 resHeight = int(float(resWidth / 4) * 3)
