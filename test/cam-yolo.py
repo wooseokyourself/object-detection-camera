@@ -9,7 +9,7 @@ parser.add_argument("--thr", nargs=2, type=str, help="conf/nms threshold (defaul
 parser.add_argument("--resize", type=str, help="resize (default=416)")
 args = parser.parse_args()
 
-outp = args.out[0]
+outp = args.out
 conf, nms = "0.4", "0.5"
 if args.thr is not None:
     conf, nms = args.thr[0], args.thr[1]
