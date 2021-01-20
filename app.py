@@ -76,7 +76,7 @@ def normalMode (lte, isPPP):
     
     ''' Wait until PPP activated '''
     if isPPP:
-        while 'ppp0' in ifcfg.interfaces() == False:
+        while ifcfg.interfaces().get('ppp0') == None:
             print("Wait for ppp activation...")
             time.sleep(1)
 
