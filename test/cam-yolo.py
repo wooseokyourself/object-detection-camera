@@ -19,7 +19,7 @@ if args.resize is not None:
     
 resWidth = int(resize)
 resHeight = int(float(resWidth / 4) * 3)
-subprocess.run("raspistill -ev 3 -ss 30000 -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o " + outp, shell=True)
+subprocess.run("raspistill -ev 3 -ss 30000 -sh 50 -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o " + outp, shell=True)
 detector = "./../build/detector ../ai-cam/model/yolov4-custom_best.weights ../ai-cam/model/yolov4-custom.cfg ../ai-cam/model/classes.names " + outp + " " + conf + " " + nms + " " + resize
 
 process = subprocess.run(detector, capture_output=True, shell=True)
