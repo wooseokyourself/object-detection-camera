@@ -42,7 +42,7 @@ def normalMode (lte, isPPP):
     IMAGEFILE = TIMESTAMP + ".jpg"
     resWidth = int(resize)
     resHeight = int(float(resWidth / 4) * 3)
-    subprocess.run("raspistill -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o results/" + IMAGEFILE, shell=True)
+    subprocess.run("raspistill -ev 3 -ss 30000 -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o results/" + IMAGEFILE, shell=True)
 
     ''' Detect '''
     detector = "./build/detector "\
