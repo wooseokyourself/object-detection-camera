@@ -147,7 +147,4 @@ if __name__ == '__main__':
         print("End process")
         lte.disablePpp()
         lte.pwrOffModem()
-        # nrf.pwrOffPi()
-        time.sleep(2)
-        # GPIO.cleanup()
-        exit(0)
+        nrf.pwrOffPi()
