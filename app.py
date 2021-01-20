@@ -21,7 +21,7 @@ MODEM_STAT_PIN = 27   # CAT.M1 Status Pin (input)
 MODEM_SER_PORT = "/dev/ttyS0"
 
 def adminMode (nrf):
-    subprocess.run("sudo systemctl start hostapd.service", shell=True)
+    subprocess.run("sudo systemctl start raspapd.service", shell=True)
     webProcess = subprocess.Popen(["python3", "webapp/webapp.py", "--ip", "0.0.0.0", "--port", "4000"])
     while nrf.isAdminMode():
         time.sleep(5)
@@ -121,7 +121,6 @@ if __name__ == '__main__':
     if args.p is not None and args.p == 1:
         isPPP = True
 
-    subprocess.run("sudo systemctl stop hostapd.service", shell=True)
     nrf = NRF(modePinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
     lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
     lte.pwrOnModem()
