@@ -28,7 +28,7 @@ def adminMode (nrf):
     time.sleep(2)
     webProcess.terminate() # 웹 종료
 
-def normalMode (lte, isPPP):
+def normalMode (isPPP):
     ''' Read configuration '''
     f = open("config/config.json", "r")
     config = json.load(f)
@@ -69,7 +69,8 @@ def normalMode (lte, isPPP):
         print("Invalid status")
 
     ''' Get RSSI and BER by AT Command '''
-    rssi, ber = lte.rssi, lte.ber
+    # rssi, ber = lte.rssi, lte.ber
+    rssi = 31
     
     ''' Get battery '''
     battery = random.randrange(1, 100) # 배터리 부분 구현해야함   
@@ -105,9 +106,11 @@ def normalMode (lte, isPPP):
                 resCode, resText = response.status_code, response.text
                 print(resCode, ":", resText)
                 break
+            '''
             else: # POST from CAT.M1 process
                 response = lte.post(URL, data) # 아직 많이 봐야함
                 break
+            '''
         except requests.exceptions.RequestException as e:
             print(e)
             time.sleep(2.5)
@@ -122,8 +125,8 @@ if __name__ == '__main__':
         isPPP = True
 
     nrf = NRF(modePinNum=TASK_MODE_PIN, offPinNum=RPI_OFF_PIN)
-    lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
-    lte.pwrOnModem()
+    # lte = CATM1(serialPort=MODEM_SER_PORT, baudrate=115200, pwrPinNum=MODEM_PWR_PIN, statPinNum=MODEM_STAT_PIN)
+    # lte.pwrOnModem()
 
     try:
         if args.m is None:
@@ -131,10 +134,10 @@ if __name__ == '__main__':
             if nrf.isAdminMode():
                 adminMode(nrf)
             else:
-                normalMode(lte, isPPP)
+                normalMode(isPPP)
         else:
             if args.m == "normal":
-                normalMode(lte, isPPP)
+                normalMode(isPPP)
             elif args.m == "admin":
                 adminMode(nrf)
             else:
@@ -144,6 +147,6 @@ if __name__ == '__main__':
         print("exception occured:", e)
     finally:
         print("End process")
-        lte.disablePpp()
-        lte.pwrOffModem()
+        # lte.disablePpp()
+        # lte.pwrOffModem()
         nrf.pwrOffPi()
