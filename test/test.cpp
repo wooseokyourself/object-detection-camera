@@ -25,7 +25,7 @@ postImage (const string& url,
            const string& time,
            const int& rssi,
            const int& battery, 
-           const char* imgBuffPtr, 
+           const uchar* imgBuffPtr, 
            const long& imgBuffSize) {
     CURL* curl;
     CURLcode res;
@@ -60,59 +60,59 @@ postImage (const string& url,
                  CURLFORM_COPYCONTENTS, to_string(battery).c_str(),
                  CURLFORM_END);
 
-    /* Fill in the filename field */
     curl_formadd(&formpost,
-                &lastptr,
-                CURLFORM_COPYNAME, "filename",
-                CURLFORM_COPYCONTENTS, (time + ".jpg").c_str(),
-                CURLFORM_END);
+                 &lastptr,
+                 CURLFORM_COPYNAME, "filename",
+                 CURLFORM_COPYCONTENTS, "wooseok-example.jpg",
+                 CURLFORM_END);
 
-    /* Fill in the file upload field */
+    // from file
+    curl_formadd(&formpost,
+                 &lastptr,
+                 CURLFORM_COPYNAME, "files",
+                 CURLFORM_FILE, "wooseok-example.jpg",
+                 CURLFORM_END);
+
+/*  // from buffer = 이거 구현되면 결과사진 파이에 저장할 필요 없음
     curl_formadd(&formpost,
                 &lastptr,
                 CURLFORM_COPYNAME, "files",
                 CURLFORM_BUFFERPTR, imgBuffPtr, 
                 CURLFORM_BUFFERLENGTH, imgBuffSize,
                 CURLFORM_END);
+*/ 
+    curl_formadd(&formpost,
+                 &lastptr,
+                 CURLFORM_COPYNAME, "submit",
+                 CURLFORM_COPYCONTENTS, "send",
+                 CURLFORM_END);
 
     curl = curl_easy_init();
 
-    /* initalize custom header list (stating that Expect: 100-continue is not
-     wanted */
     headerlist = curl_slist_append(headerlist, buf);
     if(curl) {
-    /* what URL that receives this POST */
-    curl_easy_setopt(curl, CURLOPT_URL, url);
-    if ( (argc == 2) && (!strcmp(argv[1], "noexpectheader")) )
-        /* only disable 100-continue header if explicitly requested */
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist);
-    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-    /* Perform the request, res will get the return code */
-    res = curl_easy_perform(curl);
-    /* Check for errors */
-    if(res != CURLE_OK)
-        fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                curl_easy_strerror(res));
-
-    /* always cleanup */
-    curl_easy_cleanup(curl);
-
-    /* then cleanup the formpost chain */
-    curl_formfree(formpost);
-    /* free slist */
-    curl_slist_free_all (headerlist);
+        res = curl_easy_perform(curl);
+        if(res != CURLE_OK) {
+            // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            return false;
+        }
+        curl_easy_cleanup(curl);
+        curl_formfree(formpost);
+        curl_slist_free_all (headerlist);
     }
     return true; // 이거 고치기
 }
 
 int main (void) {
     const string TIMESTAMP = getISOCurrentTimestamp<chrono::milliseconds>();
-    const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
-    Mat frame = imread("example.jpg");
+    const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000";
+    Mat frame = imread("wooseok-example.jpg");
     vector<uchar> imgBuffer;
     cv::imencode(".jpg", frame, imgBuffer);
-    char* imgBuffPtr = &imgBuffer[0];
+    uchar* imgBuffPtr = &imgBuffer[0];
     long imgBuffSize = imgBuffer.size();
     postImage(URL, TIMESTAMP, 31, 99, imgBuffPtr, imgBuffSize);
     return 0;
