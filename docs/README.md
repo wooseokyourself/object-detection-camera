@@ -145,13 +145,13 @@ pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
     + ID: admin / Password: secret
 + 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
     + 게이트웨이: 10.3.141.1
-    + 웹서버에 접속할 경우: 10.3.141.1:4000
-+ RaspAP의 활성화/비활성화 스크립트는 다음과 같다.
+    + 웹서버에 접속할 경우: 10.3.141.1:4000 
++ 나는 라즈베리파이의 부팅시간을 줄이기 위해 ```dhcpcd```와 ```raspapd``` 서비스를 비활성화 한 뒤 관리자모드에 진입하였을 때에만 ```raspapd```를 활성화하도록 코드를 짰다.
 ```console
-pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh
-pi@raspberrypi:~ $ sudo /etc/raspap/hostapd/servicestart.sh --action stop
+pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
+pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
+# 이후 개발단계에서 외부인터넷을 사용할 일이 있으면 sudo systemctl start dhcpcd.service 를 해야 한다.
 ```
-위 스크립트는 ```hostapd, dnsmasq, dhcpcd``` 를 모두 활성화하거나 비활성화하는 원리이다. 그러나 ```hostapd```만을 활성화/비활성화하는 것 만으로도 RaspAP를 제어할 수 있음을 확인하였기에, 나는 파이썬 코드에서 ```sudo systemctl <start/stop> hostapd.service``` 를 이용하여 RaspAP를 제어하였다.  
 
 ****
 
