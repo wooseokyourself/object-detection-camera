@@ -62,6 +62,7 @@ pi@raspberrypi:~ % sudo apt-get install libilmbase-dev libopenexr-dev libgstream
 
 ## PIP3 Packages
 ```console
+pi@raspberrypi:~ % sudo apt-get install python3-pip
 pi@raspberrypi:~ % pip3 install RPi.GPIO    # for OS Lite
 pi@raspberrypi:~ % pip3 install picamera    # for OS Lite
 pi@raspberrypi:~ % pip3 install pyserial    # for OS Lite
