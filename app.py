@@ -39,7 +39,7 @@ def normalMode (isPPP):
     
     ''' Capture '''
     TIMESTAMP = datetime.isoformat(datetime.now())[:-3] + "Z"
-    IMAGEFILE = TIMESTAMP + ".jpg"
+    IMAGEFILE = datetime.today().strftime('%Y-%m-%d') + ".jpg"
     resWidth = int(resize)
     resHeight = int(float(resWidth / 4) * 3)
     subprocess.run("raspistill -ev 3 -ss 30000 -sh 50 -w " + str(resWidth) + " -h " + str(resHeight) + " -t 10 -o results/" + IMAGEFILE, shell=True)
