@@ -2,8 +2,6 @@
 #define GPIO
 
 #include <wiringPi.h>
-#include <chrono>
-#include <thread>
 
 const int TASK_MODE_PIN = 20;
 const int RPI_OFF_PIN = 21;
