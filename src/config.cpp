@@ -7,7 +7,7 @@ getISOCurrentTimestamp() {
 
 std::string
 getISOCurrentDate() {
-    return date::floor<date::days>(std::chrono::system_clock::now());
+    return getISOCurrentTimestamp().substr(0, 9);
 }
 
 Config::Config () {
