@@ -16,7 +16,7 @@ capture (Mat& frame, const int& resize) {
 }
 
 bool
-detect (const string& frame,
+detect (Mat& frame,
         const string& weight, 
         const string& cfg, 
         const string& names, 
