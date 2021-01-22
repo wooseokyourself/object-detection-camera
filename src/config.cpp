@@ -2,19 +2,19 @@
 
 std::string
 getISOCurrentTimestamp() {
-    auto now = chrono::system_clock::now();
-    return date::format("%FT%TZ", date::floor<chrono::milliseconds>(now));
+    auto now = std::chrono::system_clock::now();
+    return date::format("%FT%TZ", date::floor<std::chrono::milliseconds>(now));
 }
 
 std::string
 getISOCurrentDate() {
-    return floor<chrono::days>(system_clock::now());
+    return floor<std::chrono::days>(system_clock::now());
 }
 
 Config::Config () {
     Json::Value root;
     Json::Reader reader;
-    std::ifstream json("config/config.json", ifstream::binary);
+    std::ifstream json("config/config.json", std::ifstream::binary);
     reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
@@ -28,7 +28,7 @@ Config::Config () {
 Config::Config (std::string __jsonpath) {
     Json::Value root;
     Json::Reader reader;
-    std::ifstream json(__jsonpath, ifstream::binary);
+    std::ifstream json(__jsonpath, std::ifstream::binary);
     reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
