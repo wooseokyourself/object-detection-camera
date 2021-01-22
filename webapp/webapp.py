@@ -53,8 +53,8 @@ def submit_device(device_id=None):
         f = open("config/config.json", "r")
         config = json.load(f)
         f.close()
-        config["DEVICE"]["ID"] = request.form['device_id']
-        f.open("config/config.json", "w")
+        config["DEVICE"]["ID"] = "ino-on-" + request.form['device_id']
+        f = open("config/config.json", "w")
         json.dump(config, f)
         f.close()
     return render_template('index.html', device_id=request.form['device_id'], 
