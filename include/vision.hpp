@@ -15,6 +15,7 @@
 
 using namespace std;
 using namespace cv;
+using namespace dnn;
 
 enum STATUS {
     SUCCESS_EVENT_FALSE     = 0,

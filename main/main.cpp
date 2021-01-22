@@ -14,8 +14,7 @@ const string CFG = "bin/model/yolov4-custom.cfg";
 const string NAMES = "bin/model/classes.names";
 const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
 
-int
-main (void) {
+int main (void) {
     Gpio gpio();
     if (gpio.isAdminMode()) {
         // Run shell script in background
