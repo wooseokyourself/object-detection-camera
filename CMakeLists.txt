@@ -6,15 +6,14 @@ set( SOURCE src/config.cpp src/gpio.cpp src/http.cpp src/vision.cpp )
 set( MAIN main/main.cpp )
 
 find_package( PkgConfig REQUIRED )
-find_package( WiringPi REQUIRED )
-find_package( Threads REQUIRED )
+find_library( WIRINGPI_LIBRARIES wiringPi )
 pkg_check_modules( OPENCV opencv4 )
 pkg_check_modules( CURL libcurl )
 pkg_check_modules( JSONCPP jsoncpp )
 
 include_directories( ${HEADER} ${OPENCV_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS} ${JSONCPP_INCLUDE_DIRS} ${WIRINGPI_INCLUDE_DIRS} )
-link_libraries( ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
+link_libraries( ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} )
 add_executable( app ${MAIN} ${SOURCE} )
 
 target_compile_options( app PUBLIC -std=c++11 )
-target_link_libraries( app ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
+target_link_libraries( app ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} )
