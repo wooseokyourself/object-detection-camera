@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(app)
 
-set( ROOT .. )
-set( HEADER ${ROOT}/include/*.hpp )
-set( SOURCE ${ROOT}/src/*.cpp )
+set( HEADER include/*.hpp )
+set( SOURCE src/*.cpp )
+set( MAIN main/main.cpp )
 set( OUTPUT app )
-set( MAIN ${ROOT}/main/main.cpp )
 
 include_directories( ${HEADER} )
 add_executable( ${OUTPUT} ${MAIN} ${SOURCE} )
