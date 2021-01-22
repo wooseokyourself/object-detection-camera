@@ -107,7 +107,7 @@ http::post (const string& url,
     curl_formadd(&formpost,
                  &lastptr,
                  CURLFORM_COPYNAME, "event",
-                 CURLFORM_COPYCONTENTS, "1",
+                 CURLFORM_COPYCONTENTS, "0",
                  CURLFORM_END);
 
     curl_formadd(&formpost,
