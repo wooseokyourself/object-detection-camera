@@ -18,6 +18,8 @@ Config::Config () {
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
     Json::Value YOLO = root["YOLO"];
+    std::cout << YOLO["CONFIDENCE_THRESHOLD"] << std::endl;
+    std::cout << YOLO["NMS_THRESHOLD"] << std::endl;
     this->CONF_THRESH = YOLO["CONFIDENCE_THRESHOLD"].asDouble();
     this->NMS_THRESH = YOLO["NMS_THRESHOLD"].asDouble();
     this->RESIZE = YOLO["RESIZE"].asInt();
