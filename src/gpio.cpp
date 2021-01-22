@@ -8,8 +8,9 @@ Gpio::Gpio () {
     pinMode(this->rpiOffPin, OUTPUT);    
 }
 
-Gpio::Gpio (int __taskModePin, int __rpiOffPin)
- : this->taskModePin(__taskModePin), this->rpiOffPin(__rpiOffPin) {
+Gpio::Gpio (int __taskModePin, int __rpiOffPin) {
+    this->taskModePin = __taskModePin;
+    this->rpiOffPin = __rpiOffPin;
     wiringPiSetupGpio(); // BCM
     pinMode(this->taskModePin, INPUT);
     pinMode(this->rpiOffPin, OUTPUT);
