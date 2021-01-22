@@ -1,12 +1,12 @@
 #include "../include/http.hpp"
 
 bool
-post (const string& url, 
-      const string& time,
-      const int& rssi,
-      const int& battery, 
-      const string& filename, 
-      const string& filepath) {
+http::post (const string& url, 
+            const string& time,
+            const int& rssi,
+            const int& battery, 
+            const string& filename, 
+            const string& filepath) {
 
     struct curl_httppost* formpost = NULL;
     struct curl_httppost* lastptr = NULL;
@@ -86,10 +86,10 @@ post (const string& url,
 }
 
 bool
-post (const string& url, 
-      const string& time,
-      const int& rssi,
-      const int& battery) {
+http::post (const string& url, 
+            const string& time,
+            const int& rssi,
+            const int& battery) {
 
     struct curl_httppost* formpost = NULL;
     struct curl_httppost* lastptr = NULL;
