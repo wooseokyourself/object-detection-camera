@@ -18,8 +18,8 @@ Config::Config () {
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
     Json::Value YOLO = root["YOLO"];
-    this->CONF_THRESH = YOLO["CONFIDENCE_THRESHOLD"].asFloat();
-    this->NMS_THRESH = YOLO["NMS_THRESHOLD"].asFloat();
+    this->CONF_THRESH = YOLO["CONFIDENCE_THRESHOLD"].asDouble();
+    this->NMS_THRESH = YOLO["NMS_THRESHOLD"].asDouble();
     this->RESIZE = YOLO["RESIZE"].asInt();
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
 }
@@ -32,8 +32,8 @@ Config::Config (std::string __jsonpath) {
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
     Json::Value YOLO = root["YOLO"];
-    this->CONF_THRESH = YOLO["CONFIDENCE_THRESHOLD"].asFloat();
-    this->NMS_THRESH = YOLO["NMS_THRESHOLD"].asFloat();
+    this->CONF_THRESH = YOLO["CONFIDENCE_THRESHOLD"].asDouble();
+    this->NMS_THRESH = YOLO["NMS_THRESHOLD"].asDouble();
     this->RESIZE = YOLO["RESIZE"].asInt();
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
     
