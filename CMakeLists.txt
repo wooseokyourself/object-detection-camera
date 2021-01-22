@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(app)
 
-set( HEADER include )
-set( SOURCE src )
-set( MAIN main )
+set( HEADER include/ )
+set( SOURCE src/ )
+set( MAIN main/ )
 set( OUTPUT app )
 
 include_directories( ${HEADER} )
