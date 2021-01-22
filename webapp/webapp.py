@@ -57,7 +57,7 @@ def submit_device(device_id=None):
         f = open("config/config.json", "w")
         json.dump(config, f)
         f.close()
-    return render_template('index.html', device_id=request.form['device_id'], 
+    return render_template('index.html', device_id=config["DEVICE"]["ID"], 
                                          confidence=config["YOLO"]["CONFIDENCE_THRESHOLD"],
                                          nms=config["YOLO"]["NMS_THRESHOLD"], 
                                          resize=config["YOLO"]["RESIZE"])
@@ -75,9 +75,9 @@ def submit_yolo(confidence_threshold=None, nms_threshold=None, resize=None):
         json.dump(config, f)
         f.close()
     return render_template('index.html', device_id=config["DEVICE"]["ID"], 
-                                         confidence=request.form['confidence_threshold'],
-                                         nms=request.form['nms_threshold'],
-                                         resize=request.form['resize'])
+                                         confidence=config["YOLO"]["CONFIDENCE_THRESHOLD"],
+                                         nms=config["YOLO"]["NMS_THRESHOLD"],
+                                         resize=config["YOLO"]["RESIZE"])
 
 @app.route('/')
 def index():

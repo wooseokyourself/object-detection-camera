@@ -2,6 +2,7 @@
 {% block title %}Ino-On Device Settings{% endblock %}
 {% block body %}
 <div class="jumbotron">
+
   <h1>Ino-On Device Settings</h1>
   <form method="POST" action="/submit_device">
     <h5>Device ID: {{device_id}}</h5>
@@ -22,6 +23,8 @@
     <button type="submit">설정 완료</button>
     <br />
     <br />
+  </form>
+
   <h1>YOLO Configuration Settings</h1>
   <form method="POST" action="/submit_yolo">
     <h5>Confidence Threshold: {{confidence}}</h5>
@@ -63,6 +66,7 @@
     <br />
     <br />
   </form>
+  
   <h2>Preview</h2>
   <head>
     <style>
