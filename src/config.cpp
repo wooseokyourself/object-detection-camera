@@ -20,7 +20,7 @@ Config::Config () {
     Json::Value YOLO = root["YOLO"];
     this->CONF_THRESH = std::stof(YOLO["CONFIDENCE_THRESHOLD"].asString());
     this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
-    this->RESIZE = YOLO["RESIZE"].asInt();
+    this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
 }
 
@@ -34,7 +34,7 @@ Config::Config (std::string __jsonpath) {
     Json::Value YOLO = root["YOLO"];
     this->CONF_THRESH = std::stof(YOLO["CONFIDENCE_THRESHOLD"].asString());
     this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
-    this->RESIZE = YOLO["RESIZE"].asInt();
+    this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
     
 }
