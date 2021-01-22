@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.0)
-project(app)
+project( app C CXX )
 
 set( HEADER include/ )
 set( SOURCE src/ )
 set( MAIN main/ )
 set( OUTPUT app )
+
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
 
 include_directories( ${HEADER} )
 add_executable( ${OUTPUT} ${MAIN} ${SOURCE} )
