@@ -7,7 +7,7 @@ getISOCurrentTimestamp() {
 
 std::string
 getISOCurrentDate() {
-    return getISOCurrentTimestamp().substr(0, 9);
+    return getISOCurrentTimestamp().substr(0, 10);
 }
 
 Config::Config () {
