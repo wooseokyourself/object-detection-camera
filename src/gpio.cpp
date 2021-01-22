@@ -24,5 +24,5 @@ Gpio::isAdminMode() {
 void 
 Gpio::shutdownRpi() {
     digitalWrite(this->rpiOffPin, HIGH);
-    delay(10000)
+    delay(10000);
 }
