@@ -8,8 +8,6 @@ post (const string& url,
       const string& filename, 
       const string& filepath) {
 
-    CURL* curl;
-    CURLcode res;
     struct curl_httppost* formpost = NULL;
     struct curl_httppost* lastptr = NULL;
     struct curl_slist* headerlist = NULL;
@@ -68,14 +66,14 @@ post (const string& url,
                  CURLFORM_COPYCONTENTS, "send",
                  CURLFORM_END);
 
-    curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
 
     headerlist = curl_slist_append(headerlist, buf);
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-        res = curl_easy_perform(curl);
+        CURLcode res = curl_easy_perform(curl);
         if(res != CURLE_OK) {
             // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
             return false;
@@ -130,14 +128,14 @@ post (const string& url,
                  CURLFORM_COPYCONTENTS, "send",
                  CURLFORM_END);
 
-    curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
 
     headerlist = curl_slist_append(headerlist, buf);
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-        res = curl_easy_perform(curl);
+        CURLcode res = curl_easy_perform(curl);
         if(res != CURLE_OK) {
             // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
             return false;
