@@ -2,13 +2,12 @@
 
 std::string
 getISOCurrentTimestamp() {
-    auto now = std::chrono::system_clock::now();
-    return date::format("%FT%TZ", date::floor<std::chrono::milliseconds>(now));
+    return date::format("%FT%TZ", date::floor<std::chrono::milliseconds>(std::chrono::system_clock::now()));
 }
 
 std::string
 getISOCurrentDate() {
-    return floor<std::chrono::days>(system_clock::now());
+    return date::floor<date::days>(std::chrono::system_clock::now());
 }
 
 Config::Config () {
