@@ -74,10 +74,12 @@ http::post (const string& url,
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
         CURLcode res = curl_easy_perform(curl);
-        if(res != CURLE_OK) {
-            // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            return false;
+        while (res != CURLE_OK) {
+            res = curl_easy_perform(curl);
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            delay(2500);
         }
+        
         curl_easy_cleanup(curl);
         curl_formfree(formpost);
         curl_slist_free_all (headerlist);
@@ -136,10 +138,12 @@ http::post (const string& url,
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
         CURLcode res = curl_easy_perform(curl);
-        if(res != CURLE_OK) {
-            // fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            return false;
+        while (res != CURLE_OK) {
+            res = curl_easy_perform(curl);
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            delay(2500);
         }
+    
         curl_easy_cleanup(curl);
         curl_formfree(formpost);
         curl_slist_free_all (headerlist);
