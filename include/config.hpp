@@ -3,6 +3,13 @@
 
 #include <string>
 #include <jsoncpp/json/json.h>
+#include "../include/date.h"
+
+std::string
+getISOCurrentTimestamp();
+
+std::string
+getISOCurrentDate();
 
 class Config {
 public:
