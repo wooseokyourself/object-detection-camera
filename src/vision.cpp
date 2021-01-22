@@ -20,8 +20,8 @@ detect (Mat& frame,
         const string& weight, 
         const string& cfg, 
         const string& names, 
-        const float& conf, 
-        const float& nms, 
+        const float& confThreshold, 
+        const float& nmsThreshold, 
         const int& resize) {
     Net net;
     vector<cv::String> outNames;
@@ -43,9 +43,9 @@ detect (Mat& frame,
     }
 
     bool isDetected = false;
-    __netPreProcess(frame);
+    __netPreProcess(frame, padSize, resize, net);
     net.forward(outs, outNames);
-    if (__netPostProcess(frame, outs) != 0)
+    if (__netPostProcess(frame, padSize, net, outs, confThreshold, nmsThreshold, classes) != 0)
         isDetected = true;
     return isDetected;
 }
@@ -92,8 +92,8 @@ __netPostProcess (Mat& frame,
                   const Size& padSize, 
                   Net& net, 
                   const vector<Mat>& outs, 
-                  const float& conf, 
-                  const float& nms, 
+                  const float& confThreshold, 
+                  const float& nmsThreshold, 
                   const vector<string>& classes) {
     int excavatorCount = 0;
     static vector<int> outLayers = net.getUnconnectedOutLayers();
@@ -173,4 +173,10 @@ __netPostProcess (Mat& frame,
     putText(frame, labelInferTime, Point(0, 35), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255), 2);
     // printf("Inference time: %.2f ms\n", t);
     return excavatorCount;
+}
+
+void 
+__Assert (bool condition, int status) {
+    if (!condition)
+        exit(status);
 }
