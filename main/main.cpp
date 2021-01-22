@@ -28,7 +28,7 @@ int main (void) {
         const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
         cv::Mat frame;
-        vision::capture(frame, RESIZE);
+        vision::capture(frame, cfg.yolo_resize());
         const bool isDetected = vision::detect(frame, 
                                                WEIGHT, 
                                                CFG, 

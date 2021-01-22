@@ -11,7 +11,7 @@ const int RPI_OFF_PIN = 21;
 class Gpio {
 public:
     Gpio ();
-    Gpio (int __taskModePin=20, int __rpiOffPin=21);
+    Gpio (int __taskModePin, int __rpiOffPin);
     bool isAdminMode ();
     void shutdownRpi ();
 
