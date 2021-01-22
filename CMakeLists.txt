@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 project( app C CXX )
 
 set( HEADER include/ )
-set( SOURCE src/ )
-set( MAIN main/ )
+set( SOURCE src/config.cpp src/gpio.cpp src/http.cpp src/vision.cpp )
+set( MAIN main/main.cpp )
 
 include_directories( ${HEADER} )
 add_executable( app ${MAIN} ${SOURCE} )
@@ -14,5 +14,5 @@ find_package( PkgConfig REQUIRED )
 pkg_check_modules( JSONCPP jsoncpp )
 link_libraries( ${JSONCPP_LIBRARIES} )
 
-target_compile_options( app -std=c++11 )
+target_compile_options( app PUBLIC -std=c++11 )
 target_link_libraries( app ${OpenCV_LIBS} ${CURL_LIBS} ${JSONCPP_LIBS} ${JSONCPP_LIBRARIES} )
