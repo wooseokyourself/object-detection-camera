@@ -14,7 +14,7 @@ getISOCurrentDate() {
 Config::Config () {
     Json::Value root;
     Json::Reader reader;
-    ifstream json("config/config.json", ifstream::binary);
+    std::ifstream json("config/config.json", ifstream::binary);
     reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
@@ -28,7 +28,7 @@ Config::Config () {
 Config::Config (std::string __jsonpath) {
     Json::Value root;
     Json::Reader reader;
-    ifstream json(__jsonpath, ifstream::binary);
+    std::ifstream json(__jsonpath, ifstream::binary);
     reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
