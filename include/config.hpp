@@ -3,7 +3,7 @@
 
 #include <string>
 #include <jsoncpp/json/json.h>
-#include "../include/date.h"
+#include "date.h"
 
 std::string
 getISOCurrentTimestamp();
