@@ -15,7 +15,7 @@ const string NAMES = "bin/model/classes.names";
 const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000";
 
 int main (void) {
-    Gpio gpio();
+    Gpio gpio;
     if (gpio.isAdminMode()) {
         // Run shell script in background
         system("sudo systemctl start raspapd.service &");
@@ -24,7 +24,7 @@ int main (void) {
             std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     }
     else { // normal
-        const Config cfg();
+        const Config cfg;
         const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
         cv::Mat frame;
