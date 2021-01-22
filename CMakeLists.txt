@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(app)
 
-set( HEADER include/config.hpp include/date.hpp include/gpio.hpp include/http.hpp include/vision.hpp )
-set( SOURCE src/config.cpp src/gpio.cpp src/http.cpp src/vision.cpp )
-set( MAIN main/main.cpp )
+set( HEADER include )
+set( SOURCE src )
+set( MAIN main )
 set( OUTPUT app )
 
 include_directories( ${HEADER} )
