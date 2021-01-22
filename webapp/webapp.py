@@ -50,7 +50,7 @@ def generate():
 @app.route('/submit_device', methods=['POST'])
 def submit_device(device_id=None):
     if request.method == 'POST':
-        f = open("config/confug.json", "r")
+        f = open("config/config.json", "r")
         config = json.load(f)
         f.close()
         config["DEVICE"]["ID"] = request.form['device_id']
