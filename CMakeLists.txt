@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(app)
 
-set( HEADER include/*.hpp )
-set( SOURCE src/*.cpp )
+set( HEADER include/ )
+set( SOURCE src/ )
 set( MAIN main/main.cpp )
 set( OUTPUT app )
 
