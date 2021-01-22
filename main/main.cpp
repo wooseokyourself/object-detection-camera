@@ -33,8 +33,8 @@ int main (void) {
                                                CFG, 
                                                NAMES, 
                                                cfg.yolo_confThresh(), 
-                                               cfg.nmsThresh(), 
-                                               cfg.resize());
+                                               cfg.yolo_nmsThresh(), 
+                                               cfg.yolo_resize());
         if (isDetected) {
             cv::imwrite("results/" + FILENAME + ".jpg", frame);
             http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME + ".jpg");
