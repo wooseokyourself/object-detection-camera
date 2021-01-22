@@ -1,6 +1,14 @@
 #include "../include/gpio.hpp"
 
-Gpio::Gpio (int __taskModePin=20, int __rpiOffPin=21)
+Gpio::Gpio () {
+    this->taskModePin = 20;
+    this->rpiOffPin = 21;
+    wiringPiSetupGpio(); // BCM
+    pinMode(this->taskModePin, INPUT);
+    pinMode(this->rpiOffPin, OUTPUT);    
+}
+
+Gpio::Gpio (int __taskModePin, int __rpiOffPin)
  : this->taskModePin(__taskModePin), this->rpiOffPin(__rpiOffPin) {
     wiringPiSetupGpio(); // BCM
     pinMode(this->taskModePin, INPUT);

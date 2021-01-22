@@ -6,6 +6,7 @@
 
 class Config {
 public:
+    Config ();
     Config (std::string __jsonpath="config/config.json");
     float yolo_confThresh ();
     float yolo_nmsThresh ();
