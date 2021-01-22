@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstdlib>
 #include <chrono>
 #include <thread>
@@ -27,7 +28,9 @@ int main (void) {
         const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
         cv::Mat frame;
+        std::cout << "before picture" << std::endl;
         vision::capture(frame, cfg.yolo_resize());
+        std::cout << "capture done" << std::endl;
         const bool isDetected = vision::detect(frame, 
                                                WEIGHT, 
                                                CFG, 
@@ -35,6 +38,7 @@ int main (void) {
                                                cfg.yolo_confThresh(), 
                                                cfg.yolo_nmsThresh(), 
                                                cfg.yolo_resize());
+        std::cout << "detect done" << std::endl;
         if (isDetected) {
             cv::imwrite("results/" + FILENAME + ".jpg", frame);
             http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME + ".jpg");
@@ -42,6 +46,7 @@ int main (void) {
         else {
             http::post(cfg.http_url(), TIMESTAMP, 31, 99);
         }
+        std::cout << "post done" << std::endl;
     }
     gpio.shutdownRpi();
 }
