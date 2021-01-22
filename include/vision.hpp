@@ -36,8 +36,8 @@ detect (Mat& frame,
         const string& weight, 
         const string& cfg, 
         const string& names, 
-        const float& conf, 
-        const float& nms, 
+        const float& confThreshold, 
+        const float& nmsThreshold, 
         const int& resize);
 
 void
@@ -51,8 +51,8 @@ __netPostProcess (Mat& frame,
                   const Size& padSize, 
                   Net& net, 
                   const vector<Mat>& outs, 
-                  const float& conf, 
-                  const float& nms, 
+                  const float& confThreshold, 
+                  const float& nmsThreshold, 
                   const vector<string>& classes);
 
 void
