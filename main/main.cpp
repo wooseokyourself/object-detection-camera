@@ -12,7 +12,7 @@ using namespace std;
 const string WEIGHT = "bin/model/yolov4-custom_best.weights";
 const string CFG = "bin/model/yolov4-custom.cfg";
 const string NAMES = "bin/model/classes.names";
-const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000"
+const string URL = "http://ino-on.umilevx.com/api/devices/events/ino-on-0000";
 
 int main (void) {
     Gpio gpio();
