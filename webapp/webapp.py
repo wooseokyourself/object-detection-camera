@@ -47,8 +47,23 @@ def generate():
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
 			bytearray(encodedImage) + b'\r\n')
 
-@app.route('/submit', methods=['POST'])
-def submit(confidence_threshold=None, nms_threshold=None, resize=None):
+@app.route('/submit_device', methods=['POST'])
+def submit_device(device_id=None):
+    if request.method == 'POST':
+        f = open("config/confug.json", "r")
+        config = json.load(f)
+        f.close()
+        config["DEVICE"]["ID"] = request.form['device_id']
+        f.open("config/config.json", "w")
+        json.dump(config, f)
+        f.close()
+    return render_template('index.html', device_id=request.form['device_id'], 
+                                         confidence=config["YOLO"]["CONFIDENCE_THRESHOLD"],
+                                         nms=config["YOLO"]["NMS_THRESHOLD"], 
+                                         resize=config["YOLO"]["RESIZE"])
+
+@app.route('/submit_yolo', methods=['POST'])
+def submit_yolo(confidence_threshold=None, nms_threshold=None, resize=None):
     if request.method == 'POST':
         f = open("config/config.json", "r")
         config = json.load(f)
@@ -59,7 +74,8 @@ def submit(confidence_threshold=None, nms_threshold=None, resize=None):
         f = open("config/config.json", "w")
         json.dump(config, f)
         f.close()
-    return render_template('index.html', confidence=request.form['confidence_threshold'],
+    return render_template('index.html', device_id=config["DEVICE"]["ID"], 
+                                         confidence=request.form['confidence_threshold'],
                                          nms=request.form['nms_threshold'],
                                          resize=request.form['resize'])
 
@@ -68,10 +84,10 @@ def index():
     f = open("config/config.json", "r")
     config = json.load(f)
     f.close()
+    device_id = config["DEVICE"]["ID"]
     confidence, nms = config["YOLO"]["CONFIDENCE_THRESHOLD"], config["YOLO"]["NMS_THRESHOLD"]
     resize = config["YOLO"]["RESIZE"]
-    ''' 여기에서 conf, nms, resize 를 웹 상의 UI에 집어넣어야함. '''
-    return render_template('index.html', confidence=confidence, nms=nms, resize=resize)
+    return render_template('index.html', device_id=device_id, confidence=confidence, nms=nms, resize=resize)
 
 @app.route("/videoFeed")
 def videoFeed():
