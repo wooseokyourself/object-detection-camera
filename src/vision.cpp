@@ -1,4 +1,4 @@
-#include "vision.hpp"
+#include "../include/vision.hpp"
 
 void
 capture (Mat& frame, const int& resize) {
