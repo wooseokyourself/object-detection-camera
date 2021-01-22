@@ -1,7 +1,9 @@
 #ifndef GPIO
 #define GPIO
 
+extern "C" {
 #include <wiringPi.h>
+}
 #include <chrono>
 #include <thread>
 
