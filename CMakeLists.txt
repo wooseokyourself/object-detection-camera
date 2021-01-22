@@ -10,7 +10,7 @@ pkg_check_modules( OPENCV opencv4 )
 pkg_check_modules( CURL libcurl )
 pkg_check_modules( JSONCPP jsoncpp )
 
-include_directories( ${HEADER} ${OPENCV_HEADERS} ${CURL_HEADERS} ${JSONCPP_HEADERS} )
+include_directories( ${HEADER} ${OPENCV_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS} ${JSONCPP_INCLUDE_DIRS} )
 link_libraries( ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} )
 add_executable( app ${MAIN} ${SOURCE} )
 
