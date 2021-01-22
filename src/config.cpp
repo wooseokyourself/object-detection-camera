@@ -8,14 +8,14 @@ getISOCurrentTimestamp() {
 
 std::string
 getISOCurrentDate() {
-    return now = floor<chrono::days>(system_clock::now());
+    return floor<chrono::days>(system_clock::now());
 }
 
 Config::Config () {
     Json::Value root;
     Json::Reader reader;
     ifstream json("config/config.json", ifstream::binary);
-    reader.parser(json, root);
+    reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
     Json::Value YOLO = root["YOLO"];
@@ -29,7 +29,7 @@ Config::Config (std::string __jsonpath) {
     Json::Value root;
     Json::Reader reader;
     ifstream json(__jsonpath, ifstream::binary);
-    reader.parser(json, root);
+    reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
     Json::Value YOLO = root["YOLO"];
