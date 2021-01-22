@@ -23,7 +23,7 @@ int main (void) {
             std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     }
     else { // normal
-        const Config cfg;
+        Config cfg;
         const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
         cv::Mat frame;
