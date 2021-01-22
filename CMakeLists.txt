@@ -4,7 +4,7 @@ project(app)
 set( ROOT .. )
 set( HEADER ${ROOT}/include/*.hpp )
 set( SOURCE ${ROOT}/src/*.cpp )
-set( OUTPUT ${ROOT}/app.out )
+set( OUTPUT app )
 set( MAIN ${ROOT}/main/main.cpp )
 
 include_directories( ${HEADER} )
