@@ -1,7 +1,7 @@
 #include "../include/vision.hpp"
 
 void
-capture (Mat& frame, const int& resize) {
+vision::capture (Mat& frame, const int& resize) {
     try {
         VideoCapture cap;
         cap.open(0);
@@ -11,18 +11,20 @@ capture (Mat& frame, const int& resize) {
         cap.release();
     }
     catch (Exception& e) {
-        __Assert(false, FAILURE_READING);
+        vision::__Assert(false, FAILURE_READING);
     }
 }
 
 bool
-detect (Mat& frame,
+vision::detect (Mat& frame,
         const string& weight, 
         const string& cfg, 
         const string& names, 
         const float& confThreshold, 
         const float& nmsThreshold, 
         const int& resize) {
+    vision::__Assert(!frame.empty(), FAILURE_READING);
+    vector<Mat> outs;
     Net net;
     vector<cv::String> outNames;
     vector<string> classes;
@@ -33,25 +35,25 @@ detect (Mat& frame,
         net.setPreferableTarget(DNN_TARGET_CPU);
         outNames = net.getUnconnectedOutLayersNames();
 
-        ifstream ifs(CLASSES_PATH.c_str());
+        ifstream ifs(names.c_str());
         string line;
         while (std::getline(ifs, line))
             classes.push_back(line);
     }
     catch (Exception& e) {
-        __Assert(false, FAILURE_MODEL_LOADING);
+        vision::__Assert(false, FAILURE_MODEL_LOADING);
     }
 
     bool isDetected = false;
-    __netPreProcess(frame, padSize, resize, net);
+    vision::__netPreProcess(frame, padSize, resize, net);
     net.forward(outs, outNames);
-    if (__netPostProcess(frame, padSize, net, outs, confThreshold, nmsThreshold, classes) != 0)
+    if (vision::__netPostProcess(frame, padSize, net, outs, confThreshold, nmsThreshold, classes) != 0)
         isDetected = true;
     return isDetected;
 }
 
 void
-__netPreProcess (Mat& frame, 
+vision::__netPreProcess (Mat& frame, 
                  Size& padSize, 
                  const int& resize, 
                  Net& net) {
@@ -88,7 +90,7 @@ __netPreProcess (Mat& frame,
 }
 
 int
-__netPostProcess (Mat& frame, 
+vision::__netPostProcess (Mat& frame, 
                   const Size& padSize, 
                   Net& net, 
                   const vector<Mat>& outs, 
@@ -149,7 +151,7 @@ __netPostProcess (Mat& frame,
             rectangle(frame, Point(left, top), Point(right, bottom), Scalar(0, 255, 0));
             string label = format("%.2f", confidences[idx]);
             if (!classes.empty()) {
-                __Assert(classId < (int)classes.size(), FAILURE_MODEL_LOADING);
+                vision::__Assert(classId < (int)classes.size(), FAILURE_MODEL_LOADING);
                 label = classes[classId] + ": " + label;
             }
             int baseLine;
@@ -176,7 +178,7 @@ __netPostProcess (Mat& frame,
 }
 
 void 
-__Assert (bool condition, int status) {
+vision::__Assert (bool condition, int status) {
     if (!condition)
         exit(status);
 }
