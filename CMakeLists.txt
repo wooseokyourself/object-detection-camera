@@ -12,6 +12,8 @@ add_executable( ${OUTPUT} ${MAIN} ${SOURCE} )
 
 find_package( OpenCV REQUIRED )
 find_package( CURL REQUIRED )
-find_package( JSONCPP REQUIRED )
+find_package( PkgConfig REQUIRED )
+pkg_check_modules( JSONCPP jsoncpp )
+link_libraries( ${JSONCPP_LIBRARIES} )
 
-target_link_libraries( ${OUTPUT} ${OpenCV_LIBS} ${CURL_LIBS} ${JSONCPP_LIBS} )
+target_link_libraries( ${OUTPUT} ${OpenCV_LIBS} ${CURL_LIBS} ${JSONCPP_LIBS} ${JSONCPP_LIBRARIES} )
