@@ -73,21 +73,12 @@ atcmd::__sendATcmd (const int fd, const char* cmd) {
 void
 atcmd::__readBuffer (const int fd) {
     std::cout << "Pi) __readBuffer" << std::endl;
-    while (true) {
-        char buffer[100];
-        ssize_t length = read(fd, &buffer, sizeof(buffer));
-        if (length == -1) {
-            std::cerr << "Error reading from serial port" << std::endl;
-            break;
-        }
-        else if (length == 0) {
-            std::cerr << "No more data" << std::endl;
-            break;
-        }
-        else {
-            buffer[length] = '\0';
-            std::cout << buffer; // read serial data
-        }
+    char buf[1024] = {0};
+    ssize_t readBytes = 0, n = 1;
+    while (n > 0) {
+        n = read(fd, buf + readBytes, sizeof(buf));
+        readBytes += n;
     }
+    std::cout << buf << std::endl;
     printf("\n");
 }
