@@ -27,7 +27,7 @@ deviceInit () {
     
     int cnt = 0, ret;
     do {
-        atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
+        atcmd::__sendATcmd(fd, "ATE0\r"); // at 커맨드에 맞게 문자열 수정 필요
         atcmd::__readBuffer(fd);
         if (ret == 0)
             break;
