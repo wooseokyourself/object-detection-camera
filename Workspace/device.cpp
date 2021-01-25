@@ -72,6 +72,7 @@ atcmd::__sendATcmd (const int fd, const char* cmd) {
 
 void
 atcmd::__readBuffer (const int fd) {
+    std::cout << "Pi) __readBuffer" << std::endl;
     while (true) {
         char buffer[100];
         ssize_t length = read(fd, &buffer, sizeof(buffer));
