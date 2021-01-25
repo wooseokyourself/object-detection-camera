@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <iostream>
 #include <cstdlib>
 #include "../include/vision.hpp"
@@ -44,5 +45,6 @@ int main (void) {
         }
         std::cout << "post done" << std::endl;
     }
+    sync();
     gpio.shutdownRpi();
 }
