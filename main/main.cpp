@@ -14,6 +14,7 @@ const string NAMES = "bin/model/classes.names";
 int main (void) {
     Gpio gpio;
     if (gpio.isAdminMode()) {
+        std::cout << "admin mode" << std::endl;
         // Run shell script in background
         system("sudo systemctl start raspapd.service &");
         system("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000 &");
@@ -21,6 +22,7 @@ int main (void) {
             delay(3000);
     }
     else { // normal
+        std::cout << "normal mode" << std::endl;
         Config cfg;
         const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
