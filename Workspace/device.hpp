@@ -34,7 +34,7 @@ namespace atcmd {
 void
 __sendATcmd (const int fd, const char* cmd);
 
-void
+std::string
 __readBuffer (const int fd);
 
 }
