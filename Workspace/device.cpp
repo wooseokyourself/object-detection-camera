@@ -77,7 +77,7 @@ atcmd::__readBuffer (const int fd) {
     ssize_t readBytes = 0, n = 1;
     while (n > 0) {
         printf("n=%d\n", n);
-        n = read(fd, buf + readBytes, sizeof(buf));
+        int n = read(fd, buf + readBytes, sizeof(buf));
         readBytes += n;
     }
     std::cout << buf << std::endl;
