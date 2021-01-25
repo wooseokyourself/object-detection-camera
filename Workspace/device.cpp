@@ -28,8 +28,10 @@ deviceInit () {
     int cnt = 0, ret;
     do {
         atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
-        atcmd::__readBuffer(fd);
-        if (ret == 0)
+        std::string ret = atcmd::__readBuffer(fd);
+        std::cout << ret << std::endl;
+        std::cout << "ret size = " << ret.size() << std::endl;
+        if (ret == "\r\nOK\r\n")
             break;
         ++cnt;
     } while (cnt < 10);
@@ -70,16 +72,15 @@ atcmd::__sendATcmd (const int fd, const char* cmd) {
     serialPuts(fd, cmd);
 }
 
-void
+std::string
 atcmd::__readBuffer (const int fd) {
     std::cout << "Pi) __readBuffer" << std::endl;
     char buf[1024] = {0};
     ssize_t readBytes = 0;
     while (int r = read(fd, buf + readBytes, sizeof(buf)) > 0) {
-        std::cout << buf << std::endl;
         readBytes += r;
         printf("r=%d, readBytes=%d\n", r, readBytes);
     }
-    std::cout << buf << std::endl;
     printf("\n");
+    return std::string(buf);
 }
