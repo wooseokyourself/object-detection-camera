@@ -15,7 +15,7 @@ enum Pin {
     MODEM_STAT_PIN = 27
 }
 
-const char* SERIAL_PORT = "/dev/ttyS0";
+std::string SERIAL_PORT = "/dev/ttyS0";
 
 namespace gpio {
 

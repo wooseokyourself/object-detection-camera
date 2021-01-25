@@ -32,7 +32,7 @@ gpio::powerOffModem () {
 
 int
 atcmd::init () {
-    int fd = serialOpen(SERIAL_PORT, 115200);
+    int fd = serialOpen(SERIAL_PORT.c_str(), 115200);
     if (fd != -1)
         serialFlush(fd);
     int cnt = 0, ret;
