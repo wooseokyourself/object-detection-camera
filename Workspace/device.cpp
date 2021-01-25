@@ -5,7 +5,7 @@ enum Pin {
     RPI_OFF_PIN = 21,
     MODEM_PWR_PIN = 17,
     MODEM_STAT_PIN = 27
-}
+};
 
 const std::string SERIAL_PORT = "/dev/ttyS0";
 
