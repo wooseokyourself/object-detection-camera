@@ -42,5 +42,5 @@ int main (void) {
         }
         std::cout << "post done" << std::endl;
     }
-    // gpio.shutdownRpi();
+    gpio.shutdownRpi();
 }
