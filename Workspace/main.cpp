@@ -4,8 +4,8 @@
 using namespace std;
 
 int main (void) {
-    gpio::init();
     int task;
+    int fd = deviceInit();
     while(true) {
         cout << "1. Power on Modem" << endl;
         cout << "2. ATcmd Init" << endl;
@@ -14,7 +14,7 @@ int main (void) {
         if (task == 1)
             gpio::powerOnModem();
         else if (task == 2)
-            cout << "fd=" << atcmd::init() << endl;
+            cout << fd << endl;
         else if (task == 4)
             gpio::powerOffModem();
         else

@@ -9,13 +9,60 @@ enum Pin {
 
 const std::string SERIAL_PORT = "/dev/ttyS0";
 
-void
-gpio::init () {
-    wiringPiSetupGpio(); // BCM
+int
+deviceInit () {
+    int fd = serialOpen(SERIAL_PORT.c_str(), 115200);
+    if  (fd == -1) {
+        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno));
+        return -1;
+    }
+    if (wiringPiSetupGpio() == -1) { // BCM
+        fprintf(stderr, "Unable to start wiringPi: %s\n", strerror(errno));
+        return -1;
+    }
     pinMode(TASK_MODE_PIN, INPUT);
     pinMode(RPI_OFF_PIN, OUTPUT);    
     pinMode(MODEM_PWR_PIN, OUTPUT);
     pinMode(MODEM_STAT_PIN, INPUT);
+    
+
+    int count ;
+    unsigned int nextTime = millis () + 300 ;
+
+    for (count = 0 ; count < 256 ; ) {
+        if (millis () > nextTime) {
+            printf ("\nOut: %3d: ", count) ;
+            fflush (stdout) ;
+            serialPutchar (fd, count) ;
+            nextTime += 300 ;
+            ++count ;
+        }
+        delay (3) ;
+        while (serialDataAvail (fd)) {
+            printf (" -> %3d", serialGetchar (fd)) ;
+            fflush (stdout) ;
+        }
+    }
+
+    printf ("\n") ;
+    return fd;
+
+    /*
+    int cnt = 0, ret;
+    do {
+        atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
+        atcmd::__readBuffer(fd);
+        if (ret == 0)
+            break;
+        ++cnt;
+    } while (cnt < 10);
+
+    atcmd::__sendATcmd(fd, "ATE0\r");
+    atcmd::__readBuffer(fd);
+    atcmd::__sendATcmd(fd, "AT+CEREG=2\r");
+    atcmd::__readBuffer(fd);
+    */
+    return fd;
 }
 
 bool
@@ -37,26 +84,6 @@ gpio::powerOnModem () {
 void
 gpio::powerOffModem () {
     digitalWrite(MODEM_PWR_PIN, LOW);
-}
-
-int
-atcmd::init () {
-    int fd = serialOpen(SERIAL_PORT.c_str(), 115200);
-    int cnt = 0, ret;
-    do {
-        atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
-        atcmd::__readBuffer(fd);
-        if (ret == 0)
-            break;
-        ++cnt;
-    } while (cnt < 10);
-
-    atcmd::__sendATcmd(fd, "ATE0\r");
-    atcmd::__readBuffer(fd);
-    atcmd::__sendATcmd(fd, "AT+CEREG=2");
-    atcmd::__readBuffer(fd);
-
-    return fd;
 }
 
 void
@@ -82,5 +109,5 @@ atcmd::__readBuffer (const int fd) {
             std::cout << buffer; // read serial data
         }
     }
-    std::cout << std::endl;
+    printf("\n");
 }

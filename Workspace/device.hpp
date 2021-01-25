@@ -3,15 +3,17 @@
 
 #include <unistd.h>
 #include <cstring>
+#include <cstdio>
+#include <cerror>
 #include <iostream>
 #include <string>
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-namespace gpio {
+int
+deviceInit ();
 
-void
-init ();
+namespace gpio {
 
 bool
 isAdminMode ();
@@ -28,9 +30,6 @@ powerOffModem ();
 }
 
 namespace atcmd {
-
-int
-init ();
 
 void
 __sendATcmd (const int fd, const char* cmd);
