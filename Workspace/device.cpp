@@ -68,7 +68,7 @@ gpio::powerOffModem () {
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
-    // serialFlush(fd);
+    serialFlush(fd);
     serialPuts(fd, cmd);
 }
 
@@ -79,8 +79,8 @@ atcmd::__readBuffer (const int fd) {
     ssize_t readBytes = 0;
     while (int r = read(fd, buf + readBytes, sizeof(buf)) > 0) {
         readBytes += r;
-        printf("r=%d, readBytes=%d\n", r, readBytes);
+        // printf("r=%d, readBytes=%d\n", r, readBytes);
     }
-    printf("\n");
+    // printf("\n");
     return std::string(buf);
 }
