@@ -42,8 +42,6 @@ gpio::powerOffModem () {
 int
 atcmd::init () {
     int fd = serialOpen(SERIAL_PORT.c_str(), 115200);
-    if (fd != -1)
-        serialFlush(fd);
     int cnt = 0, ret;
     do {
         atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
@@ -63,7 +61,6 @@ atcmd::init () {
 
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
-    serialFlush(fd);
     serialPuts(fd, cmd);
 }
 
