@@ -8,15 +8,6 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-enum Pin {
-    TASK_MODE_PIN = 20,
-    RPI_OFF_PIN = 21,
-    MODEM_PWR_PIN = 17,
-    MODEM_STAT_PIN = 27
-}
-
-std::string SERIAL_PORT = "/dev/ttyS0";
-
 namespace gpio {
 
 void
