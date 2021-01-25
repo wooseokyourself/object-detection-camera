@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <cstdio>
-#include <cerror>
+#include <error.h>
 #include <iostream>
 #include <string>
 #include <wiringPi.h>
