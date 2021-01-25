@@ -31,6 +31,9 @@ powerOffModem ();
 
 namespace atcmd {
 
+int
+getRSSI (const int fd);
+
 void
 __sendATcmd (const int fd, const char* cmd);
 

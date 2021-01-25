@@ -65,6 +65,14 @@ gpio::powerOffModem () {
     digitalWrite(MODEM_PWR_PIN, LOW);
 }
 
+int
+atcmd::getRSSI (const int fd) {
+    atcmd::__sendATcmd(fd, "AT+CSQ\r");
+    std::string ret = atcmd::__readBuffer(fd);
+    std::cout << ret << std::endl;
+    return 0;
+}
+
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;

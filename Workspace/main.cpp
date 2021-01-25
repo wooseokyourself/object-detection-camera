@@ -14,7 +14,7 @@ int main (void) {
         if (task == 1)
             gpio::powerOnModem();
         else if (task == 2)
-            cout << fd << endl;
+            atcmd::getRSSI(fd);
         else if (task == 4)
             gpio::powerOffModem();
         else
