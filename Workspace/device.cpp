@@ -85,7 +85,7 @@ atcmd::__readBuffer (const int fd) {
     std::cout << "Pi) __readBuffer" << std::endl;
     char buf[1024] = {0};
     ssize_t readBytes = 0;
-    while (int r = read(fd, buf + readBytes, sizeof(buf)) > 0) {
+    while (int r = read(fd, buf + readBytes, 4) > 0) {
         readBytes += r;
         // printf("r=%d, readBytes=%d\n", r, readBytes);
     }
