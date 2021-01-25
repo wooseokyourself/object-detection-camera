@@ -50,6 +50,7 @@ atcmd::init () {
         atcmd::__readBuffer(fd);
         if (ret == 0)
             break;
+        ++cnt;
     } while (cnt < 10);
 
     atcmd::__sendATcmd(fd, "ATE0\r");
