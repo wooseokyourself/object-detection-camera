@@ -73,7 +73,7 @@ atcmd::__readBuffer (const int fd) {
             break;
         }
         else if (length == 0) {
-            std::cerr << "No more data" << endl;
+            std::cerr << "No more data" << std::endl;
             break;
         }
         else {
