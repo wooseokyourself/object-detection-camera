@@ -29,11 +29,8 @@ powerOffModem ();
 
 namespace atcmd {
 
-std::string
-getRssi ();
-
-void
-post ();
+int
+init ();
 
 void
 __sendATcmd (const int fd, const char* cmd);
