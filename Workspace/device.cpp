@@ -25,29 +25,6 @@ deviceInit () {
     pinMode(MODEM_PWR_PIN, OUTPUT);
     pinMode(MODEM_STAT_PIN, INPUT);
     
-
-    int count ;
-    unsigned int nextTime = millis () + 300 ;
-
-    for (count = 0 ; count < 256 ; ) {
-        if (millis () > nextTime) {
-            printf ("\nOut: %3d: ", count) ;
-            fflush (stdout) ;
-            serialPutchar (fd, count) ;
-            nextTime += 300 ;
-            ++count ;
-        }
-        delay (3) ;
-        while (serialDataAvail (fd)) {
-            printf (" -> %3d", serialGetchar (fd)) ;
-            fflush (stdout) ;
-        }
-    }
-
-    printf ("\n") ;
-    return fd;
-
-    /*
     int cnt = 0, ret;
     do {
         atcmd::__sendATcmd(fd, "AT\r"); // at 커맨드에 맞게 문자열 수정 필요
@@ -61,7 +38,7 @@ deviceInit () {
     atcmd::__readBuffer(fd);
     atcmd::__sendATcmd(fd, "AT+CEREG=2\r");
     atcmd::__readBuffer(fd);
-    */
+    
     return fd;
 }
 
