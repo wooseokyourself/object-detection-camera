@@ -8,6 +8,9 @@ detector
 *.weights
 *.cfg
 
+### Logs ###
+logs/*.txt
+
 ### C++ ###
 # Prerequisites
 *.d
