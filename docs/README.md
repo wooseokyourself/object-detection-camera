@@ -12,7 +12,7 @@
     + [Build](https://github.com/UmileVX/ino-on_AICamera#build)
     + [Run](https://github.com/UmileVX/ino-on_AICamera#run)
     + [Test](https://github.com/UmileVX/ino-on_AICamera#test)
-+ [Error Code](https://github.com/UmileVX/ino-on_AICamera#)
++ [Error Code](https://github.com/UmileVX/ino-on_AICamera#error-code)
 + [Resources](https://github.com/UmileVX/ino-on_AICamera#resources)
 
 ****
@@ -86,8 +86,12 @@ pi@raspberrypi:~ $ sudo raspi-config
 3. B2 Console Autologin 혹은 B4 Desktop Autologin 선택
 
 + 부팅시 프로그램 자동 실행 설정 (모든 Requirements 들을 설치 후 제일 마지막에 설정)
-`~/.profile` 파일에 다음을 입력   
-```python3 ~/ino-on_AiCamera/app.py --p 1```
+`~/.profile` 파일 제일 하단에 다음을 입력   
+```
+cd ino-on_AICamera
+find logs/*.txt -type f -mtime +7 -exec rm {} + # 7일 지난 로그파일 삭제
+./build/app 2>>&1 | tee -a logs/$(date +%Y-%m-%d).txt 
+```
 
 
 ### 2. PPP
@@ -252,6 +256,12 @@ pi@raspberrypi:~/ino-on_AICamera/test $
 ```console
 pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
+****
+
+# Error Code
+- 다음의 에러 코드는 서버의 RSSI 값에 수신된다.
+
+
 ****
 
 # Resources
