@@ -90,6 +90,7 @@ pi@raspberrypi:~ $ sudo raspi-config
 ```
 cd ino-on_AICamera
 find logs/*.txt -type f -mtime +7 -exec rm {} + # 7일 지난 로그파일 삭제
+mkdir -p logs
 ./build/app 2>>&1 | tee -a logs/$(date +%Y-%m-%d).txt 
 ```
 
