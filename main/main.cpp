@@ -14,7 +14,7 @@ const string NAMES = "bin/model/classes.names";
 
 int main (void) {
     const string TIMESTAMP = getISOCurrentTimestamp();
-    std::cout << "START PROCESS IN SYSTEM TIME: " << TIMESTAMP << std::endl;
+    std::cout << "\nSTART PROCESS IN SYSTEM TIME: " << TIMESTAMP << std::endl;
     Gpio gpio;
     if (gpio.isAdminMode()) {
         std::cout << " <admin mode>" << std::endl;
@@ -46,6 +46,6 @@ int main (void) {
         }   
     }
     sync();
-    std::cout << "END PROCESS." << std::endl;
+    std::cout << "END PROCESS.\n" << std::endl;
     gpio.shutdownRpi();
 }
