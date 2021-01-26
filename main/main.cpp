@@ -13,19 +13,20 @@ const string CFG = "bin/model/yolov4-custom.cfg";
 const string NAMES = "bin/model/classes.names";
 
 int main (void) {
+    const string TIMESTAMP = getISOCurrentTimestamp();
+    std::cout << "START PROCESS IN SYSTEM TIME: " << TIMESTAMP << std::endl;
     Gpio gpio;
     if (gpio.isAdminMode()) {
-        std::cout << "admin mode" << std::endl;
+        std::cout << " <admin mode>" << std::endl;
         // Run shell script in background
         system("sudo systemctl start raspapd.service &");
         system("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000 &");
         while (gpio.isAdminMode())
             delay(3000);
     }
-    else { // normal
-        std::cout << "normal mode" << std::endl;
+    else {
+        std::cout << " <normal mode>" << std::endl;
         Config cfg;
-        const string TIMESTAMP = getISOCurrentTimestamp();
         const string FILENAME = getISOCurrentDate();
         cv::Mat frame;
         vision::capture(frame, cfg.yolo_resize());
@@ -42,9 +43,9 @@ int main (void) {
         }
         else {
             http::post(cfg.http_url(), TIMESTAMP, 31, 99);
-        }
-        std::cout << "post done" << std::endl;
+        }   
     }
     sync();
+    std::cout << "END PROCESS." << std::endl;
     gpio.shutdownRpi();
 }
