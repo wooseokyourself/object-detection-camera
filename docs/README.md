@@ -1,18 +1,19 @@
 ### Contents
-+ [Description](https://github.com/UmileVX/ino-on_AiCam#description)   
-+ [Requirements](https://github.com/UmileVX/ino-on_AiCam#requirements)
-    + [Software Requirements](https://github.com/UmileVX/ino-on_AiCam#software-requirements)
-    + [PIP3 Packages](https://github.com/UmileVX/ino-on_AiCam#pip3-packages)
-    + [Setup Guide for Plain Raspberry Pi 4B](https://github.com/UmileVX/ino-on_AiCam#setup-guide-for-plain-raspberry-pi-4b)
-+ [Configuration](https://github.com/UmileVX/ino-on_AiCam#configuration)
-    + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AiCam#raspberry-pi-gpio-pin-number-bcm)
-    + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AiCam#yolov4-configuration-json)
-    + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AiCam#http-request-to-server)
-+ [Usage](https://github.com/UmileVX/ino-on_AiCam#usage)
-    + [Build](https://github.com/UmileVX/ino-on_AiCam#build)
-    + [Run](https://github.com/UmileVX/ino-on_AiCam#run)
-    + [Test](https://github.com/UmileVX/ino-on_AiCam#test)
-+ [Resources](https://github.com/UmileVX/ino-on_AiCam#resources)
++ [Description](https://github.com/UmileVX/ino-on_AICamera#description)   
++ [Requirements](https://github.com/UmileVX/ino-on_AICamera#requirements)
+    + [Software Requirements](https://github.com/UmileVX/ino-on_AICamera#software-requirements)
+    + [PIP3 Packages](https://github.com/UmileVX/ino-on_AICamera#pip3-packages)
+    + [Setup Guide for Plain Raspberry Pi 4B](https://github.com/UmileVX/ino-on_AICamera#setup-guide-for-plain-raspberry-pi-4b)
++ [Configuration](https://github.com/UmileVX/ino-on_AICamera#configuration)
+    + [Raspberry Pi GPIO Pin Number (BCM)](https://github.com/UmileVX/ino-on_AICamera#raspberry-pi-gpio-pin-number-bcm)
+    + [Yolov4 Configuration (Json)](https://github.com/UmileVX/ino-on_AICamera#yolov4-configuration-json)
+    + [HTTP Request to Server](https://github.com/UmileVX/ino-on_AICamera#http-request-to-server)
++ [Usage](https://github.com/UmileVX/ino-on_AICamera#usage)
+    + [Build](https://github.com/UmileVX/ino-on_AICamera#build)
+    + [Run](https://github.com/UmileVX/ino-on_AICamera#run)
+    + [Test](https://github.com/UmileVX/ino-on_AICamera#test)
++ [Error Code](https://github.com/UmileVX/ino-on_AICamera#)
++ [Resources](https://github.com/UmileVX/ino-on_AICamera#resources)
 
 ****
 
@@ -220,36 +221,36 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
 
 ## Build
 ```console
-pi@raspberrypi:~/ino-on_AiCam $ mkdir build && cd build && cmake .. && make && cd ..
-pi@raspberrypi:~/ino-on_AiCam $ cd bin/model && ./getModel.sh # 모델 다운로드
-pi@raspberrypi:~/ino-on_AiCam $ mkdir results # 결과 이미지가 저장될 디렉토리
+pi@raspberrypi:~/ino-on_AICamera $ mkdir build && cd build && cmake .. && make && cd ..
+pi@raspberrypi:~/ino-on_AICamera $ cd bin/model && ./getModel.sh # 모델 다운로드
+pi@raspberrypi:~/ino-on_AICamera $ mkdir results # 결과 이미지가 저장될 디렉토리
 ```
 
 ## Run
 ```console
-pi@raspberrypi:~/ino-on_AiCam $ ./build/app # 본 프로젝트 디렉토리에서 실행해야한다.
+pi@raspberrypi:~/ino-on_AICamera $ ./build/app # 본 프로젝트 디렉토리에서 실행해야한다.
 ```
 
 ## Test
 
 ### AT Command: 모뎀 전원 켜기
 ```console
-pi@raspberrypi:~/ino-on_AiCam/test $ 
+pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
 
 ### AT Command: 모뎀 전원 끄기
 ```console
-pi@raspberrypi:~/ino-on_AiCam/test $ 
+pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
 
 ### AT Command: RSSI 값 얻기
 ```console
-pi@raspberrypi:~/ino-on_AiCam/test $ 
+pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
 
 ### AT Command: 이미지와 함께 서버에 multipart/form-data 형식의 POST 전송하기
 ```console
-pi@raspberrypi:~/ino-on_AiCam/test $ 
+pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
 ****
 
