@@ -21,6 +21,7 @@ int main (void) {
         // Run shell script in background
         system("sudo systemctl start raspapd.service &");
         system("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000 &");
+        system("python3 -m browsepy 0.0.0.0 4001 --directory . &");
         while (gpio.isAdminMode())
             delay(3000);
     }
