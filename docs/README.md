@@ -92,6 +92,7 @@ cd ino-on_AICamera
 # 7일 지난 로그파일 삭제
 find logs/*.txt -type f -mtime +7 -exec rm {} +
 mkdir -p logs
+mkdir -p results
 ./build/app 2>&1 | tee -a logs/$(date +%Y-%m-%d).txt 
 ```
 
@@ -198,8 +199,8 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
         "event"="1"
         "rssi"="-31"
         "battery"="97"
-        "filename"="image001.jpg"
-        "files"="@test_event.jpg"
+        "filename"="2021-01-08.jpg"
+        "files"="@results/2021-01-08.jpg"
     }
     ```
     + 이벤트가 없을 경우 
