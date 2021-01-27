@@ -180,7 +180,7 @@ vision::__netPostProcess (Mat& frame,
 void 
 vision::__Assert (bool condition, int status) {
     if (!condition) {
-        printf("vision error exit code %d", status);
+        printf("ino-on_AICamera %d", status);
         exit(status);
     }
 }
