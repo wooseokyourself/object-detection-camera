@@ -47,5 +47,6 @@ int main (void) {
     }
     sync();
     std::cout << "END PROCESS.\n" << std::endl;
+    delay(3000);
     gpio.shutdownRpi();
 }
