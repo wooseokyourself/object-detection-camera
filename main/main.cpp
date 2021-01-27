@@ -27,7 +27,7 @@ int main (void) {
     else {
         std::cout << " <normal mode>" << std::endl;
         Config cfg;
-        const string FILENAME = getISOCurrentDate();
+        const string FILENAME = getISOCurrentDate() + ".jpg";
         cv::Mat frame;
         vision::capture(frame, cfg.yolo_resize());
         const bool isDetected = vision::detect(frame, 
@@ -38,8 +38,8 @@ int main (void) {
                                                cfg.yolo_nmsThresh(), 
                                                cfg.yolo_resize());
         if (isDetected) {
-            cv::imwrite("results/" + FILENAME + ".jpg", frame);
-            http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME + ".jpg");
+            cv::imwrite("results/" + FILENAME, frame);
+            http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME);
         }
         else {
             http::post(cfg.http_url(), TIMESTAMP, 31, 99);
