@@ -23,7 +23,7 @@ app = Flask(__name__)
 vs = VideoStream(usePiCamera=1, framerate=6).start()
 time.sleep(2.0)
 
-def readFrame(frameCount):
+def readFrame():
     global vs, outputFrame, lock
     while True:
         frame = vs.read()
@@ -104,8 +104,12 @@ if __name__ == '__main__':
 	ap.add_argument("-o", "--port", type=int, required=True,
 		help="ephemeral port number of the server (1024 to 65535)")
 	args = vars(ap.parse_args())
+    t = threading.Thread(target=readFrame)
+    t.daemon = True
+    t.start()
 	# start the flask app
 	app.run(host=args["ip"], port=args["port"], debug=True,
 		threaded=True, use_reloader=False)
+
 # release the video stream pointer
 vs.stop()
