@@ -98,18 +98,17 @@ def videoFeed():
 
 if __name__ == '__main__':
 	# construct the argument parser and parse command line arguments
-	ap = argparse.ArgumentParser()
-	ap.add_argument("-i", "--ip", type=str, required=True,
-		help="ip address of the device")
-	ap.add_argument("-o", "--port", type=int, required=True,
-		help="ephemeral port number of the server (1024 to 65535)")
-	args = vars(ap.parse_args())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-i", "--ip", type=str, required=True,
+        help="ip address of the device")
+    ap.add_argument("-o", "--port", type=int, required=True,
+        help="ephemeral port number of the server (1024 to 65535)")
+    args = vars(ap.parse_args())
     t = threading.Thread(target=readFrame)
     t.daemon = True
     t.start()
 	# start the flask app
-	app.run(host=args["ip"], port=args["port"], debug=True,
+    app.run(host=args["ip"], port=args["port"], debug=True,
 		threaded=True, use_reloader=False)
-
 # release the video stream pointer
 vs.stop()
