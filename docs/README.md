@@ -173,10 +173,10 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
 + ~~CAT.M1 모뎀 상태: 27 input~~
     > HIGH: 모뎀 인식   
     > LOW: 모뎀 미인식   
-    
+
 **모뎀전원이 라즈베리파이 전원과 동일하게 온/오프 되도록 변경되어서 더이상 라즈베리파이에서 모뎀을 제어하지 않는다.**
 
-※ 모든 핀 번호는 `Gpio` 클래스의 생성자에 에 정의되어있다.   
+※ 모든 핀 번호는 `Gpio` 클래스의 생성자에 정의되어있다.   
 
 ## Yolov4 Configuration (Json)
 + `config/config.json`
