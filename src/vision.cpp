@@ -118,10 +118,7 @@ vision::__netPostProcess (Mat& frame,
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
                     // Take a limit on size of the detecting boxes.
-                    if (width * height >= (frame.cols * frame.rows) / 2
-                        || width >= frame.cols // * 5 / 6
-                        || height >= frame.cols // * 5 / 6
-                        )
+                    if (width >= frame.cols || height >= frame.rows)
                         continue;
                     int centerX = (int)(data[0] * frame.cols);
                     int centerY = (int)(data[1] * frame.rows);
@@ -143,6 +140,7 @@ vision::__netPostProcess (Mat& frame,
     for (size_t i = 0; i < indices.size(); ++i) {   
         int idx = indices[i];
         if (classIds[idx] == 0) { // Draw rectangle if class is for excavator.
+	    std::cout << "excavator: " << confidences[idx] << std::endl;
             excavatorCount ++;
             Rect box = boxes[idx];
             int left = box.x;
