@@ -115,11 +115,12 @@ vision::__netPostProcess (Mat& frame,
                 if (confidence > confThreshold) {
                     int width = (int)(data[2] * frame.cols);
                     int height = (int)(data[3] * frame.rows);
-                    // Take a limit on size of the detecting boxes.
+                    /* // Take a limit on size of the detecting boxes.
                     if (width * height >= (frame.cols * frame.rows) / 2
                         || width >= frame.cols * 4 / 5
                         || height >= frame.cols * 4 / 5)
                         continue;
+                    */
                     int centerX = (int)(data[0] * frame.cols);
                     int centerY = (int)(data[1] * frame.rows);
                     int left = centerX - width / 2;
