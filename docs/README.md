@@ -25,7 +25,7 @@
 관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.   
 
 ## Network
-Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
+Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 Workspace 에서 구현 및 테스트중이고 (issue #2, #6) 실제 구현은 PPP 인터페이스를 사용중이다.
 
 ## Normal Mode
 1. 모뎀 전원 연결
@@ -138,13 +138,6 @@ Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
 pi@raspberrypi:~ $ sudo rfkill unblock wlan
 ```
 
-#### 2.2. PPP Enable/Disable
-+ 모뎀 전원이 켜져있을 때, PPP를 `sudo pon`으로 활성화하고, `sudo poff` 로 비활성화 할 수 있다.
-+ 임의로 모뎀에 전원을 넣기 위해서는 test 디렉토리에서 `test/catm1PwrOf.py` 를 실행시키면 된다.
-+ 임의로 모뎀에 전원을 차단하기 위해서는 test 디렉토리에서 `test/catm1PwrOff.py` 를 실행시키면 된다.
-+ 무선랜이 연결되어있는 경우, `sudo ifconfig wlan0 down` 으로 무선랜을 비활성화 한 뒤 PPP 네트워크 연결을 확인한다.
-
-
 ### 3. RaspAP
 #### 3.1. RaspAP Install
 + RaspAP 설치 방법 ([reference](https://github.com/billz/raspap-webgui))
@@ -174,12 +167,13 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
 + 작업 완료 알림: 21 output   
     > HIGH: pi 작업 완료   
     > LOW: pi 작업 진행중
-+ CAT.M1 모뎀 전원 관리: 17 output
++ ~~CAT.M1 모뎀 전원 관리: 17 output~~
     > HIGH: 모뎀 전원 연결   
     > LOW: 모뎀 전원 차단
-+ CAT.M1 모뎀 상태: 27 input
++ ~~CAT.M1 모뎀 상태: 27 input~~
     > HIGH: 모뎀 인식   
     > LOW: 모뎀 미인식
+**모뎀전원이 라즈베리파이 전원과 동일하게 온/오프 되도록 변경되어서 더이상 라즈베리파이에서 모뎀을 제어하지 않는다.**
 
 ※ 모든 핀 번호는 `Gpio` 클래스의 생성자에 에 정의되어있다.   
 
@@ -246,29 +240,6 @@ pi@raspberrypi:~/ino-on_AICamera $ cd bin/model && ./getModel.sh # 모델 다운
 pi@raspberrypi:~/ino-on_AICamera $ ./build/app # 본 프로젝트 디렉토리에서 실행해야한다.
 ```
 
-## Test
-**진행중..**
-
-### AT Command: 모뎀 전원 켜기
-```console
-pi@raspberrypi:~/ino-on_AICamera/test $ 
-```
-
-### AT Command: 모뎀 전원 끄기
-```console
-pi@raspberrypi:~/ino-on_AICamera/test $ 
-```
-
-### AT Command: RSSI 값 얻기
-```console
-pi@raspberrypi:~/ino-on_AICamera/test $ 
-```
-
-### AT Command: 이미지와 함께 서버에 multipart/form-data 형식의 POST 전송하기
-```console
-pi@raspberrypi:~/ino-on_AICamera/test $ 
-```
-
 ****
 
 # Resources
@@ -281,7 +252,6 @@ pi@raspberrypi:~/ino-on_AICamera/test $
 + [RaspAP](https://raspap.com/)
 + [PPP](https://sixfab.com/ppp-installer-for-sixfab-shield-hat/)
 + [Browsepy](https://pypi.org/project/browsepy/0.4.0/)
-+ [CATM1](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/)
 
 **Code reference**
 + [Camera-preview](https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/)
@@ -291,3 +261,4 @@ pi@raspberrypi:~/ino-on_AICamera/test $
 **Others**
 + [ACID-dateset](https://www.acidb.ca/)
 + [Darknet](https://github.com/AlexeyAB/darknet/)
++ [CATM1](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/)
