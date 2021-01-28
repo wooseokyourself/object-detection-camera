@@ -234,7 +234,7 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
 ****
 
 # Usage
-
+**[Requirements](https://github.com/UmileVX/ino-on_AICamera#requirements) 를 먼저 만족해야 정상적으로 동작한다.**
 ## Build
 ```console
 pi@raspberrypi:~/ino-on_AICamera $ mkdir build && cd build && cmake .. && make && cd ..
