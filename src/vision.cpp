@@ -47,8 +47,10 @@ vision::detect (Mat& frame,
     bool isDetected = false;
     vision::__netPreProcess(frame, padSize, resize, net);
     net.forward(outs, outNames);
-    if (vision::__netPostProcess(frame, padSize, net, outs, confThreshold, nmsThreshold, classes) != 0)
+    if (vision::__netPostProcess(frame, padSize, net, outs, confThreshold, nmsThreshold, classes) != 0) {
         isDetected = true;
+	std::cout << "Excavator detected!" << std::endl;
+    }
     return isDetected;
 }
 
