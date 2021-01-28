@@ -12,7 +12,6 @@
     + [Build](https://github.com/UmileVX/ino-on_AICamera#build)
     + [Run](https://github.com/UmileVX/ino-on_AICamera#run)
     + [Test](https://github.com/UmileVX/ino-on_AICamera#test)
-+ [Error Code](https://github.com/UmileVX/ino-on_AICamera#error-code)
 + [Resources](https://github.com/UmileVX/ino-on_AICamera#resources)
 
 ****
@@ -23,7 +22,7 @@
 사진을 촬영하고 포크레인을 검출한 뒤 결과값을 서버에 보내는 작업을 의미한다.
 
 #### Admin mode (Admin task)
-관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.
+관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.   
 
 ## Network
 Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 아직 제대로 구현이 되지 않았다. 
@@ -38,7 +37,12 @@ Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
 
 ## Admin Mode
 1. 모뎀 전원 연결
-2. 웹서버 실행 (webapp 디렉토리 소스코드)
+2. AP 및 웹서버 실행
++ SSID: ino-on-camera / Password: 00000000
+    + RaspAP 기본 웹페이지 (라즈베리파이 네트워크 관련 설정): 10.3.141.1
+        + ID: admin / Password: secret
+    + Configuration 설정 및 카메라 프리뷰 페이지: 10.3.141.1:4000
+    + 라즈베리파이 내부 디렉토리 브라우저 탐색 페이지: 10.3.141.1:4001
 3. NRF에게 종료신호 송신
 
 ****
@@ -67,6 +71,9 @@ pi@raspberrypi:~ $ pip3 install numpy
 pi@raspberrypi:~ $ pip3 install opencv-python
 pi@raspberrypi:~ $ pip3 install imutils
 pi@raspberrypi:~ $ pip3 install browsepy
+pi@raspberrypi:~ $ pip3 install --upgrade --force-reinstall unicategories
+pi@raspberrypi:~ $ pip3 install -I unicategories
+pi@raspberrypi:~ $ pip3 install --ignore-installed unicategories
 ```
 
 ## Setup Guide for Plain Raspberry Pi 4B
@@ -144,21 +151,22 @@ pi@raspberrypi:~ $ sudo rfkill unblock wlan
 ```console
 pi@raspberrypi:~ $ curl -sL https://install.raspap.com | bash
 ```
-+ 라즈베리파이에서 localhost 웹에 접속하면 라즈베리파이의 시스템 정보 등과 함께 RaspAP 설정 가능
-    + ID: admin / Password: secret
-+ 외부에서 와이파이로 접속할 경우, SSID: raspi-webgui / Password: ChangeMe
-    + 게이트웨이: 10.3.141.1
-    + 웹서버에 접속할 경우: 10.3.141.1:4000 
-+ 나는 라즈베리파이의 부팅시간을 줄이기 위해 ```dhcpcd```와 ```raspapd``` 서비스를 비활성화 한 뒤 관리자모드에 진입하였을 때에만 ```raspapd```를 활성화하도록 코드를 짰다.
++ ```raspapd.service``` 가 활성화된 상태에서, 외부에서 SSID=raspi-webgui / Password=ChangeMe 로 와이파이 연결이 가능하다.
++ 외부 단말에서 라즈베리파이의 와이파이에 연결 후 10.3.141.1 웹에 접속하면 라즈베리파이의 시스템 정보 등과 함께 RaspAP 설정 가능
+    + 사이트 ID: admin / Password: secret
++ 본 프로젝트에서 라즈베리파이 와이파이를 다음과 같이 변경한다. (10.3.141.1 에서 변경가능)
+    + SSID: ino-on-camera(default=raspi-webgui) / Password: 00000000(default=ChangeMe)
++ 나는 라즈베리파이의 부팅시간을 줄이기 위해 ```dhcpcd.service```와 ```raspapd.service``` 를 비활성화 한 뒤, 관리자모드에 진입하였을 때에만 ```raspapd.service```를 활성화하도록 코드를 짰다.
 ```console
 pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
-# 이후 개발단계에서 외부인터넷을 사용할 일이 있으면 sudo systemctl start dhcpcd.service 를 해야 한다.
+# 이후 개발단계에서 외부인터넷을 사용할 일이 있으면 sudo systemctl start dhcpcd.service 를 해야 이더넷을 사용할 수 있다.
 ```
 
 ****
 
 # Configuration
+**GPIO 를 제외한 모든 값들은 관리자모드를 통해 외부에서 변경할 수 있다.**
 ## Raspberry Pi GPIO Pin Number (BCM)
 + 작동상태 모드 확인: 20 input   
     > HIGH: Admin mode   
@@ -231,7 +239,6 @@ pi@raspberrypi:~ $ sudo systemctl disable raspapd.service
 ```console
 pi@raspberrypi:~/ino-on_AICamera $ mkdir build && cd build && cmake .. && make && cd ..
 pi@raspberrypi:~/ino-on_AICamera $ cd bin/model && ./getModel.sh # 모델 다운로드
-pi@raspberrypi:~/ino-on_AICamera $ mkdir results # 결과 이미지가 저장될 디렉토리
 ```
 
 ## Run
@@ -240,6 +247,7 @@ pi@raspberrypi:~/ino-on_AICamera $ ./build/app # 본 프로젝트 디렉토리�
 ```
 
 ## Test
+**진행중..**
 
 ### AT Command: 모뎀 전원 켜기
 ```console
@@ -260,14 +268,26 @@ pi@raspberrypi:~/ino-on_AICamera/test $
 ```console
 pi@raspberrypi:~/ino-on_AICamera/test $ 
 ```
-****
-
-# Error Code
-- 다음의 에러 코드는 서버의 RSSI 값에 수신된다.
-
 
 ****
 
 # Resources
-* [OpenCV](https://opencv.org/)
-* [CATM1](https://github.com/codezoo-ltd/CAT.M1_RaspberryPi/)
+**Imported**
++ [WiringPi](http://wiringpi.com/)
++ [OpenCV](https://opencv.org/)
++ [libcurl](https://curl.se/libcurl/)
++ [JsonCpp](http://open-source-parsers.github.io/jsoncpp-docs/doxygen/index.html/)
++ [Date](https://github.com/HowardHinnant/date/)
++ [RaspAP](https://raspap.com/)
++ [PPP](https://sixfab.com/ppp-installer-for-sixfab-shield-hat/)
++ [Browsepy](https://pypi.org/project/browsepy/0.4.0/)
++ [CATM1](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/)
+
+**Code reference**
++ [Camera-preview](https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/)
++ [Responsive-web-design](https://github.com/sdhutchins/flask-demo/)
++ [Opencv-dnn-yolo](https://github.com/opencv/opencv/blob/master/samples/dnn/object_detection.cpp/)
+
+**Others**
++ [ACID-dateset](https://www.acidb.ca/)
++ [Darknet](https://github.com/AlexeyAB/darknet/)
