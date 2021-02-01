@@ -12,6 +12,7 @@
     + [Build](https://github.com/UmileVX/ino-on_AICamera#build)
     + [Run](https://github.com/UmileVX/ino-on_AICamera#run)
     + [Test](https://github.com/UmileVX/ino-on_AICamera#test)
++ [Others](https://github.com/UmileVX/ino-on_AICamera#others)
 + [Resources](https://github.com/UmileVX/ino-on_AICamera#resources)
 
 ****
@@ -240,6 +241,9 @@ pi@raspberrypi:~/ino-on_AICamera $ cd bin/model && ./getModel.sh # 모델 다운
 ```console
 pi@raspberrypi:~/ino-on_AICamera $ ./build/app # 본 프로젝트 디렉토리에서 실행해야한다.
 ```
+****
+
+# Others
 
 ****
 
