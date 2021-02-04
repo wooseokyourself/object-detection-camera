@@ -20,7 +20,7 @@ import cv2
 outputFrame = None
 lock = threading.Lock()
 app = Flask(__name__)
-vs = VideoStream(usePiCamera=1, framerate=1).start()
+vs = VideoStream(usePiCamera=1, framerate=6).start()
 # vs = VideoStream(src=0, framerate=1).start()
 time.sleep(2.0)
 
