@@ -1,7 +1,3 @@
-```console
-yourMacOS:Yolo_Label you$ qmake
-yourMacOS:Yolo_Label you$ make
-```
 ### Contents
 + [Description](https://github.com/UmileVX/ino-on_AICamera#description)   
 + [Requirements](https://github.com/UmileVX/ino-on_AICamera#requirements)
