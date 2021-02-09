@@ -76,7 +76,7 @@ http::post (const string& url,
         curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeoutsecs);
 
         CURLcode res = curl_easy_perform(curl);
-        while (res != CURLE_OK || res != CURLE_OPERATION_TIMEDOUT) {
+        while (res != CURLE_OK && res != CURLE_OPERATION_TIMEDOUT) {
             res = curl_easy_perform(curl);
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
             delay(2500);
@@ -146,7 +146,7 @@ http::post (const string& url,
         curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeoutsecs);
 
         CURLcode res = curl_easy_perform(curl);
-        while (res != CURLE_OK || res != CURLE_OPERATION_TIMEDOUT) {
+        while (res != CURLE_OK && res != CURLE_OPERATION_TIMEDOUT) {
             res = curl_easy_perform(curl);
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
             delay(2500);
