@@ -6,7 +6,8 @@ http::post (const string& url,
             const int& rssi,
             const int& battery, 
             const string& filename, 
-            const string& filepath) {
+            const string& filepath, 
+            const long& timeoutsecs) {
 
     struct curl_httppost* formpost = NULL;
     struct curl_httppost* lastptr = NULL;
@@ -72,6 +73,7 @@ http::post (const string& url,
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeoutsecs);
 
         CURLcode res = curl_easy_perform(curl);
         while (res != CURLE_OK) {
@@ -91,7 +93,8 @@ bool
 http::post (const string& url, 
             const string& time,
             const int& rssi,
-            const int& battery) {
+            const int& battery, 
+            const long& timeoutsecs) {
 
     struct curl_httppost* formpost = NULL;
     struct curl_httppost* lastptr = NULL;
@@ -136,6 +139,7 @@ http::post (const string& url,
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeoutsecs);
 
         CURLcode res = curl_easy_perform(curl);
         while (res != CURLE_OK) {

@@ -22,6 +22,7 @@ Config::Config () {
     this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
     this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
+    this->HTTP_TIMEOUT_SECS = std::stof(SERVER["HTTP_TIMEOUT"].asString());
 }
 
 Config::Config (std::string __jsonpath) {
@@ -36,7 +37,7 @@ Config::Config (std::string __jsonpath) {
     this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
     this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
     this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
-    
+    this->HTTP_TIMEOUT_SECS = std::stof(SERVER["HTTP_TIMEOUT"].asString());
 }
 
 float
@@ -57,4 +58,9 @@ Config::yolo_resize () {
 std::string
 Config::http_url () {
     return this->URL;
+}
+
+long
+Config::http_timeout_secs () {
+    return this->HTTP_TIMEOUT_SECS;
 }

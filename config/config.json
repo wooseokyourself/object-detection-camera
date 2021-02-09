@@ -1,1 +1,1 @@
-{"DEVICE": {"ID": "ino-on-0005"}, "SERVER": {"URL": "http://ino-on.umilevx.com/", "ENDPOINT": "api/devices/events/"}, "YOLO": {"CONFIDENCE_THRESHOLD": "0.35", "NMS_THRESHOLD": "0.5", "RESIZE": "800"}}
+{"DEVICE": {"ID": "ino-on-0005"}, "SERVER": {"URL": "http://ino-on.umilevx.com/", "ENDPOINT": "api/devices/events/", "HTTP_TIMEOUT": "15"}, "YOLO": {"CONFIDENCE_THRESHOLD": "0.35", "NMS_THRESHOLD": "0.5", "RESIZE": "800"}}
