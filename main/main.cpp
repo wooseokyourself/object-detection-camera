@@ -40,10 +40,10 @@ int main (void) {
                                                cfg.yolo_resize());
         if (isDetected) {
             cv::imwrite("results/" + FILENAME, frame);
-            http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME);
+            http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME, cfg.http_timeout_secs());
         }
         else {
-            http::post(cfg.http_url(), TIMESTAMP, 31, 99);
+            http::post(cfg.http_url(), TIMESTAMP, 31, 99, cfg.http_timeout_secs());
         }   
     }
     sync();
