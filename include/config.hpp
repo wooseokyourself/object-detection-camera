@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <jsoncpp/json/json.h>
+#include <wiringPi.h>
 #include "../include/date.hpp"
 
 std::string
@@ -14,8 +15,8 @@ convertToISOformat (std::string __timestamp);
 
 class Config {
 public:
-    Config ();
-    Config (std::string __jsonpath);
+    void readFromJsonFile (const std::string filePath);
+    void readFromUart (const char* serialPath, const int baudRate);
     float yolo_confThresh ();
     float yolo_nmsThresh ();
     int yolo_resize ();

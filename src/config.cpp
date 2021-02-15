@@ -1,3 +1,4 @@
+
 #include "../include/config.hpp"
 
 std::string
@@ -10,10 +11,14 @@ convertToISOformat (std::string __timestamp) {
     return __timestamp.substr(0, 10);
 }
 
-Config::Config () {
+/**
+ * @filePath - json 파일의 경로
+ */
+void
+Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
     Json::Reader reader;
-    std::ifstream json("config/config.json", std::ifstream::binary);
+    std::ifstream json(filePath, std::ifstream::binary);
     reader.parse(json, root);
     Json::Value DEVICE = root["DEVICE"];
     Json::Value SERVER = root["SERVER"];
@@ -25,19 +30,14 @@ Config::Config () {
     this->HTTP_TIMEOUT_SECS = std::stof(SERVER["HTTP_TIMEOUT"].asString());
 }
 
-Config::Config (std::string __jsonpath) {
-    Json::Value root;
-    Json::Reader reader;
-    std::ifstream json(__jsonpath, std::ifstream::binary);
-    reader.parse(json, root);
-    Json::Value DEVICE = root["DEVICE"];
-    Json::Value SERVER = root["SERVER"];
-    Json::Value YOLO = root["YOLO"];
-    this->CONF_THRESH = std::stof(YOLO["CONFIDENCE_THRESHOLD"].asString());
-    this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
-    this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
-    this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
-    this->HTTP_TIMEOUT_SECS = std::stof(SERVER["HTTP_TIMEOUT"].asString());
+/**
+ * @serialPort - "/dev/AMA0"
+ * @baudRate - 115200
+ * 시리얼포트를 활성화하고 읽는다.
+ */
+void
+Config::readFromUart (const char* serialPort, const int baudRate) {
+    
 }
 
 float
