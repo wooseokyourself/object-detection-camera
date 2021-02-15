@@ -51,6 +51,7 @@ int main (void) {
             http::post(cfg.http_normal_url(), TIMESTAMP, 31, 99, cfg.http_timeout_secs());
         }   
     }
+    
     sync();
     std::cout << "END PROCESS.\n" << std::endl;
     delay(1000);
