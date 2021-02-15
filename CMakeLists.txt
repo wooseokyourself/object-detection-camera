@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project( app C CXX )
 
 set( HEADER include/ )
-set( SOURCE src/config.cpp src/gpio.cpp src/http.cpp src/vision.cpp )
+set( SOURCE src/config.cpp src/serials.cpp src/http.cpp src/vision.cpp )
 set( MAIN main/main.cpp )
 
 find_package( PkgConfig REQUIRED )
