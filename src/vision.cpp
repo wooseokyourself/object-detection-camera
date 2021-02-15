@@ -1,12 +1,15 @@
 #include "../include/vision.hpp"
 
+/// @brief 가로사이즈를 기준으로 4:3 비율로 촬영
+/// @param frame 촬영된 사진이 저장되는 객체
+/// @param width 사진의 가로 사이즈 
 void
-vision::capture (Mat& frame, const int& resize) {
+vision::capture (Mat& frame, const int& width) {
     try {
         VideoCapture cap;
         cap.open(0);
-        cap.set(CAP_PROP_FRAME_WIDTH, resize);
-        cap.set(CAP_PROP_FRAME_HEIGHT, int((float(resize) / 4) * 3));
+        cap.set(CAP_PROP_FRAME_WIDTH, width);
+        cap.set(CAP_PROP_FRAME_HEIGHT, int((float(width) / 4) * 3));
         cap >> frame;
         cap.release();
     }

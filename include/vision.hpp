@@ -29,7 +29,7 @@ enum STATUS {
 namespace vision {
 
 void
-capture (Mat& frame, const int& resize);
+capture (Mat& frame, const int& width);
 
 bool
 detect (Mat& frame,
