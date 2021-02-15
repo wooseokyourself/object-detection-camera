@@ -6,9 +6,8 @@ getISOCurrentTimestamp () {
     return date::format("%FT%TZ", date::floor<std::chrono::milliseconds>(std::chrono::system_clock::now()));
 }
 
-/**
- * @filePath - json 파일의 경로
- */
+/// @brief .json 파일 읽기
+/// @param filePath json 파일의 경로
 void
 Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
@@ -21,15 +20,14 @@ Config::readFromJsonFile (const std::string filePath) {
     this->CONF_THRESH = std::stof(YOLO["CONFIDENCE_THRESHOLD"].asString());
     this->NMS_THRESH = std::stof(YOLO["NMS_THRESHOLD"].asString());
     this->RESIZE = std::stoi(YOLO["RESIZE"].asString());
-    this->URL = SERVER["URL"].asString() + SERVER["ENDPOINT"].asString() + DEVICE["ID"].asString();
+    this->NORMAL_URL = SERVER["URL"].asString() + SERVER["NORMAL_ENDPOINT"].asString() + DEVICE["ID"].asString();
+    this->ADMIN_URL = SERVER["URL"].asString() + SERVER["ADMIN_ENDPOINT"].asString() + DEVICE["ID"].asString();
     this->HTTP_TIMEOUT_SECS = std::stof(SERVER["HTTP_TIMEOUT"].asString());
 }
 
-/**
- * @serialPort - "/dev/AMA0"
- * @baudRate - 115200
- * 시리얼포트를 활성화하고 읽는다.
- */
+/// @brief UART 통신으로 설정변수 읽기
+/// @param serialPort 시리얼포트 경로 (ex. "/dev/AMA0")
+/// @param baudRate 데이터 전송 속도 (ex. 115200)
 void
 Config::readFromUart (const char* serialPort, const int baudRate) {
     
@@ -51,8 +49,13 @@ Config::yolo_resize () {
 }
 
 std::string
-Config::http_url () {
-    return this->URL;
+Config::http_normal_url () {
+    return this->NORMAL_URL;
+}
+
+std::string
+Config::http_admin_url () {
+    return this->ADMIN_URL;
 }
 
 long
