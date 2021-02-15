@@ -29,7 +29,7 @@ int main (void) {
         std::cout << " <normal mode>" << std::endl;
         Config cfg;
         cfg.readFromJsonFile("config/config.json");
-        const string FILENAME = convertToISOformat(TIMESTAMP) + ".jpg";
+        const string FILENAME = TIMESTAMP.substr(0, 10) + ".jpg"; // yyyy-mm-dd.jpg
         cv::Mat frame;
         vision::capture(frame, cfg.yolo_resize());
         const bool isDetected = vision::detect(frame, 

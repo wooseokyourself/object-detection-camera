@@ -6,11 +6,6 @@ getISOCurrentTimestamp () {
     return date::format("%FT%TZ", date::floor<std::chrono::milliseconds>(std::chrono::system_clock::now()));
 }
 
-std::string
-convertToISOformat (std::string __timestamp) {
-    return __timestamp.substr(0, 10);
-}
-
 /**
  * @filePath - json 파일의 경로
  */

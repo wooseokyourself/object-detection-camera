@@ -10,9 +10,6 @@
 std::string
 getISOCurrentTimestamp ();
 
-std::string
-convertToISOformat (std::string __timestamp);
-
 class Config {
 public:
     void readFromJsonFile (const std::string filePath);
