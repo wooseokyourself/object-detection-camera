@@ -1,23 +1,22 @@
 #include "../include/serials.hpp"
 
-Serials::Serials (const std::string __port, const int __baudRate) {
+Serials::Serials (const std::string port, const int baudRate) {
     this->taskModePin = 20;
     this->rpiOffPin = 21;
-    this->port = __port;
-    this->baudRate = __baudRate;
     wiringPiSetupGpio(); // BCM
     pinMode(this->taskModePin, INPUT);
     pinMode(this->rpiOffPin, OUTPUT);
 }
 
-Serials::Serials (const int __taskModePin, const int __rpiOffPin, const std::string __port, const int __baudRate) {
+Serials::Serials (const int __taskModePin, const int __rpiOffPin, const std::string port, const int baudRate) {
     this->taskModePin = __taskModePin;
     this->rpiOffPin = __rpiOffPin;
-    this->port = __port;
-    this->baudRate = __baudRate;
     wiringPiSetupGpio(); // BCM
     pinMode(this->taskModePin, INPUT);
     pinMode(this->rpiOffPin, OUTPUT);
+    
+    this->serialFd = serialOpen(port, baudRate);
+    if (serialFd) // 여기서부터 작성하셈!
 }
 
 
