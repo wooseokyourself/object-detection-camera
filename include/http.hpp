@@ -5,7 +5,6 @@
 #include <cstring>
 #include <string>
 #include <vector>
-#include <wiringPi.h>
 #include <curl/curl.h>
 
 using namespace std;
