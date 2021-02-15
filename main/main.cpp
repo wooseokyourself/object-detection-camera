@@ -28,7 +28,7 @@ int main (void) {
     else {
         std::cout << " <normal mode>" << std::endl;
         Config cfg;
-        const string FILENAME = getISOCurrentDate() + ".jpg";
+        const string FILENAME = convertToISOformat(TIMESTAMP) + ".jpg";
         cv::Mat frame;
         vision::capture(frame, cfg.yolo_resize());
         const bool isDetected = vision::detect(frame, 

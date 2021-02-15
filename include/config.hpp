@@ -7,10 +7,10 @@
 #include "../include/date.hpp"
 
 std::string
-getISOCurrentTimestamp();
+getISOCurrentTimestamp ();
 
 std::string
-getISOCurrentDate();
+convertToISOformat (std::string __timestamp);
 
 class Config {
 public:
