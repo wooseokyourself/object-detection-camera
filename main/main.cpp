@@ -13,22 +13,26 @@ const string CFG = "bin/model/yolov4-custom.cfg";
 const string NAMES = "bin/model/classes.names";
 
 int main (void) {
+    Gpio gpio;
+    Config cfg;
+    cfg.readFromJsonFile("config/config.json");
     const string TIMESTAMP = getISOCurrentTimestamp();
     std::cout << "\nSTART PROCESS IN SYSTEM TIME: " << TIMESTAMP << std::endl;
-    Gpio gpio;
+
     if (gpio.isAdminMode()) {
         std::cout << " <admin mode>" << std::endl;
-        // Run shell script in background
-        system("sudo systemctl start raspapd.service &");
-        system("python3 webapp/webapp.py --ip 0.0.0.0 --port 4000 &");
-        system("python3 -m browsepy 0.0.0.0 4001 --directory . &");
-        while (gpio.isAdminMode())
-            delay(3000);
+        const std::string FILENAME = "preview.jpg";
+        while (gpio.isAdminMode()) {
+            cv::Mat frame;
+            vision::capture(frame, 256);
+            cv::imwrite("results/" + FILENAME, frame);
+            http::post(cfg.http_admin_url(), TIMESTAMP, FILENAME, "results/" + FILENAME, cfg.http_timeout_secs);
+            // delay(1000);
+        }
+        system("rm -f results/preview.jpg");
     }
     else {
         std::cout << " <normal mode>" << std::endl;
-        Config cfg;
-        cfg.readFromJsonFile("config/config.json");
         const string FILENAME = TIMESTAMP.substr(0, 10) + ".jpg"; // yyyy-mm-dd.jpg
         cv::Mat frame;
         vision::capture(frame, cfg.yolo_resize());
@@ -41,14 +45,14 @@ int main (void) {
                                                cfg.yolo_resize());
         if (isDetected) {
             cv::imwrite("results/" + FILENAME, frame);
-            http::post(cfg.http_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME, cfg.http_timeout_secs());
+            http::post(cfg.http_normal_url(), TIMESTAMP, 31, 99, FILENAME, "results/" + FILENAME, cfg.http_timeout_secs());
         }
         else {
-            http::post(cfg.http_url(), TIMESTAMP, 31, 99, cfg.http_timeout_secs());
+            http::post(cfg.http_normal_url(), TIMESTAMP, 31, 99, cfg.http_timeout_secs());
         }   
     }
     sync();
     std::cout << "END PROCESS.\n" << std::endl;
-    delay(3000);
+    delay(1000);
     gpio.shutdownRpi();
 }
