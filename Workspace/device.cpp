@@ -148,7 +148,7 @@ atcmd::post (const int fd, const std::string url, const int tryout) {
 
     std::string cmd;
     // Header
-    cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data"
+    cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data";
 
     return "end"; 
 }
