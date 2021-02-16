@@ -25,9 +25,7 @@ int main (void) {
         else if (task == 3)
             atcmd::getRSSI(fd);
         else if (task == 4) {
-            std::string url;
-            cout << "input url: ";
-            cin >> url;
+            std::string url = "http://ino-on.umilevx.com/api/devices/events/ino-on-1996";
             atcmd::post(fd, url);
         }
         else
