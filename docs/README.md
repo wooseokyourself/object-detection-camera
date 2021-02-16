@@ -56,8 +56,11 @@ Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워�
     > `opencv-contrib` 는 필요없음   
     > `sudo apt-get install libopencv-dev python3-opencv` 를 이용한 설치는 테스트 해봐야 함 (arm 최적화 등)
 ```console
+pi@raspberrypi:~ % sudo apt-get install git
 pi@raspberrypi:~ % sudo apt-get install libjsoncpp-dev
 pi@raspberrypi:~ % sudo apt-get install libcurl4-openssl-dev
+pi@raspberrypi:~ % git clone https://github.com/WiringPi/WiringPi
+pi@raspberrypi:~ % ./WiringPi/build
 ```
 Raspberry Pi OS Lite 일 경우 다음도 추가로 설치해야 함
 ```console
