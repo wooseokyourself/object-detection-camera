@@ -11,6 +11,7 @@ const std::string SERIAL_PORT = "/dev/ttyS0";
 
 int
 deviceInit () {
+    // serial
     int fd = serialOpen(SERIAL_PORT.c_str(), 115200);
     if  (fd == -1) {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno));
@@ -20,6 +21,8 @@ deviceInit () {
         fprintf(stderr, "Unable to start wiringPi: %s\n", strerror(errno));
         return -1;
     }
+
+    // gpio
     pinMode(TASK_MODE_PIN, INPUT);
     pinMode(RPI_OFF_PIN, OUTPUT);    
     pinMode(MODEM_PWR_PIN, OUTPUT);
@@ -68,8 +71,8 @@ gpio::powerOffModem () {
 int
 atcmd::getRSSI (const int fd) {
     atcmd::__sendATcmd(fd, "AT+CSQ\r");
-    std::string ret = atcmd::__readBuffer(fd);
-    std::cout << ret << std::endl;
+    std::string response = atcmd::__readBuffer(fd);
+    std::cout << response << std::endl;
     return 0;
 }
 
@@ -83,12 +86,11 @@ atcmd::__sendATcmd (const int fd, const char* cmd) {
 std::string
 atcmd::__readBuffer (const int fd) {
     std::cout << "Pi) __readBuffer" << std::endl;
-    char buf[1024] = {0};
-    ssize_t readBytes = 0;
-    while (int r = read(fd, buf + readBytes, 4) > 0) {
-        readBytes += r;
-        // printf("r=%d, readBytes=%d\n", r, readBytes);
-    }
-    // printf("\n");
-    return std::string(buf);
+    int len = serialDataAvail(fd);
+    if (len == -1)
+        return "No data read";
+    std::string buf(len, " ");
+    for (int i = 0 ; i < len ; i ++)
+        buf[i] = serialGetchar(fd);
+    return buf;
 }
