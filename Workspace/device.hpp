@@ -43,7 +43,7 @@ __sendATcmd (const int fd, const char* cmd);
 std::string
 __readBuffer (const int fd);
 
-void
+bool
 __readBufferUntil (const int fd, const std::string expected);
 
 }

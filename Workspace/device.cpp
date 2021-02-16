@@ -83,6 +83,7 @@ std::string
 atcmd::post (const int fd, const std::string url) {
     std::string response;
 
+    /* // 이하 두 커맨드 안해도 post 잘 날아감
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
@@ -90,18 +91,23 @@ atcmd::post (const int fd, const std::string url) {
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    */
 
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
     
+    /* // 이건 응답으로 ERROR 받으면서 안되는데 왜 안되는지 모르겠음.
     std::cout << "[Active context 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT=1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    */
 
+    /* // 여기서 성공하면 아이피주소를 리턴하는데 이를 통해 에러처리 가능할듯
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?\r");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
+    */
 
     std::cout << "[Set the URL which will be accessed]" << std::endl;
     const int urlLen = url.length();
@@ -152,7 +158,7 @@ atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
     // serialFlush(fd);
     serialPuts(fd, cmd);
-    delay(3);
+    delay(500);
 }
 
 std::string
@@ -172,12 +178,15 @@ atcmd::__readBuffer (const int fd) {
     }
 }
 
-void
+bool
 atcmd::__readBufferUntil (const int fd, const std::string expected) {
     std::string response = atcmd::__readBuffer(fd);
     while (response != expected) {
         response = atcmd::__readBuffer(fd);
         std::cout << response << std::endl;
-        delay(300);
+        if (response == "\r\nERROR\r\n")
+            return false;
+        delay(500);
     }
+    return true;
 }
