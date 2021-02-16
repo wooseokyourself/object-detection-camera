@@ -182,8 +182,8 @@ bool
 atcmd::__readBufferUntil (const int fd, const std::string expected) {
     std::string response = atcmd::__readBuffer(fd);
     while (response != expected) {
-        response = atcmd::__readBuffer(fd);
         std::cout << response << std::endl;
+        response = atcmd::__readBuffer(fd);
         if (response == "\r\nERROR\r\n")
             return false;
         delay(500);
