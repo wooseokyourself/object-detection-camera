@@ -170,14 +170,14 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     std::string filePath = "example.jpg";
 
     std::string body =
-        "--boundary\r\n" +
-        "Content-Disposition: form-data; name=\"files\"; filename=\""+ filePath + "\"\r\n" + 
+        std::string("--boundary\r\n") + 
+        "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "Content-Type: image/jpg\r\n" + 
         "\r\n" + 
         "--boundary--\r\n";
 
     std::string header = 
-        "POST " + url + " HTTP/1.1\r\n" + 
+        std::string("POST ") + url + " HTTP/1.1\r\n" + 
         "Host: " + host + "\r\n" + 
         "Content-Length: " + std::to_string(body.length()) + "\r\n" +  
         "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
