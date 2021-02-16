@@ -81,21 +81,27 @@ atcmd::getRSSI (const int fd) {
 
 std::string
 atcmd::post (const int fd, std::string url) {
+    std::string response;
+
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
 
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
 
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
     
     std::cout << "[Active context 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT=1");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
 
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?");
@@ -104,9 +110,12 @@ atcmd::post (const int fd, std::string url) {
     std::cout << "[Set the URL which will be accessed]" << std::endl;
     const int urlLen = url.length();
     atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen)).c_str());
-    if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
-        atcmd::__sendATcmd(fd, url.c_str());
+    while (response = atcmd::__readBuffer(fd) != "\r\nCONNECT\r\n");
+    std::cout << response << std::endl;
+    atcmd::__sendATcmd(fd, url.c_str());
     std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
 
     std::cout << "[Send HTTP POST request]" << std::endl;
     std::string bodyLength = "20";
@@ -116,9 +125,11 @@ atcmd::post (const int fd, std::string url) {
                             + bodyLength + ","
                             + maxInputBodyTime + "," 
                             + maxResponseTime).c_str());
-    if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
-        atcmd::__sendATcmd(fd, "Message=HelloQuectel");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    while (response = atcmd::__readBuffer(fd) != "\r\nCONNECT\r\n");
+    std::cout << response << std::endl;
+    atcmd::__sendATcmd(fd, "Message=HelloQuectel");
+    while (response = atcmd::__readBuffer(fd) != "\r\nOK\r\n");
+    std::cout << response << std::endl;
 
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80");
