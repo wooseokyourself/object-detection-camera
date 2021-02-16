@@ -93,6 +93,10 @@ atcmd::post (const int fd, const std::string url) {
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
     */
 
+    std::cout << "[Set multipart/form-data]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contenttype\",multipart/form-data\r")
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
+
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
@@ -128,6 +132,12 @@ atcmd::post (const int fd, const std::string url) {
     atcmd::__sendATcmd(fd, "Message=HelloQuectel");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
+    std::cout << "[Send HTTP POST file request]" << std::endl;
+    std::string filename = "example.jpg";
+    atcmd::__sendATcmd(fd, ("AT+QHTTPPOSTFILE="
+                            + filename + "\r").c_str());
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
+
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
@@ -147,7 +157,6 @@ atcmd::post (const int fd, const std::string url) {
     std::string cmd;
     // Header
     cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data"
-    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=")
 */
     return "end"; 
 }
