@@ -180,6 +180,7 @@ atcmd::__readBuffer (const int fd) {
 
 bool
 atcmd::__readBufferUntil (const int fd, const std::string expected) {
+    std::cout << "expected:\n" << expected << std::endl;
     std::string response = atcmd::__readBuffer(fd);
     std::cout << response << std::endl;
     while (response != expected) {
