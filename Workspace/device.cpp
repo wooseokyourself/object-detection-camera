@@ -94,7 +94,7 @@ atcmd::post (const int fd, const std::string url) {
     */
 
     std::cout << "[Set multipart/form-data]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contenttype\",multipart/form-data\r")
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contenttype\",multipart/form-data\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
