@@ -168,23 +168,28 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
 
     std::string filename = "example.jpg";
     std::string filePath = "example.jpg";
-    std::string data = 
-        "POST " + fullUrl + " HTTP/1.1\r\n" + 
-        "Host:" + host + "\r\n" + 
-        "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
-        "\r\n" + 
+
+    std::string body =
         "--boundary\r\n" +
         "Content-Disposition: form-data; name=\"files\"; filename=\""+ filePath + "\"\r\n" + 
         "Content-Type: image/jpg\r\n" + 
         "\r\n" + 
-        "--boundary--\r\n"
-        ;
+        "--boundary--\r\n";
+
+    std::string header = 
+        "POST " + url + " HTTP/1.1\r\n" + 
+        "Host: " + host + "\r\n" + 
+        "Content-Length: " + std::to_string(body.length()) + "\r\n" +  
+        "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
+        "\r\n";
     
-    const std::string headerLen = std::to_string(data.length());
+    std::string data = header + body;
+
+    const std::string dataLen = std::to_string(data.length());
     std::string maxInputBodyTime = "80";
     std::string maxResponseTime = "80";
     atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
-                            + headerLen + ","
+                            + dataLen + ","
                             + maxInputBodyTime + "," 
                             + maxResponseTime + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
