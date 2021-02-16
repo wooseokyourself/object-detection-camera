@@ -146,10 +146,6 @@ atcmd::post (const int fd, const std::string url, const int tryout) {
     std::cout << atcmd::__readBuffer(fd) << std::endl;
     */                       
 
-    std::string cmd;
-    // Header
-    cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data";
-
     return "end"; 
 }
 
@@ -193,6 +189,9 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
     atcmd::__sendATcmd(fd, data.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+
+    atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
 }
 
 void
