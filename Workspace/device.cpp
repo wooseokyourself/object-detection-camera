@@ -83,11 +83,11 @@ std::string
 atcmd::post (const int fd, const std::string url, const int tryout) {
     std::string response;
 
-    /* // 이하 두 커맨드 안해도 post 잘 날아감
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
+    /*
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
@@ -120,6 +120,7 @@ atcmd::post (const int fd, const std::string url, const int tryout) {
     atcmd::__sendATcmd(fd, url.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
+    /*
     std::cout << "[Send HTTP POST request]" << std::endl;
     std::string bodyLength = "20";
     std::string maxInputBodyTime = "80";
@@ -131,7 +132,9 @@ atcmd::post (const int fd, const std::string url, const int tryout) {
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
     atcmd::__sendATcmd(fd, "Message=HelloQuectel");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+    */
 
+    /*
     std::cout << "[Send HTTP POST file request]" << std::endl;
     std::string filename = "example.jpg";
     atcmd::__sendATcmd(fd, ("AT+QHTTPPOSTFILE=\""
@@ -141,24 +144,52 @@ atcmd::post (const int fd, const std::string url, const int tryout) {
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
-
-/*
-    std::string data = "POST / HTTP/1.1\n
-                    Host: " + url + "\n
-                    Content-Type: multipart/form-data;boundary=\"boundary\"
-                    \n\n
-                    --boundary\n
-                    Content-Disposition: form-data; name=\"time\"
-                    \n
-                    --boundary\n
-                    Content-Disposition: form-data; name=\"\"; filename=\"example.jpg\"
-                    "
+    */                       
 
     std::string cmd;
     // Header
     cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data"
-*/
+
     return "end"; 
+}
+
+void
+atcmd::customPost (const int fd, const std::string host, const std::string url, const int tryout) {
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"requestheader\",1\r");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+
+    const int urlLen = ("http://" + host + url).length();
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
+    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
+    atcmd::__sendATcmd(fd, url.c_str());
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+
+    std::string filename = example.jpg;
+    std::string filePath = example.jpg;
+    std::string data = 
+        "POST http://" + host + url + " HTTP/1.1\r\n" + 
+        "Host:" + host + "\r\n" + 
+        "Content-Type: multipart/form-data;boundary=\"boundary\"\r\n" + 
+        "\n\n" + 
+        "--boundary\n" + 
+        "Content-Disposition: form-data; name=\"time\"" +
+        "\n" + 
+        "--boundary\n" +
+        "Content-Disposition: form-data; name=\"" + filename + "\"; filename=\""+ filePath + "\"";
+    
+    const int headerLen = data.length();
+    std::string maxInputBodyTime = "80";
+    std::string maxResponseTime = "80";
+    atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
+                            + headerLen + ","
+                            + maxInputBodyTime + "," 
+                            + maxResponseTime + "\r").c_str());
+    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
+    atcmd::__sendATcmd(fd, data.c_str());
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 }
 
 void

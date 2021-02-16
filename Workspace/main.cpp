@@ -28,8 +28,11 @@ int main (void) {
             int tryout;
             cout << "tryout: ";
             cin >> tryout;
-            std::string url = "http://ino-on.umilevx.com/api/devices/events/ino-on-1996";
-            atcmd::post(fd, url, tryout);
+            // std::string url = "http://ino-on.umilevx.com/api/devices/events/ino-on-1996";
+            // atcmd::post(fd, url, tryout);
+            string host = "ino-on.umilevx.com";
+            string url = "/api/devices/events/ino-on-1996";
+            atcmd::customPost(fd, host, url, tryout);
         }
         else
             break;
