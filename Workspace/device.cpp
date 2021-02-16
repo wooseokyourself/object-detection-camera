@@ -161,16 +161,16 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"requestheader\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
-    const int urlLen = ("http://" + host + url).length();
-    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
+    const std::string fullUrl = "http://" + host + url;
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(fullUrl.length()) + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
-    atcmd::__sendATcmd(fd, url.c_str());
+    atcmd::__sendATcmd(fd, fullUrl.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
     std::string filename = "example.jpg";
     std::string filePath = "example.jpg";
     std::string data = 
-        "POST http://" + host + url + " HTTP/1.1\r\n" + 
+        "POST " + fullUrl + " HTTP/1.1\r\n" + 
         "Host:" + host + "\r\n" + 
         "Content-Type: multipart/form-data;boundary=\"boundary\"\r\n" + 
         "\n\n" + 
