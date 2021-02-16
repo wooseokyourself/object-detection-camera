@@ -16,7 +16,7 @@ int main (void) {
             string cmd;
             cout << "input cmd: ";
             cin >> cmd;
-            atcmd::__sendATcmd(fd, cmd);
+            atcmd::__sendATcmd(fd, cmd.c_str());
         }
         else if (task == 2) {
             cout << atcmd::__readBuffer(fd) << endl;
