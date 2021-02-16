@@ -44,7 +44,7 @@ std::string
 __readBuffer (const int fd);
 
 bool
-__readBufferUntil (const int fd, const std::string expected);
+__readBufferUntil (const int fd, const std::string expected, const int count);
 
 }
 

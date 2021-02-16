@@ -86,21 +86,21 @@ atcmd::post (const int fd, const std::string url) {
     /* // 이하 두 커맨드 안해도 post 잘 날아감
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
     std::cout << "[Query the state of context]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT?\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
     */
 
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
     
     /* // 이건 응답으로 ERROR 받으면서 안되는데 왜 안되는지 모르겠음.
     std::cout << "[Active context 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QIACT=1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
     */
 
     /* // 여기서 성공하면 아이피주소를 리턴하는데 이를 통해 에러처리 가능할듯
@@ -112,9 +112,9 @@ atcmd::post (const int fd, const std::string url) {
     std::cout << "[Set the URL which will be accessed]" << std::endl;
     const int urlLen = url.length();
     atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
-    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", 5);
     atcmd::__sendATcmd(fd, url.c_str());
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
     std::cout << "[Send HTTP POST request]" << std::endl;
     std::string bodyLength = "20";
@@ -124,9 +124,9 @@ atcmd::post (const int fd, const std::string url) {
                             + bodyLength + ","
                             + maxInputBodyTime + "," 
                             + maxResponseTime + "\r").c_str());
-    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", 5);
     atcmd::__sendATcmd(fd, "Message=HelloQuectel");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
@@ -178,10 +178,10 @@ atcmd::__readBuffer (const int fd) {
 }
 
 bool
-atcmd::__readBufferUntil (const int fd, const std::string expected) {
+atcmd::__readBufferUntil (const int fd, const std::string expected, const int count) {
     std::string response = atcmd::__readBuffer(fd);
     std::cout << response << std::endl;
-    while (response != expected) {
+    for (int i = 0 ; i < count && response != expected ; i ++) {
         std::cout << response << std::endl;
         response = atcmd::__readBuffer(fd);
         if (response == "\r\nERROR\r\n")
