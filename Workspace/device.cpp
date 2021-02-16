@@ -103,7 +103,7 @@ post (const int fd, std::string url, std::string imagePath) {
 
     std::cout << "[Set the URL which will be accessed]" << std::endl;
     const int urlLen = url.length();
-    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + to_string(urlLen)).c_str());
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen)).c_str());
     if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
         atcmd::__sendATcmd(fd, url.c_str());
     std::cout << atcmd::__readBuffer(fd) << std::endl;
@@ -124,7 +124,6 @@ post (const int fd, std::string url, std::string imagePath) {
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
 
-
 /*
     std::string data = "POST / HTTP/1.1\n
                     Host: " + url + "\n
@@ -142,6 +141,7 @@ post (const int fd, std::string url, std::string imagePath) {
     cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data"
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=")
 */
+    return "end"; 
 }
 
 void
