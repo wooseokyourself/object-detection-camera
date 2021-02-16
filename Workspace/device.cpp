@@ -80,7 +80,7 @@ atcmd::getRSSI (const int fd) {
 }
 
 std::string
-post (const int fd, std::string url) {
+atcmd::post (const int fd, std::string url) {
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
