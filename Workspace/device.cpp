@@ -134,8 +134,8 @@ atcmd::post (const int fd, const std::string url) {
 
     std::cout << "[Send HTTP POST file request]" << std::endl;
     std::string filename = "example.jpg";
-    atcmd::__sendATcmd(fd, ("AT+QHTTPPOSTFILE="
-                            + filename + "\r").c_str());
+    atcmd::__sendATcmd(fd, ("AT+QHTTPPOSTFILE=\""
+                            + filename + "\"\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", 5);
 
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
