@@ -158,6 +158,9 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contenttype\",3\r"); // 3: multipart/form-data
+    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
+
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"requestheader\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
