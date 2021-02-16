@@ -82,7 +82,7 @@ atcmd::getRSSI (const int fd) {
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
-    .. serialFlush(fd);
+    // serialFlush(fd);
     serialPuts(fd, cmd);
     delay(3);
 }
