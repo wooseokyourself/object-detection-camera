@@ -159,13 +159,17 @@ std::string
 atcmd::__readBuffer (const int fd) {
     std::cout << "Pi) __readBuffer" << std::endl;
     int len = serialDataAvail(fd);
-    if (len == -1)
+    if (len < 0)
+        return "Error";
+    else if (len == 0)
         return "No data read";
-    std::string buf(len, ' ');
-    int i = 0;
-    while (len = serialDataAvail(fd) > 0)
-        buf[i++] = serialGetchar(fd);
-    return buf;
+    else {
+        std::string buf(len, ' ');
+        int i = 0;
+        while (len = serialDataAvail(fd) > 0)
+            buf[i++] = serialGetchar(fd);
+        return buf;
+    }
 }
 
 void
