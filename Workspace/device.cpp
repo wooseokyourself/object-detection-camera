@@ -167,8 +167,8 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__sendATcmd(fd, url.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
-    std::string filename = example.jpg;
-    std::string filePath = example.jpg;
+    std::string filename = "example.jpg";
+    std::string filePath = "example.jpg";
     std::string data = 
         "POST http://" + host + url + " HTTP/1.1\r\n" + 
         "Host:" + host + "\r\n" + 
@@ -180,7 +180,7 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
         "--boundary\n" +
         "Content-Disposition: form-data; name=\"" + filename + "\"; filename=\""+ filePath + "\"";
     
-    const int headerLen = data.length();
+    const std::string headerLen = std::to_string(data.length());
     std::string maxInputBodyTime = "80";
     std::string maxResponseTime = "80";
     atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
