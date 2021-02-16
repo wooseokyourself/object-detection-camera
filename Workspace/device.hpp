@@ -35,7 +35,7 @@ int
 getRSSI (const int fd);
 
 std::string
-post (const int fd, const std::string url);
+post (const int fd, const std::string url, const int tryout);
 
 void
 __sendATcmd (const int fd, const char* cmd);
