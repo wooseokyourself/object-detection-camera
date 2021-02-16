@@ -171,13 +171,14 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     std::string data = 
         "POST " + fullUrl + " HTTP/1.1\r\n" + 
         "Host:" + host + "\r\n" + 
-        "Content-Type: multipart/form-data;boundary=\"boundary\"\r\n" + 
-        "\n\n" + 
-        "--boundary\n" + 
-        "Content-Disposition: form-data; name=\"time\"" +
-        "\n" + 
-        "--boundary\n" +
-        "Content-Disposition: form-data; name=\"" + filename + "\"; filename=\""+ filePath + "\"";
+        "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
+        "\r\n" + 
+        "--boundary\r\n" +
+        "Content-Disposition: form-data; name=\"files\"; filename=\""+ filePath + "\"\r\n" + 
+        "Content-Type: image/jpg\r\n" + 
+        "\r\n" + 
+        "--boundary--\r\n"
+        ;
     
     const std::string headerLen = std::to_string(data.length());
     std::string maxInputBodyTime = "80";
