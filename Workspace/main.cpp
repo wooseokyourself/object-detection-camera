@@ -7,23 +7,28 @@ int main (void) {
     int task;
     int fd = deviceInit();
     while(true) {
-        cout << "1. Power on Modem" << endl;
-        cout << "2. get RSSI" << endl;
-        cout << "3. Post image" << endl;
-        cout << "4. Power off Modem" << endl;
+        cout << "1. Send Manually" << endl;
+        cout << "2. Read Manually" << endl;
+        cout << "3. get RSSI" << endl;
+        cout << "4. Post image" << endl;
         cin >> task;
-        if (task == 1)
-            gpio::powerOnModem();
-        else if (task == 2)
+        if (task == 1) {
+            string cmd;
+            cout << "input cmd: ";
+            cin >> cmd;
+            atcmd::__sendATcmd(fd, cmd);
+        }
+        else if (task == 2) {
+            cout << atcmd::__readBuffer(fd) << endl;
+        }
+        else if (task == 3)
             atcmd::getRSSI(fd);
-        else if (task == 3) {
+        else if (task == 4) {
             std::string url;
             cout << "input url: ";
             cin >> url;
             atcmd::post(fd, url);
         }
-        else if (task == 4)
-            gpio::powerOffModem();
         else
             break;
     }
