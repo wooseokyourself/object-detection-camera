@@ -16,6 +16,7 @@ int main (void) {
             string cmd;
             cout << "input cmd: ";
             cin >> cmd;
+            cmd += "\r";
             atcmd::__sendATcmd(fd, cmd.c_str());
         }
         else if (task == 2) {
