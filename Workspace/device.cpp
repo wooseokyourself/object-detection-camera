@@ -114,7 +114,6 @@ atcmd::post (const int fd, const std::string url) {
     atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n");
     atcmd::__sendATcmd(fd, url.c_str());
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
 
     std::cout << "[Send HTTP POST request]" << std::endl;
@@ -180,7 +179,6 @@ atcmd::__readBuffer (const int fd) {
 
 bool
 atcmd::__readBufferUntil (const int fd, const std::string expected) {
-    std::cout << "expected:\n" << expected << std::endl;
     std::string response = atcmd::__readBuffer(fd);
     std::cout << response << std::endl;
     while (response != expected) {
