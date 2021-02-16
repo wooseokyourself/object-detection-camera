@@ -84,28 +84,28 @@ atcmd::post (const int fd, const std::string url) {
     std::string response;
 
     std::cout << "[Configure the PDP context ID as 1]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1");
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
 
     std::cout << "[Query the state of context]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT?");
+    atcmd::__sendATcmd(fd, "AT+QIACT?\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
 
     std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1");
+    atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
     
     std::cout << "[Active context 1]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT=1");
+    atcmd::__sendATcmd(fd, "AT+QIACT=1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
 
     std::cout << "[Query the state of context]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT?");
+    atcmd::__sendATcmd(fd, "AT+QIACT?\r");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
 
     std::cout << "[Set the URL which will be accessed]" << std::endl;
     const int urlLen = url.length();
-    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen)).c_str());
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n");
     atcmd::__sendATcmd(fd, url.c_str());
     std::cout << atcmd::__readBuffer(fd) << std::endl;
@@ -118,13 +118,13 @@ atcmd::post (const int fd, const std::string url) {
     atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
                             + bodyLength + ","
                             + maxInputBodyTime + "," 
-                            + maxResponseTime).c_str());
+                            + maxResponseTime + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n");
     atcmd::__sendATcmd(fd, "Message=HelloQuectel");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n");
 
     std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80");
+    atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
     std::cout << atcmd::__readBuffer(fd) << std::endl;
 
 /*
