@@ -102,7 +102,8 @@ post (const int fd, std::string url, std::string imagePath) {
     std::cout << atcmd::__readBuffer(fd) << std::endl;
 
     std::cout << "[Set the URL which will be accessed]" << std::endl;
-    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + to_string(url.length())).c_str());
+    const int urlLen = url.length();
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + to_string(urlLen)).c_str());
     if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
         atcmd::__sendATcmd(fd, url.c_str());
     std::cout << atcmd::__readBuffer(fd) << std::endl;
