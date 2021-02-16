@@ -39,10 +39,13 @@ deviceInit () {
         ++cnt;
     } while (cnt < 10);
 
+    std::string response;
     atcmd::__sendATcmd(fd, "ATE0\r");
-    atcmd::__readBuffer(fd);
+    response = atcmd::__readBuffer(fd);
+    std::cout << response << std::endl;
     atcmd::__sendATcmd(fd, "AT+CEREG=2\r");
-    atcmd::__readBuffer(fd);
+    response = atcmd::__readBuffer(fd);
+    std::cout << response << std::endl;
     
     return fd;
 }
@@ -79,8 +82,9 @@ atcmd::getRSSI (const int fd) {
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
-    serialFlush(fd);
+    .. serialFlush(fd);
     serialPuts(fd, cmd);
+    delay(3);
 }
 
 std::string
@@ -89,8 +93,9 @@ atcmd::__readBuffer (const int fd) {
     int len = serialDataAvail(fd);
     if (len == -1)
         return "No data read";
-    std::string buf(len, " ");
-    for (int i = 0 ; i < len ; i ++)
-        buf[i] = serialGetchar(fd);
+    std::string buf(len, ' ');
+    int i = 0;
+    while (len = serialDataAvail(fd) > 0)
+        buf[i++] = serialGetchar(fd);
     return buf;
 }
