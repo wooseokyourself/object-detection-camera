@@ -79,6 +79,70 @@ atcmd::getRSSI (const int fd) {
     return 0;
 }
 
+std::string
+post (const int fd, std::string url, std::string imagePath) {
+    std::cout << "[Configure the PDP context ID as 1]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Query the state of context]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QIACT?");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+    
+    std::cout << "[Active context 1]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QIACT=1");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Query the state of context]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QIACT?");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Set the URL which will be accessed]" << std::endl;
+    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + to_string(url.length())).c_str());
+    if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
+        atcmd::__sendATcmd(fd, url.c_str());
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Send HTTP POST request]" << std::endl;
+    std::string bodyLength = "20";
+    std::string maxInputBodyTime = "80";
+    std::string maxResponseTime = "80";
+    atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
+                            + bodyLength + ","
+                            + maxInputBodyTime + "," 
+                            + maxResponseTime).c_str());
+    if (atcmd::__readBuffer(fd) == "\r\nCONNECT\r\n")
+        atcmd::__sendATcmd(fd, "Message=HelloQuectel");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+    std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
+    atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80");
+    std::cout << atcmd::__readBuffer(fd) << std::endl;
+
+
+/*
+    std::string data = "POST / HTTP/1.1\n
+                    Host: " + url + "\n
+                    Content-Type: multipart/form-data;boundary=\"boundary\"
+                    \n\n
+                    --boundary\n
+                    Content-Disposition: form-data; name=\"time\"
+                    \n
+                    --boundary\n
+                    Content-Disposition: form-data; name=\"\"; filename=\"example.jpg\"
+                    "
+
+    std::string cmd;
+    // Header
+    cmd = "AT+QHTTPCFG=\"contenttype\",multipart/form-data"
+    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=")
+*/
+}
+
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;

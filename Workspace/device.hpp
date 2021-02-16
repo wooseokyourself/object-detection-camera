@@ -34,6 +34,9 @@ namespace atcmd {
 int
 getRSSI (const int fd);
 
+std::string
+post (const int fd, std::string url);
+
 void
 __sendATcmd (const int fd, const char* cmd);
 
