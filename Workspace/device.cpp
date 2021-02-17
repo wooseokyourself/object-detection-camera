@@ -250,7 +250,7 @@ void
 atcmd::__sendATcmd (const int fd, const char* cmd, const size_t len) {
     std::cout << "target bytes: " << len << endl;
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
-    std::cout << "written bytes: " << write(fd, cmd, len) << endl;
+    std::cout << "written bytes: " << write(fd, cmd, len) << std::endl;
     delay(500);
 }
 
