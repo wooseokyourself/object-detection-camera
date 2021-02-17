@@ -203,7 +203,7 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
         battery + "\r\n" + 
 
         "--boundary\r\n" + 
-        "Content-Type: image/jpg\r\n" + 
+        "Content-Type: image/jpeg\r\n" + 
         "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "\r\n" + 
         imageBin + "\r\n" + 
