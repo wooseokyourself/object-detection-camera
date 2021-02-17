@@ -166,8 +166,8 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__sendATcmd(fd, fullUrl.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
-    std::string filename = "example.jpg";
-    std::string filePath = "example.jpg";
+    std::string filename = "1996-03-05.jpg";
+    std::string filePath = "1996-03-05.jpg";
     
     std::ifstream bin(filePath, std::ios::binary);
     std::string imageBin((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
