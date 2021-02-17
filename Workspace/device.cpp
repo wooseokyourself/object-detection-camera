@@ -79,78 +79,17 @@ atcmd::getRSSI (const int fd) {
     return 0;
 }
 
-std::string
-atcmd::post (const int fd, const std::string url, const int tryout) {
-    std::string response;
-
-    std::cout << "[Configure the PDP context ID as 1]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-
-    /*
-    std::cout << "[Query the state of context]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT?\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-    */
-
-    std::cout << "[Set multipart/form-data]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contenttype\",3\r"); // 3: multipart/form-data
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-
-    std::cout << "[Configure PDP context 1. APN is 'move.dataxs.mobi' for TATA]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QICSGP=1,1,\"move.dataxs.mobi\",\"\",\"\",1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-    
-    /* // 이건 응답으로 ERROR 받으면서 안되는데 왜 안되는지 모르겠음.
-    std::cout << "[Active context 1]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT=1\r");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-    */
-
-    /* // 여기서 성공하면 아이피주소를 리턴하는데 이를 통해 에러처리 가능할듯
-    std::cout << "[Query the state of context]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QIACT?\r");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
-    */
-
-    std::cout << "[Set the URL which will be accessed]" << std::endl;
-    const int urlLen = url.length();
-    atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(urlLen) + "\r").c_str());
-    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
-    atcmd::__sendATcmd(fd, url.c_str());
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-
-    /*
-    std::cout << "[Send HTTP POST request]" << std::endl;
-    std::string bodyLength = "20";
-    std::string maxInputBodyTime = "80";
-    std::string maxResponseTime = "80";
-    atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
-                            + bodyLength + ","
-                            + maxInputBodyTime + "," 
-                            + maxResponseTime + "\r").c_str());
-    atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
-    atcmd::__sendATcmd(fd, "Message=HelloQuectel");
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-    */
-
-    /*
-    std::cout << "[Send HTTP POST file request]" << std::endl;
-    std::string filename = "example.jpg";
-    atcmd::__sendATcmd(fd, ("AT+QHTTPPOSTFILE=\""
-                            + filename + "\"\r").c_str());
-    atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-
-    std::cout << "[Read HTTP response body and output it via UART]" << std::endl;
-    atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
-    std::cout << atcmd::__readBuffer(fd) << std::endl;
-    */                       
-
-    return "end"; 
-}
-
 void
-atcmd::customPost (const int fd, const std::string host, const std::string url, const int tryout) {
+atcmd::customPost (const int fd, const std::string host, const std::string uri, const int tryout) {
+    std::string filename = "1996-03-05.jpg";
+    std::string filePath = "1996-03-05.jpg";
+    std::ifstream bin(filePath, std::ios::binary);
+    std::string imageBin((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
+    std::string TIMESTAMP = "1996-03-05";
+    std::string event = "1";
+    std::string rssi = "31";
+    std::string battery = "90";
+
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"contextid\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
@@ -160,22 +99,11 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__sendATcmd(fd, "AT+QHTTPCFG=\"requestheader\",1\r");
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
-    const std::string fullUrl = "http://" + host + url;
+    const std::string fullUrl = "http://" + host + uri;
     atcmd::__sendATcmd(fd, ("AT+QHTTPURL=" + std::to_string(fullUrl.length()) + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
     atcmd::__sendATcmd(fd, fullUrl.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
-
-    std::string filename = "1996-03-05.jpg";
-    std::string filePath = "1996-03-05.jpg";
-    
-    std::ifstream bin(filePath, std::ios::binary);
-    std::string imageBin((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
-
-    std::string TIMESTAMP = "1996-03-05";
-    std::string event = "1";
-    std::string rssi = "31";
-    std::string battery = "90";
 
     std::string body_fields = (
         std::string("--boundary\r\n") + 
@@ -221,7 +149,7 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     int bodyLen = body_fields.length() + body_image.length();
 
     std::string header = (
-        std::string("POST ") + url + " HTTP/1.1\r\n" + 
+        std::string("POST ") + uri + " HTTP/1.1\r\n" + 
         "Host: " + host + "\r\n" + 
         "Content-Length: " + std::to_string(bodyLen) + "\r\n" +  
         "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
