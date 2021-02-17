@@ -220,6 +220,9 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     
     std::string data = header + body;
 
+    std::cout << "[POST REQUEST FORM]" << std::endl;
+    std::cout << data << std::endl;
+
     const std::string dataLen = std::to_string(data.length());
     std::string maxInputBodyTime = "80";
     std::string maxResponseTime = "80";
