@@ -71,8 +71,8 @@ CMakeUserPresets.json
 
 ### Images ###
 # JPEG
-*.jpg
-*.jpeg
+# *.jpg
+# *.jpeg
 *.jpe
 *.jif
 *.jfif
