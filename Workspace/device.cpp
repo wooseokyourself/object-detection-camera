@@ -204,13 +204,13 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     );
 
     std::string body_image = (
-        "--boundary\r\n" + 
+        std::string("--boundary\r\n") + 
         "Content-Type: image/jpeg\r\n" + 
         "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "\r\n" + 
         imageBin + "\r\n" + 
         "--boundary--\r\n"
-    )
+    );
 
     int bodyLen = body_fields.length() + body_image.length();
 
