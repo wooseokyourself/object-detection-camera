@@ -177,7 +177,7 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     std::string rssi = "31";
     std::string battery = "90";
 
-    std::string body = (
+    std::string body_fields = (
         std::string("--boundary\r\n") + 
         "Content-Type: text/plain\r\n" + 
         "Content-Disposition: form/data; name=\"time\"\r\n" + 
@@ -201,29 +201,28 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
         "Content-Disposition: form/data; name=\"battery\"\r\n" + 
         "\r\n" + 
         battery + "\r\n" + 
+    );
 
+    std::string body_image = (
         "--boundary\r\n" + 
         "Content-Type: image/jpeg\r\n" + 
         "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "\r\n" + 
         imageBin + "\r\n" + 
         "--boundary--\r\n"
-    );
+    )
+
+    int bodyLen = body_fields.length() + body_image.length();
 
     std::string header = (
         std::string("POST ") + url + " HTTP/1.1\r\n" + 
         "Host: " + host + "\r\n" + 
-        "Content-Length: " + std::to_string(body.length()) + "\r\n" +  
+        "Content-Length: " + std::to_string(bodyLen) + "\r\n" +  
         "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
         "\r\n"
     );
-    
-    std::string data = header + body;
 
-    std::cout << "[POST REQUEST FORM]" << std::endl;
-    std::cout << data << std::endl;
-
-    const std::string dataLen = std::to_string(data.length());
+    const std::string dataLen = std::to_string(header.length() + bodyLen);
     std::string maxInputBodyTime = "80";
     std::string maxResponseTime = "80";
     atcmd::__sendATcmd(fd, ("AT+QHTTPPOST="
@@ -231,7 +230,9 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
                             + maxInputBodyTime + "," 
                             + maxResponseTime + "\r").c_str());
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
-    atcmd::__sendATcmd(fd, data.c_str());
+    atcmd::__sendATcmd(fd, header.c_str());
+    atcmd::__sendATcmd(fd, body_fields.c_str());
+    atcmd::__sendATcmd(fd, body_image.c_str());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
