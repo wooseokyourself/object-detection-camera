@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iterator>
 #include <string>
+#include <unistd.h>
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
@@ -44,6 +45,9 @@ customPost (const int fd, const std::string host, const std::string url, const i
 
 void
 __sendATcmd (const int fd, const char* cmd);
+
+void
+__sendATcmd (const int fd, const char* cmd, const size_t len);
 
 std::string
 __readBuffer (const int fd);

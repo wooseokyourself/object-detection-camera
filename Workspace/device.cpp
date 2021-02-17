@@ -232,7 +232,7 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
     atcmd::__readBufferUntil(fd, "\r\nCONNECT\r\n", tryout);
     atcmd::__sendATcmd(fd, header.c_str());
     atcmd::__sendATcmd(fd, body_fields.c_str());
-    atcmd::__sendATcmd(fd, body_image.c_str());
+    atcmd::__sendATcmd(fd, body_image.c_str(), body_image.length());
     atcmd::__readBufferUntil(fd, "\r\nOK\r\n", tryout);
 
     atcmd::__sendATcmd(fd, "AT+QHTTPREAD=80\r");
@@ -242,8 +242,14 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
 void
 atcmd::__sendATcmd (const int fd, const char* cmd) {
     std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
-    // serialFlush(fd);
     serialPuts(fd, cmd);
+    delay(500);
+}
+
+void
+atcmd::__sendATcmd (const int fd, const char* cmd, const size_t len) {
+    std::cout << "Pi) Send AT cmd: " << cmd << std::endl;
+    write(fd, cmd, len);
     delay(500);
 }
 
