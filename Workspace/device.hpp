@@ -6,6 +6,8 @@
 #include <cstdio>
 #include <error.h>
 #include <iostream>
+#include <fstream>
+#include <iterator>
 #include <string>
 #include <wiringPi.h>
 #include <wiringSerial.h>

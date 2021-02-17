@@ -168,20 +168,59 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
 
     std::string filename = "example.jpg";
     std::string filePath = "example.jpg";
+    
+    std::ifstream bin(filePath, std::ios::binary);
+    std::string imageBin((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
 
-    std::string body =
+    std::string TIMESTAMP = "1996-03-05";
+    std::string event = "1";
+    std::string rssi = "31";
+    std::string battery = "90";
+
+    std::string body = (
+        std::string("--boundary\r\n") + 
+        "Content-Disposition: form/data; name=\"time\"\r\n" + 
+        "Content-Type: text/plain\r\n" + 
+        "\r\n" + 
+        TIMESTAMP + "\r\n" + 
+        "--boundary--\r\n" + 
+
+        std::string("--boundary\r\n") + 
+        "Content-Disposition: form/data; name=\"event\"\r\n" + 
+        "Content-Type: text/plain\r\n" + 
+        "\r\n" + 
+        event + "\r\n" + 
+        "--boundary--\r\n" + 
+
+        std::string("--boundary\r\n") + 
+        "Content-Disposition: form/data; name=\"rssi\"\r\n" + 
+        "Content-Type: text/plain\r\n" + 
+        "\r\n" + 
+        rssi + "\r\n" + 
+        "--boundary--\r\n" + 
+
+        std::string("--boundary\r\n") + 
+        "Content-Disposition: form/data; name=\"battery\"\r\n" + 
+        "Content-Type: text/plain\r\n" + 
+        "\r\n" + 
+        battery + "\r\n" + 
+        "--boundary--\r\n" + 
+
         std::string("--boundary\r\n") + 
         "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "Content-Type: image/jpg\r\n" + 
         "\r\n" + 
+        imageBin + "\r\n" + 
         "--boundary--\r\n";
+    )
 
-    std::string header = 
+    std::string header = (
         std::string("POST ") + url + " HTTP/1.1\r\n" + 
         "Host: " + host + "\r\n" + 
         "Content-Length: " + std::to_string(body.length()) + "\r\n" +  
         "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
         "\r\n";
+    )
     
     std::string data = header + body;
 
