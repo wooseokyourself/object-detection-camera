@@ -31,7 +31,7 @@ int main (void) {
             // std::string url = "http://ino-on.umilevx.com/api/devices/events/ino-on-1996";
             // atcmd::post(fd, url, tryout);
             string host = "ino-on.umilevx.com";
-            string url = "/api/devices/events/ino-on-1996";
+            string url = "/api/devices/events/ino-on-0005";
             atcmd::customPost(fd, host, url, tryout);
         }
         else
