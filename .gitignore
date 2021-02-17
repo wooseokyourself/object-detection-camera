@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/cmake,c++,python,vscode,images,opencv,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=cmake,c++,python,vscode,images,opencv,node
 
+### My private space! ###
+zz-prev/*
+
 ### Executable file ###
 detector
 

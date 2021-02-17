@@ -1,0 +1,4 @@
+#ifndef YOLOOBJECTDETECTOR
+#define YOLOOBJECTDETECTOR
+
+#endif
