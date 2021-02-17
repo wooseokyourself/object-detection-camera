@@ -200,7 +200,13 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
         "Content-Type: text/plain\r\n" + 
         "Content-Disposition: form/data; name=\"battery\"\r\n" + 
         "\r\n" + 
-        battery + "\r\n"
+        battery + "\r\n" + 
+
+        "--boundary\r\n" + 
+        "Content-Type: text/plain\r\n" + 
+        "Content-Disposition: form/data; name=\"filename\"\r\n" + 
+        "\r\n" + 
+        filename + "\r\n"
     );
 
     std::string body_image = (
