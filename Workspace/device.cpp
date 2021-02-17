@@ -183,30 +183,26 @@ atcmd::customPost (const int fd, const std::string host, const std::string url, 
         "Content-Type: text/plain\r\n" + 
         "\r\n" + 
         TIMESTAMP + "\r\n" + 
-        "--boundary\r\n" + 
 
-        std::string("--boundary\r\n") + 
+        "--boundary\r\n" + 
         "Content-Disposition: form/data; name=\"event\"\r\n" + 
         "Content-Type: text/plain\r\n" + 
         "\r\n" + 
         event + "\r\n" + 
-        "--boundary\r\n" + 
 
-        std::string("--boundary\r\n") + 
+        "--boundary\r\n" + 
         "Content-Disposition: form/data; name=\"rssi\"\r\n" + 
         "Content-Type: text/plain\r\n" + 
         "\r\n" + 
-        rssi + "\r\n" + 
-        "--boundary\r\n" + 
+        rssi + "\r\n" +  
 
-        std::string("--boundary\r\n") + 
+        "--boundary\r\n" + 
         "Content-Disposition: form/data; name=\"battery\"\r\n" + 
         "Content-Type: text/plain\r\n" + 
         "\r\n" + 
         battery + "\r\n" + 
-        "--boundary\r\n" + 
 
-        std::string("--boundary\r\n") + 
+        "--boundary\r\n" + 
         "Content-Disposition: form-data; name=\"files\"; filename=\"" + filePath + "\"\r\n" + 
         "Content-Type: image/jpg\r\n" + 
         "\r\n" + 
