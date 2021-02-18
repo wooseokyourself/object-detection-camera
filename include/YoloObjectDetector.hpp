@@ -1,9 +1,10 @@
 #ifndef YOLOOBJECTDETECTOR
 #define YOLOOBJECTDETECTOR
 
-#include <cassert>
+#include <cstring>
 #include <iostream>
 #include <fstream>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -19,23 +20,26 @@ using namespace dnn;
 
 class YoloObjectDetector {
 public:
-    YoloObjectDetector (const std::string weightsPath, 
-                        const std::string cfgPath, 
-                        const std::String namesPath, 
-                        const int _target, 
-                        const float _confThreshold, 
-                        const float _nmsThreshold, 
-                        const int _width);
+    YoloObjectDetector ();
+    void init (const std::string weightsPath, 
+               const std::string cfgPath, 
+               const std::String namesPath, 
+               const int _target, 
+               const float _confThreshold, 
+               const float _nmsThreshold, 
+               const int _width);
     Mat& getFrameRef ();
     Mat cloneFrame ();
     void capture ();
     int detect ();
+    void getFrameBytes (std::string& outBytes) const;
 
 private:
     void netPreProcess (Size& padSize);
     int netPostProcess (const Size& padSize, std::vector<Mat>& outs);
 
 private:
+    bool isSet;
     int target;
 
     Mat frame;
