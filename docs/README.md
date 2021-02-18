@@ -19,11 +19,11 @@
 
 # Description
 ## Terms
-#### Normal mode (Normal task)
+#### Detecting mode (Normal task)
 사진을 촬영하고 포크레인을 검출한 뒤 결과값을 서버에 보내는 작업을 의미한다.
 
-#### Admin mode (Admin task)
-관리자 페이지를 위한 웹서버를 실행하는 작업을 의미한다.   
+#### Preview mode (Admin task)
+사진을 계속 촬영하여 서버에 보내는 작업을 의미한다.   
 
 ## Network
 Normal mode 에서의 결과를 서버에 보내기 위해(http post) 네트워크가 필요하다. 이 때 PPP 인터페이스를 통해 네트워크에 접속하여 현재 앱에서 요청을 보내는 방법과, 모뎀의 AT Command 를 이용하여 보내는 방법이 존재하는데, AT Command 를 이용한 방법은 Workspace 에서 구현 및 테스트중이고 (issue #2, #6) 실제 구현은 PPP 인터페이스를 사용중이다.
