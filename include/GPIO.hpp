@@ -1,6 +1,7 @@
 #ifndef GPIO
 #define GPIO
 
+#include <iostream>
 #include <wiringPi.h>
 
 class GPIO {
