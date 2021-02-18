@@ -1,3 +1,4 @@
+#include "../include/Common.hpp"
 #include "../include/BG96.hpp"
 #include "../include/Config.hpp"
 #include "../include/GPIO.hpp"
@@ -17,11 +18,12 @@ int main (void) {
     NRF nrf;
     HttpPostFormData fields;
     YoloObjectDetector vision;
-
+    
     config.readFromJsonFile(JSON_PATH);
 
     std::string imageBytes;
     if (config.isDetectingMode()) {
+        const std::string TIMESTAMP = getISOCurrentTimestamp();
         vision.setModel ("bin/model/yolov4.weights", // .weights path
                          "bin/model/yolov4.cfg",     // .cfg path
                          "bin/model/classes.names",  // .names path
