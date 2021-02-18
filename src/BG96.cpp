@@ -17,7 +17,18 @@ BG96::~BG96 () {
 }
 
 int BG96::getRssi() {
-    
+    this->putATcmd("AT+CSQ\r");
+    std::string response = this->getResponse();
+    int colonIdx = -1;
+    for (int i = 0 ; i < response.length() ; i ++) {
+        if (response[i] == ':') {
+            colonIdx = i;
+            break;
+        }
+    }
+    if (colonIdx == -1)
+        return -1;
+    return std::stoi(response.substr(colonIdx - 2, colonIdx - 1));
 }
 
 std::string BG96::postMultipart (const std::string host,
