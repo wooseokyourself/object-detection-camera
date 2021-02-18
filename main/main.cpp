@@ -22,16 +22,16 @@ int main (void) {
 
     std::string imageBytes;
     if (config.isDetectingMode()) {
-        vision.init ("bin/model/yolov4.weights",    // .weights path
-                     "bin/model/yolov4.cfg",        // .cfg path
-                     "bin/model/classes.names",     // .names path
-                     0,                             // detecting target index
-                     config.getConfThreshold(),     // yolo confidence threshold
-                     config.getNmsThreshold(),      // yolo nms threshold
-                     config.getWidth()              // picture width (ratio=4:3)
-                    );
-        vision.capture();
-        vision.detect();
+        vision.setModel ("bin/model/yolov4.weights", // .weights path
+                         "bin/model/yolov4.cfg",     // .cfg path
+                         "bin/model/classes.names",  // .names path
+                        );
+        vision.capture(config.getWidth());           // picture width (retio is 4:3)
+        vision.detect(0,                             // detecting target index (in .names file)
+                      config.getConfThreshold(),     // yolo confidence threshold
+                      config.getNmsThreshold(),      // yolo nms threshold
+                      config.getWidth()              // resize
+                     );
         vision.getFrameBytes(imageBytes);
 
         fields.addField("text/plain", "time", TIMESTAMP);
@@ -46,10 +46,10 @@ int main (void) {
     }
     else {
         while (config.isPreviewMode()) {
-            vision.capture();
+            vision.capture(256);
             vision.getFrameBytes(imageBytes);
             fields.addField("image/jpeg", "files", imageBytes);
-            std::string response = modem.postMultipart(HOST, PREVIEW_URI = config.getID(), fields, 20);
+            std::string response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
             config.readFromJsonString(response);
             // nrf.setPowerInterval(config.getIntervalSecs());
             fields.clear();
