@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project( app C CXX )
 
 set( HEADER include/ )
-set( SOURCE src/config.cpp src/serials.cpp src/http.cpp src/vision.cpp )
+set( SOURCE src/BG96.cpp src/Common.cpp src/Config.cpp src/GPIO.cpp src/HttpPostFormData.cpp src/NRF.cpp src/Serial.cpp src/YoloObjectDetector.cpp )
 set( MAIN main/main.cpp )
 
 find_package( PkgConfig REQUIRED )
@@ -15,5 +15,5 @@ include_directories( ${HEADER} ${OPENCV_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS} ${JSO
 link_libraries( ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} )
 add_executable( app ${MAIN} ${SOURCE} )
 
-target_compile_options( app PUBLIC -std=c++11 )
+target_compile_options( app PUBLIC -std=c++17 )
 target_link_libraries( app ${OPENCV_LIBRARIES} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES} ${WIRINGPI_LIBRARIES} )
