@@ -1,6 +1,6 @@
 #include "../include/Serial.hpp"
 
-Serial::Serial (const char* _port, const int baudRate) {
+Serial::Serial (const char* port, const int baudRate) {
     struct termios options;
     speed_t myBaud;
     int     status;
@@ -38,11 +38,11 @@ Serial::Serial (const char* _port, const int baudRate) {
         case 4000000:	myBaud = B4000000 ; break ;
 
         default:
-        return -2; // ERROR
+        std::cerr << "Serial: " << "undefinde baud rate" << std::endl;
     }
 
-    if ((this->fd = open (_port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
-        return -1; // ERROR
+    if ((this->fd = open (port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
+        std::cerr << "Serial: " << "can't open the port: " << port << std::endl;
 
     fcntl (this->fd, F_SETFL, O_RDWR);
 
