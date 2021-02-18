@@ -52,6 +52,10 @@ void YoloObjectDetector::capture () {
 }
 
 int YoloObjectDetector::detect () {
+    if (!this->isSet) {
+        std::cerr << "YoloObjectDetector: " << "need to initialize dnn model" << std::endl;
+        return -1;
+    }
     std::vector<Mat> outs;
     Size padSize;
     this->netPreProcess(padSize);
