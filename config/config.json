@@ -1,0 +1,12 @@
+{
+    "ID": "ino-on-xxxx", 
+    "CONFIDENCE_THRESHOLD": "0.35", 
+    "NMS_THRESHOLD": "0.5", 
+    "RESIZE": "800", 
+    "MODE": "0"
+}
+
+
+"HOST": "http://ino-on.umilevx.com/"
+"DETECTING_ENDPOINT": "api/devices/events/" + ID
+"PREVIEW_ENDPOINT": "api/manager/device/" + ID
