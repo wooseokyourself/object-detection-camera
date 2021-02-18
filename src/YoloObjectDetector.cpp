@@ -4,14 +4,9 @@ YoloObjectDetector::YoloObjectDetector () : isSet(false) {
 
 }
 
-void YoloObjectDetector::init (const std::string weightsPath, 
-                               const std::string cfgPath, 
-                               const std::String namesPath, 
-                               const int _target, 
-                               const float _confThreshold, 
-                               const float _nmsThreshold, 
-                               const int _width) {
-    this->target = _target;
+void YoloObjectDetector::setModel (const std::string weightsPath, 
+                                   const std::string cfgPath, 
+                                   const std::String namesPath) {
     try {
         this->net = readNet(weightsPath, cfgPath);
         this->net.setPreferableBackend(DNN_BACKEND_OPENCV);
@@ -37,12 +32,12 @@ Mat YoloObjectDetector::cloneFrame () {
     return this->frame.clone();
 }
 
-void YoloObjectDetector::capture () {
+void YoloObjectDetector::capture (const int width) {
     try {
         VideoCapture cap;
         cap.open(0);
-        cap.set(CAP_PROP_FRAME_WIDTH, this->width);
-        cap.set(CAP_PROP_FRAME_HEIGHT, int((float(this->width) / 4) * 3));
+        cap.set(CAP_PROP_FRAME_WIDTH, width);
+        cap.set(CAP_PROP_FRAME_HEIGHT, int((float(width) / 4) * 3));
         cap >> this->frame;
         cap.release();
     }
@@ -51,7 +46,10 @@ void YoloObjectDetector::capture () {
     }
 }
 
-int YoloObjectDetector::detect () {
+int YoloObjectDetector::detect (const int target, 
+                                const float confThreshold, 
+                                const float nmsThreshold, 
+                                const int resize) {
     if (!this->isSet) {
         std::cerr << "YoloObjectDetector: " << "need to initialize dnn model" << std::endl;
         return -1;
@@ -60,7 +58,7 @@ int YoloObjectDetector::detect () {
     Size padSize;
     this->netPreProcess(padSize);
     net.forward(outs, this->outNames);
-    return netPostProcess(padSize, outs);
+    return netPostProcess(target, padSize, outs);
 }
 
 void getFrameBytes (std::string& outBytes) const {
@@ -69,7 +67,7 @@ void getFrameBytes (std::string& outBytes) const {
     std::memcpy(outBytes, reinterpret_cast<char const*>(this->frame.data), len);
 }
 
-void YoloObjectDetector::netPreProcess (Size& padSize) {
+void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
     // Add padding to image
     if (this->frame.rows != this->frame.cols) {
         int length = this->frame.cols > this->frame.rows ? this->frame.cols : this->frame.rows;
@@ -90,7 +88,7 @@ void YoloObjectDetector::netPreProcess (Size& padSize) {
     // Prepare for inference
     static Mat blob = blobFromImage(this->frame, 
                                     1, // scalarfactor: double
-                                    Size(this->width, this->width),
+                                    Size(resize, resize),
                                     Scalar(), 
                                     true, // swapRB: bool
                                     false, 
@@ -102,7 +100,11 @@ void YoloObjectDetector::netPreProcess (Size& padSize) {
                  Scalar()); // mean: Scalar
 }
 
-int YoloObjectDetector::netPostProcess (const Size& padSize, std::vector<Mat>& outs) {
+int YoloObjectDetector::netPostProcess (const int confThreshold, 
+                                        const int nmsThreshold, 
+                                        const int target, 
+                                        const Size& padSize, 
+                                        std::vector<Mat>& outs) {
     int targetCount = 0;
     static std::vector<int> outLayers = net.getUnconnectedOutLayers();
     static std::string outLayerType = net.getLayer(outLayers[0])->type;
@@ -118,7 +120,7 @@ int YoloObjectDetector::netPostProcess (const Size& padSize, std::vector<Mat>& o
                 Point classIdPoint;
                 double confidence;
                 minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
-                if (confidence > this->confThreshold) {
+                if (confidence > confThreshold) {
                     int width = (int)(data[2] * this->frame.cols);
                     int height = (int)(data[3] * this->frame.rows);
                     // Take a limit on size of the detecting boxes.
@@ -140,7 +142,7 @@ int YoloObjectDetector::netPostProcess (const Size& padSize, std::vector<Mat>& o
 
     // Draw rectangles
     std::vector<int> indices;
-    NMSBoxes(boxes, confidences, this->confThreshold, this->nmsThreshold, indices);
+    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
     for (size_t i = 0 ; i < indices.size() ; i ++) {   
         int idx = indices[i];
         if (classIds[idx] == target) { // Draw rectangle if class is target

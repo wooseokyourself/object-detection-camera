@@ -21,22 +21,25 @@ using namespace dnn;
 class YoloObjectDetector {
 public:
     YoloObjectDetector ();
-    void init (const std::string weightsPath, 
-               const std::string cfgPath, 
-               const std::String namesPath, 
-               const int _target, 
-               const float _confThreshold, 
-               const float _nmsThreshold, 
-               const int _width);
+    void setModel (const std::string weightsPath, 
+                   const std::string cfgPath, 
+                   const std::String namesPath);
     Mat& getFrameRef ();
     Mat cloneFrame ();
-    void capture ();
-    int detect ();
+    void capture (const int width);
+    int detect (const int target, 
+                const float confThreshold, 
+                const float nmsThreshold
+                const int resize);
     void getFrameBytes (std::string& outBytes) const;
 
 private:
-    void netPreProcess (Size& padSize);
-    int netPostProcess (const Size& padSize, std::vector<Mat>& outs);
+    void netPreProcess (const int resize, Size& padSize);
+    int netPostProcess (const int confThreshold, 
+                        const int nmsThreshold, 
+                        const int target, 
+                        const Size& padSize, 
+                        std::vector<Mat>& outs);
 
 private:
     bool isSet;
@@ -47,10 +50,6 @@ private:
 
     std::vector<cv::String> outNames;
     std::vector<std::string> classes;
-
-    float confThreshold;
-    float nmsThreshold;
-    int width;
 };
 
 #endif
