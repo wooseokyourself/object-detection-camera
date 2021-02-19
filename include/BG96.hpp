@@ -1,6 +1,7 @@
 #ifndef BG96
 #define BG96
 
+#include <string>
 #include <cstdlib>
 #include "Serial.hpp"
 #include "HttpPostFormData.hpp"

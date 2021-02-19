@@ -1,8 +1,6 @@
 #include "../include/BG96.hpp"
 
-BG96::BG96 (const char* _port, const int baudRate) {
-    Serial(_port, baudRate);
-
+BG96::BG96 (const char* _port, const int baudRate) : Serial(_port, baudRate); {
     // Wait until modem ready
     this->putATcmd("AT\r");
     this->waitResponseUntil("\r\nOK\r\n", 15);
