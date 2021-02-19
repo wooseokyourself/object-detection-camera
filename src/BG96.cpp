@@ -45,22 +45,22 @@ std::string BG96::postMultipart (const std::string host,
                                  const int timeoutSecs) {
 
     // multipart/form-data boundary
-    std::string boundary ;
+    std::string boundary;
 
     this->putATcmd("AT+QHTTPCFG=\"contextid\",1\r");
-    this->waitResponseUntil("\r\nOK\r\n", tryout);
+    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     this->putATcmd("AT+QHTTPCFG=\"contenttype\",3\r"); // 3: multipart/form-data
-    this->waitResponseUntil("\r\nOK\r\n", tryout);
+    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     this->putATcmd("AT+QHTTPCFG=\"requestheader\",1\r");
-    this->waitResponseUntil("\r\nOK\r\n", tryout);
+    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     const std::string fullUrl = "http://" + host + uri;
     this->putATcmd("AT+QHTTPURL=" + std::to_string(fullUrl.length()) + "\r");
-    this->waitResponseUntil("\r\nCONNECT\r\n", tryout);
+    this->waitResponseUntil("\r\nCONNECT\r\n", timeoutSecs);
     this->putATcmd(fullUrl);
-    this->waitResponseUntil("\r\nOK\r\n", tryout);
+    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     // Construct body of request form
     std::string body;
@@ -102,10 +102,10 @@ std::string BG96::postMultipart (const std::string host,
                     + std::to_string(header.length() + body.length()) + ","
                     + maxInputBodyTime + "," 
                     + maxResponseTime + "\r");
-    this->waitResponseUntil(fd, "\r\nCONNECT\r\n", tryout);
+    this->waitResponseUntil(fd, "\r\nCONNECT\r\n", timeoutSecs);
     this->putATcmd(header);
     this->putATcmd(body, body.length());
-    this->waitResponseUntil("\r\nOK\r\n", tryout);
+    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     this->putATcmd("AT+QHTTPREAD=80\r");
     std::response = this->getResponse();
@@ -145,13 +145,17 @@ std::string BG96::getResponse () {
     }
 }
 
-bool BG96::waitResponseUntil (const std::string expected, const int count) {
-    std::string response = this->getResponse();
-    for (int i = 0 ; i < count && response != expected ; i ++) {
+bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    while (true) {
         response = this->getResponse();
-        if (response == "\r\nERROR\r\n")
+        if (response == expected)
+            return true;
+        else if (response == "\r\nERROR\r\n")
+            return false;
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs)
             return false;
         delay(500);
     }
-    return true;
 }

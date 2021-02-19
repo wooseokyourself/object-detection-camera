@@ -1,6 +1,7 @@
 #ifndef __BG96__
 #define __BG96__
 
+#include <chrono>
 #include <string>
 #include <cstdlib>
 #include "Serial.hpp"
@@ -24,7 +25,7 @@ public:
     void putATcmd (const char* cmd, const size_t len);
     void putATcmd (std::string cmd, const size_t len);
     std::string getResponse ();
-    bool waitResponseUntil (const std::string expected, const int count);
+    bool waitResponseUntil (const std::string expected, const int timeoutSecs);
 
 };
 
