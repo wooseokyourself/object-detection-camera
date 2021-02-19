@@ -108,8 +108,8 @@ std::string BG96::postMultipart (const std::string host,
     this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
     this->putATcmd("AT+QHTTPREAD=80\r");
-    std::response = this->getResponse();
-    while (response != "CME-703") // 여기 고쳐야함!! http busy 안뜰때까지 대기
+    std::string response = this->getResponse();
+    while (response.find("703") != -1) // 703: HTTP BUSY
         response = this->getResponse();
     return response;
 }
