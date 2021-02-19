@@ -162,7 +162,7 @@ int YoloObjectDetector::netPostProcess (const int confThreshold,
             int classId = classIds[idx];
 
             rectangle(this->frame, Point(left, top), Point(right, bottom), Scalar(0, 255, 0));
-            string label = format("%.2f", confidences[idx]);
+            std::string label = format("%.2f", confidences[idx]);
             if (!classes.empty())
                 label = classes[classId] + ": " + label;
             int baseLine;
