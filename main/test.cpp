@@ -20,11 +20,16 @@ const std::string NRF_PORT = " ";
 
 int main (void) {
     Config config;
+    cout << "Config ready" << endl;
     BG96 modem(MODEM_PORT, 115200);
+    cout << "BG96 ready" << endl;
     // NRF nrf;
     GPIO gpio(RPI_OFF_PIN);
+    cout << "GPIO ready" << endl;
     HttpPostFormData fields;
+    cout << "HttpPostFormData ready" << endl;
     YoloObjectDetector vision;
+    cout << "YoloObjectDetector ready" << endl;
 
     int select;
     while (true) {
@@ -40,6 +45,8 @@ int main (void) {
         cout << "8. VISION  : Capture." << endl;
         cout << "9. VISION  : Detect previous frame and save it to file." << endl;
         cout << "=========================================================" << endl;
+        cout << "select: ";
+        cin >> select;
         
         switch (select) {
             case 1: {
