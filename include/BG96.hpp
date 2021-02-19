@@ -13,19 +13,19 @@ public:
     BG96 (const std::string _port, const int baudRate);
     ~BG96 ();
 
-    int getRssi();
+    int getRssi const();
     std::string postMultipart (const std::string host,
                                const std::string uri,
                                const HttpPostFormData& fields, 
-                               const int timeoutSecs) const;
+                               const int timeoutSecs);
 
 public:
-    void putATcmd (const char* cmd) const;
-    void putATcmd (std::string cmd) const;
-    void putATcmd (const char* cmd, const size_t len) const;
-    void putATcmd (std::string cmd, const size_t len) const;
-    std::string getResponse () const;
-    bool waitResponseUntil (const std::string expected, const int timeoutSecs) const;
+    void putATcmd (const char* cmd);
+    void putATcmd (std::string cmd);
+    void putATcmd (const char* cmd, const size_t len);
+    void putATcmd (std::string cmd, const size_t len);
+    std::string getResponse ();
+    bool waitResponseUntil (const std::string expected, const int timeoutSecs);
 };
 
 #endif

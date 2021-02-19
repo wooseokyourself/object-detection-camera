@@ -24,7 +24,7 @@ BG96::~BG96 () {
     Serial::release();
 }
 
-int BG96::getRssi() const {
+int BG96::getRssi() {
     this->putATcmd("AT+CSQ\r");
     std::string response = this->getResponse();
     int colonIdx = -1;
@@ -102,7 +102,7 @@ std::string BG96::postMultipart (const std::string host,
                     + std::to_string(header.length() + body.length()) + ","
                     + maxInputBodyTime + "," 
                     + maxResponseTime + "\r");
-    this->waitResponseUntil(fd, "\r\nCONNECT\r\n", timeoutSecs);
+    this->waitResponseUntil("\r\nCONNECT\r\n", timeoutSecs);
     this->putATcmd(header);
     this->putATcmd(body, body.length());
     this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
@@ -114,23 +114,23 @@ std::string BG96::postMultipart (const std::string host,
     return response;
 }
 
-void BG96::putATcmd (const char* cmd) const {
+void BG96::putATcmd (const char* cmd) {
     Serial::puts(cmd);
 }
 
-void BG96::putATcmd (std::string cmd) const {
+void BG96::putATcmd (std::string cmd) {
     Serial::puts(cmd.c_str());
 }
 
-void BG96::putATcmd (const char* cmd, const size_t len) const {
+void BG96::putATcmd (const char* cmd, const size_t len) {
     Serial::puts(cmd, len);
 }
 
-void BG96::putATcmd (std::string cmd, const size_t len) const {
+void BG96::putATcmd (std::string cmd, const size_t len) {
     Serial::puts(cmd.c_str(), len);
 }
 
-std::string BG96::getResponse () const {
+std::string BG96::getResponse () {
     int len = Serial::remaining();
     if (len < 0)
         return "Error";
@@ -145,7 +145,7 @@ std::string BG96::getResponse () const {
     }
 }
 
-bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) const {
+bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while (true) {
         response = this->getResponse();
