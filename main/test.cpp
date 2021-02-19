@@ -5,7 +5,7 @@
 #include "../include/HttpPostFormData.hpp"
 #include "../include/NRF.hpp"
 #include "../include/Serial.hpp"
-#include "../YoloObjectDetector.hpp"
+#include "../include/YoloObjectDetector.hpp"
 
 using namespace std;
 
