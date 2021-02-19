@@ -1,6 +1,7 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <jsoncpp/json/json.h>
