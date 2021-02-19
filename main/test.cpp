@@ -75,7 +75,7 @@ int main (void) {
                 break;
             }
             case 4: {
-                modem.getRssi();
+                cout << modem.getRssi() << endl;
                 break;
             }
             case 5: {
