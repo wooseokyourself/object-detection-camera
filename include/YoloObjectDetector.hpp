@@ -25,20 +25,20 @@ public:
                    const std::string cfgPath, 
                    const std::string namesPath);
     Mat& getFrameRef ();
-    Mat cloneFrame ();
-    bool writeFrame (const std::string filePath);
+    Mat cloneFrame () const;
+    void getFrameBytes (std::string& outBytes) const;
+    bool writeFrame (const std::string filePath) const;
     void capture (const int width);
     int detect (const int target, 
                 const float confThreshold, 
                 const float nmsThreshold, 
                 const int resize);
-    void getFrameBytes (std::string& outBytes) const;
 
 private:
     void netPreProcess (const int resize, Size& padSize);
-    int netPostProcess (const int confThreshold, 
-                        const int nmsThreshold, 
-                        const int target, 
+    int netPostProcess (const int target,
+                        const int confThreshold, 
+                        const int nmsThreshold,  
                         const Size& padSize, 
                         std::vector<Mat>& outs);
 

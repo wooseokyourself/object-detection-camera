@@ -6,7 +6,7 @@ YoloObjectDetector::YoloObjectDetector () : isSet(false) {
 
 void YoloObjectDetector::setModel (const std::string weightsPath, 
                                    const std::string cfgPath, 
-                                   const std::String namesPath) {
+                                   const std::string namesPath) {
     try {
         this->net = readNet(weightsPath, cfgPath);
         this->net.setPreferableBackend(DNN_BACKEND_OPENCV);
@@ -28,12 +28,18 @@ Mat& YoloObjectDetector::getFrameRef () {
     return this->frame;
 }
 
-Mat YoloObjectDetector::cloneFrame () {
+Mat YoloObjectDetector::cloneFrame () const {
     return this->frame.clone();
 }
 
-bool YoloObjectDetector::writeFrame (const std::string filePath) {
-    return imwrite(filePath. frame);
+void YoloObjectDetector::getFrameBytes (std::string& outBytes) const {
+    int len = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
+    outBytes.resize(len);
+    std::memcpy(outBytes, reinterpret_cast<char const*>(this->frame.data), len);
+}
+
+bool YoloObjectDetector::writeFrame (const std::string filePath) const {
+    return imwrite(filePath, this->frame);
 }
 
 void YoloObjectDetector::capture (const int width) {
@@ -60,15 +66,9 @@ int YoloObjectDetector::detect (const int target,
     }
     std::vector<Mat> outs;
     Size padSize;
-    this->netPreProcess(padSize);
+    this->netPreProcess(resize, padSize);
     net.forward(outs, this->outNames);
-    return netPostProcess(target, padSize, outs);
-}
-
-void getFrameBytes (std::string& outBytes) const {
-    int len = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
-    outBytes.resize(len);
-    std::memcpy(outBytes, reinterpret_cast<char const*>(this->frame.data), len);
+    return netPostProcess(target, confThreshold, nmsThreshold, padSize, outs);
 }
 
 void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
