@@ -42,7 +42,7 @@ int BG96::getRssi() {
 std::string BG96::postMultipart (const std::string host,
                                  const std::string uri,
                                  const HttpPostFormData& fields, 
-                                 const int timeoutSecs) const {
+                                 const int timeoutSecs) {
 
     // multipart/form-data boundary
     std::string boundary;
@@ -156,6 +156,6 @@ bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs)
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs)
             return false;
-        delay(500);
+        usleep(500000); // 0.5 ms
     }
 }

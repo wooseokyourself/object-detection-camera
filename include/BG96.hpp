@@ -4,6 +4,7 @@
 #include <chrono>
 #include <string>
 #include <cstdlib>
+#include <unistd.h>
 #include "Serial.hpp"
 #include "HttpPostFormData.hpp"
 
