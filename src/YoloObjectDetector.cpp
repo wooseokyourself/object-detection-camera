@@ -34,9 +34,9 @@ Mat YoloObjectDetector::cloneFrame () const {
 
 std::string YoloObjectDetector::extractFrameBytes () {
     const size_t bytesLen = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
-    const char* bytes = (char*)malloc(this->bytesLen);
+    char* bytes = (char*)malloc(this->bytesLen);
     std::memcpy(bytes, reinterpret_cast<char const*>(this->frame.data), bytesLen);
-    std::string ret(this->bytes);
+    std::string ret(bytes);
     free(bytes);
     return ret;
 }
