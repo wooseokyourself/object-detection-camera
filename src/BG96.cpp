@@ -148,7 +148,7 @@ std::string BG96::getResponse () {
 bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while (true) {
-        response = this->getResponse();
+        std::string response = this->getResponse();
         if (response == expected)
             return true;
         else if (response == "\r\nERROR\r\n")
