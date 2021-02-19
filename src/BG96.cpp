@@ -10,6 +10,16 @@ BG96::BG96 (const char* _port, const int baudRate) : Serial(_port, baudRate) {
     this->waitResponseUntil("\r\nOK\r\n", 15);
 }
 
+BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(), baudRate) {
+    // Wait until modem ready
+    this->putATcmd("AT\r");
+    this->waitResponseUntil("\r\nOK\r\n", 15);
+    this->putATcmd("ATE0\r");
+    this->waitResponseUntil("\r\nOK\r\n", 15);
+    this->putATcmd("AT+CEREG=2\r");
+    this->waitResponseUntil("\r\nOK\r\n", 15);
+}
+
 BG96::~BG96 () {
     ~Serial();
 }

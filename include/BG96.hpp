@@ -9,6 +9,7 @@
 class BG96 : public Serial {
 public:
     BG96 (const char* _port, const int baudRate);
+    BG96 (const std::string _port, const int baudRate);
     ~BG96 ();
 
     int getRssi();
