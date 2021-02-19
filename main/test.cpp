@@ -54,15 +54,7 @@ int main (void) {
                 break;
             case 2:
                 cout << "Below is input string." << endl;
-                string json =
-                "
-                    {\"ID\": \"ino-on-xxxx\", 
-                    \"CONF_THRESHOLD\": \"0.99\", 
-                    \"NMS_THRESHOLD\": \"0.99\", 
-                    \"WIDTH\": \"999\", 
-                    \"MODE\": \"1\", 
-                    \"INTERVAL_SECS\": \"300\"}
-                ";
+                string json = "{\"ID\": \"ino-on-xxxx\", \"CONF_THRESHOLD\": \"0.99\", \"NMS_THRESHOLD\": \"0.99\", \"WIDTH\": \"999\", \"MODE\": \"1\", \"INTERVAL_SECS\": \"300\"}";
                 cout << json << endl;
                 config.readFromJsonString(json);
                 cout << "ID: " << config.getID() << endl;
