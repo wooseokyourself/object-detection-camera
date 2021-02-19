@@ -13,7 +13,7 @@ public:
     BG96 (const std::string _port, const int baudRate);
     ~BG96 ();
 
-    int getRssi const();
+    int getRssi ();
     std::string postMultipart (const std::string host,
                                const std::string uri,
                                const HttpPostFormData& fields, 
