@@ -39,7 +39,7 @@ int main (void) {
                       config.getNmsThreshold(),      // yolo nms threshold
                       config.getWidth()              // resize
                      );
-        vision.getFrameBytes(imageBytes);
+        imageBytes = vision.extractFrameBytes();
 
         fields.addField("text/plain", "time", TIMESTAMP);
         fields.addField("text/plain", "event", "1");
@@ -55,7 +55,7 @@ int main (void) {
     else {
         while (config.isPreviewMode()) {
             vision.capture(256);
-            vision.getFrameBytes(imageBytes);
+            imageBytes = vision.extractFrameBytes();
             fields.addField("image/jpeg", "files", imageBytes);
             std::string response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
             config.readFromJsonString(response);
