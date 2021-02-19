@@ -29,6 +29,7 @@ protected:
     void puts (const char* s);
     void puts (const char* s, const size_t len);
     int getchar ();
+    void release ();
 
 private:
     int fd;

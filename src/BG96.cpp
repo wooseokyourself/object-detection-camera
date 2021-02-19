@@ -21,7 +21,7 @@ BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(),
 }
 
 BG96::~BG96 () {
-    ~Serial();
+    Serial::release();
 }
 
 int BG96::getRssi() {
