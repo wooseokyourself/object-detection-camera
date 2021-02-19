@@ -15,8 +15,8 @@ const std::string DETECTING_URI = "api/devices/events/";
 const std::string PREVIEW_URI = "api/manager/device/";
 
 const int RPI_OFF_PIN = 21; // BCM
-const char[] MODEM_PORT = "/dev/ttyS0";
-const char[] NRF_PORT = " ";
+char[] MODEM_PORT = "/dev/ttyS0";
+char[] NRF_PORT = " ";
 
 int main (void) {
     Config config;
