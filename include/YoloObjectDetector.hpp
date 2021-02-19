@@ -21,16 +21,12 @@ using namespace dnn;
 class YoloObjectDetector {
 public:
     YoloObjectDetector ();
-    ~YoloObjectDetector ();
     void setModel (const std::string weightsPath, 
                    const std::string cfgPath, 
                    const std::string namesPath);
     Mat& getFrameRef ();
     Mat cloneFrame () const;
-    void extractFrameBytes ();
-    size_t getFrameBytesLen () const;
-    char* getFrameBytesPtr () const;
-    void clearFrameBytes () const;
+    std::string extractFrameBytes ();
     bool writeFrame (const std::string filePath) const;
     void capture (const int width);
     int detect (const int target, 
@@ -52,8 +48,6 @@ private:
 
     Mat frame;
     Net net;
-    char* bytes;
-    size_t bytesLen;
 
     std::vector<cv::String> outNames;
     std::vector<std::string> classes;
