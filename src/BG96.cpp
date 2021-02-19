@@ -20,9 +20,7 @@ BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(),
     this->waitResponseUntil("\r\nOK\r\n", 15);
 }
 
-BG96::~BG96 () {
-    Serial::release();
-}
+BG96::~BG96 () { }
 
 int BG96::getRssi() {
     this->putATcmd("AT+CSQ\r");

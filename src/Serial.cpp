@@ -77,6 +77,10 @@ Serial::Serial (const char* port, const int baudRate) {
     usleep(10000);	// 10mS
 }
 
+Serial::~Serial () {
+    this->release();
+}
+
 /// @brief Flush the serial buffers (both tx & rx)
 void Serial::flush () {
     tcflush(this->fd, TCIOFLUSH);
