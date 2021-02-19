@@ -16,7 +16,7 @@ public:
                                const HttpPostFormData& fields, 
                                const int timeoutSecs);
 
-protected:
+public:
     void putATcmd (const char* cmd);
     void putATcmd (std::string cmd);
     void putATcmd (const char* cmd, const size_t len);

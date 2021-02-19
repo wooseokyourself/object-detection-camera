@@ -23,9 +23,10 @@ public:
     YoloObjectDetector ();
     void setModel (const std::string weightsPath, 
                    const std::string cfgPath, 
-                   const std::String namesPath);
+                   const std::string namesPath);
     Mat& getFrameRef ();
     Mat cloneFrame ();
+    bool writeFrame (const std::string filePath);
     void capture (const int width);
     int detect (const int target, 
                 const float confThreshold, 

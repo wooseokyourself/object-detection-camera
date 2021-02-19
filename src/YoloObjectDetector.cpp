@@ -32,6 +32,10 @@ Mat YoloObjectDetector::cloneFrame () {
     return this->frame.clone();
 }
 
+bool YoloObjectDetector::writeFrame (const std::string filePath) {
+    return imwrite(filePath. frame);
+}
+
 void YoloObjectDetector::capture (const int width) {
     try {
         VideoCapture cap;

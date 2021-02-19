@@ -3,7 +3,8 @@ project( app C CXX )
 
 set( HEADER include/ )
 set( SOURCE src/BG96.cpp src/Common.cpp src/Config.cpp src/GPIO.cpp src/HttpPostFormData.cpp src/NRF.cpp src/Serial.cpp src/YoloObjectDetector.cpp )
-set( MAIN main/main.cpp )
+set( MAIN main/test.cpp )
+#set ( MAIN main/main.cpp )
 
 find_package( PkgConfig REQUIRED )
 find_library( WIRINGPI_LIBRARIES wiringPi )
