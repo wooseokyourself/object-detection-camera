@@ -13,7 +13,7 @@ void YoloObjectDetector::setModel (const std::string weightsPath,
         this->net.setPreferableTarget(DNN_TARGET_CPU);
         this->outNames = this->net.getUnconnectedOutLayersNames();
 
-        ifstream ifs(names.c_str());
+        std::ifstream ifs(names.c_str());
         std::string line;
         while (std::getline(ifs, line))
             classes.push_back(line);
@@ -34,8 +34,10 @@ Mat YoloObjectDetector::cloneFrame () const {
 
 void YoloObjectDetector::getFrameBytes (std::string& outBytes) const {
     int len = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
-    outBytes.resize(len);
-    std::memcpy(outBytes, reinterpret_cast<char const*>(this->frame.data), len);
+    char* buf = (char*)malloc(len);
+    std::memcpy(buf, reinterpret_cast<char const*>(this->frame.data), len);
+    outBytes.clear();
+    outBytes(buf);
 }
 
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
