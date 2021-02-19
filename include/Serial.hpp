@@ -31,7 +31,7 @@ protected:
     int getchar ();
     void release ();
 
-private:
+protected:
     int fd;
 };
 

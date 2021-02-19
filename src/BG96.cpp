@@ -24,7 +24,7 @@ BG96::~BG96 () {
     Serial::release();
 }
 
-int BG96::getRssi() {
+int BG96::getRssi() const {
     this->putATcmd("AT+CSQ\r");
     std::string response = this->getResponse();
     int colonIdx = -1;
@@ -42,7 +42,7 @@ int BG96::getRssi() {
 std::string BG96::postMultipart (const std::string host,
                                  const std::string uri,
                                  const HttpPostFormData& fields, 
-                                 const int timeoutSecs) {
+                                 const int timeoutSecs) const {
 
     // multipart/form-data boundary
     std::string boundary;
@@ -114,23 +114,23 @@ std::string BG96::postMultipart (const std::string host,
     return response;
 }
 
-void BG96::putATcmd (const char* cmd) {
+void BG96::putATcmd (const char* cmd) const {
     Serial::puts(cmd);
 }
 
-void BG96::putATcmd (std::string cmd) {
+void BG96::putATcmd (std::string cmd) const {
     Serial::puts(cmd.c_str());
 }
 
-void BG96::putATcmd (const char* cmd, const size_t len) {
+void BG96::putATcmd (const char* cmd, const size_t len) const {
     Serial::puts(cmd, len);
 }
 
-void BG96::putATcmd (std::string cmd, const size_t len) {
+void BG96::putATcmd (std::string cmd, const size_t len) const {
     Serial::puts(cmd.c_str(), len);
 }
 
-std::string BG96::getResponse () {
+std::string BG96::getResponse () const {
     int len = Serial::remaining();
     if (len < 0)
         return "Error";
@@ -145,7 +145,7 @@ std::string BG96::getResponse () {
     }
 }
 
-bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
+bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) const {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while (true) {
         response = this->getResponse();
