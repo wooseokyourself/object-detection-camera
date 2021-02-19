@@ -33,17 +33,17 @@ bool HttpPostFormData::changeField (const int i,
 const std::string& HttpPostFormData::getContentType (const int i) const {
     if (i < 0 || this->size() <= i)
         return "null";
-    return this->contents.type;
+    return this->contents[i].type;
 }
 
 const std::string& HttpPostFormData::getContentName (const int i) const {
     if (i < 0 || this->size() <= i)
         return "null";
-    return this->contents.name;
+    return this->contents[i].name;
 }
 
 const std::string& HttpPostFormData::getContent (const int i) const {
     if (i < 0 || this->size() <= i)
         return "null";
-    return this->contents.data;
+    return this->contents[i].data;
 }
