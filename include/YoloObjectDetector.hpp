@@ -30,7 +30,7 @@ public:
     void capture (const int width);
     int detect (const int target, 
                 const float confThreshold, 
-                const float nmsThreshold
+                const float nmsThreshold, 
                 const int resize);
     void getFrameBytes (std::string& outBytes) const;
 
