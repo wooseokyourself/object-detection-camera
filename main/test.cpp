@@ -46,7 +46,7 @@ int main (void) {
         switch (select) {
             case 1: {
                 cout << "Reading config/config.json" << endl;
-                config.readFromJsonFile();
+                config.readFromJsonFile("config/config.json");
                 cout << "ID: " << config.getID() << endl;
                 cout << "Conf: " << config.getConfThreshold() << endl;
                 cout << "Nms: " << config.getNmsThreshold() << endl;
