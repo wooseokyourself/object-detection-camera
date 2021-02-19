@@ -13,7 +13,7 @@ void YoloObjectDetector::setModel (const std::string weightsPath,
         this->net.setPreferableTarget(DNN_TARGET_CPU);
         this->outNames = this->net.getUnconnectedOutLayersNames();
 
-        std::ifstream ifs(names.c_str());
+        std::ifstream ifs(namesPath.c_str());
         std::string line;
         while (std::getline(ifs, line))
             classes.push_back(line);
