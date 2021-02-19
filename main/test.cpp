@@ -74,7 +74,6 @@ int main (void) {
                 break;
             }
             case 5: {
-                string imageBytes;
                 string imageBytes = vision.extractFrameBytes();
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "1");
