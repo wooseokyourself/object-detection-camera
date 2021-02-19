@@ -98,7 +98,7 @@ int main (void) {
             case 9:
                 vision.setModel("bin/model/yolov4.weights", // .weights path
                                 "bin/model/yolov4.cfg",     // .cfg path
-                                "bin/model/classes.names",  // .names path
+                                "bin/model/classes.names"  // .names path
                                 );
                 vision.detect(0,                             // detecting target index (in .names file)
                               0.4,     // yolo confidence threshold

@@ -31,7 +31,7 @@ int main (void) {
         const std::string TIMESTAMP = getISOCurrentTimestamp();
         vision.setModel("bin/model/yolov4.weights", // .weights path
                         "bin/model/yolov4.cfg",     // .cfg path
-                        "bin/model/classes.names",  // .names path
+                        "bin/model/classes.names"  // .names path
                         );
         vision.capture(config.getWidth());           // picture width (retio is 4:3)
         vision.detect(0,                             // detecting target index (in .names file)
