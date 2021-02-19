@@ -1,7 +1,12 @@
 #include "../include/YoloObjectDetector.hpp"
 
-YoloObjectDetector::YoloObjectDetector () : isSet(false) {
+YoloObjectDetector::YoloObjectDetector () : isSet(false), size_t(0) {
 
+}
+
+YoloObjectDetector::~YoloObjectDetector () {
+    if (this->bytesLen > 0)
+        free(this->bytes);
 }
 
 void YoloObjectDetector::setModel (const std::string weightsPath, 
@@ -32,12 +37,20 @@ Mat YoloObjectDetector::cloneFrame () const {
     return this->frame.clone();
 }
 
-void YoloObjectDetector::getFrameBytes (std::string& outBytes) const {
-    int len = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
-    char* buf = (char*)malloc(len);
-    std::memcpy(buf, reinterpret_cast<char const*>(this->frame.data), len);
-    outBytes.clear();
-    outBytes(buf);
+void YoloObjectDetector::extractFrameBytes () {
+    if (this->bytesLen > 0)
+        free(bytes);
+    this->bytesLen = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
+    this->bytes = (char*)malloc(this->bytesLen);
+    std::memcpy(this->bytes, reinterpret_cast<char const*>(this->frame.data), this->bytesLen);
+}
+
+size_t YoloObjectDetector::getFrameBytesLen () const {
+    return this->bytesLen;
+}
+
+char* YoloObjectDetector::getFrameBytesPtr () const {
+    return this->bytesLen == 0 ? nullptr : this->bytes;
 }
 
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
@@ -70,7 +83,8 @@ int YoloObjectDetector::detect (const int target,
     Size padSize;
     this->netPreProcess(resize, padSize);
     net.forward(outs, this->outNames);
-    return netPostProcess(target, confThreshold, nmsThreshold, padSize, outs);
+    int detected = netPostProcess(target, confThreshold, nmsThreshold, padSize, outs);
+    this->extractFrameBytes();
 }
 
 void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
