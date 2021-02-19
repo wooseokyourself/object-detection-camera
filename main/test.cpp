@@ -25,8 +25,6 @@ int main (void) {
     GPIO gpio(RPI_OFF_PIN);
     HttpPostFormData fields;
     YoloObjectDetector vision;
-    
-    config.readFromJsonFile(JSON_PATH);
 
     int select;
     while (true) {
