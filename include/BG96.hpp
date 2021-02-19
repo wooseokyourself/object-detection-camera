@@ -1,5 +1,5 @@
-#ifndef BG96
-#define BG96
+#ifndef __BG96__
+#define __BG96__
 
 #include <string>
 #include <cstdlib>

@@ -1,5 +1,5 @@
-#ifndef HTTPPOSTFORMDATA
-#define HTTPPOSTFORMDATA
+#ifndef __HTTPPOSTFORMDATA__
+#define __HTTPPOSTFORMDATA__
 
 #include <vector>
 #include <string>

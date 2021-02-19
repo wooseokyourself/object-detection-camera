@@ -1,5 +1,5 @@
-#ifndef GPIO
-#define GPIO
+#ifndef __GPIO__
+#define __GPIO__
 
 #include <iostream>
 #include <wiringPi.h>

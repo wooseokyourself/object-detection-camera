@@ -1,5 +1,5 @@
-#ifndef SERIAL
-#define SERIAL
+#ifndef __SERIAL__
+#define __SERIAL__
 
 /**
  * reference: https://github.com/WiringPi/WiringPi/blob/master/wiringPi/wiringSerial.c

@@ -1,5 +1,5 @@
-#ifndef COMMON
-#define COMMON
+#ifndef __COMMON__
+#define __COMMON__
 
 #include <unistd.h>
 #include <string>

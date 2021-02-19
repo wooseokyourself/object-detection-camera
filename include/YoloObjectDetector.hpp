@@ -1,5 +1,5 @@
-#ifndef YOLOOBJECTDETECTOR
-#define YOLOOBJECTDETECTOR
+#ifndef __YOLOOBJECTDETECTOR__
+#define __YOLOOBJECTDETECTOR__
 
 #include <cstring>
 #include <iostream>

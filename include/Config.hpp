@@ -1,5 +1,5 @@
-#ifndef CONFIG
-#define CONFIG
+#ifndef __CONFIG__
+#define __CONFIG__
 
 #include <fstream>
 #include <string>
