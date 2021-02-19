@@ -44,7 +44,7 @@ int main (void) {
         cout << "=========================================================" << endl;
         
         switch (select) {
-            case 1:
+            case 1: {
                 cout << "Reading config/config.json" << endl;
                 config.readFromJsonFile();
                 cout << "ID: " << config.getID() << endl;
@@ -52,7 +52,8 @@ int main (void) {
                 cout << "Nms: " << config.getNmsThreshold() << endl;
                 cout << "Width: " << config.getWidth() << endl;
                 break;
-            case 2:
+            }
+            case 2: {
                 cout << "Below is input string." << endl;
                 string json = "{\"ID\": \"ino-on-xxxx\", \"CONF_THRESHOLD\": \"0.99\", \"NMS_THRESHOLD\": \"0.99\", \"WIDTH\": \"999\", \"MODE\": \"1\", \"INTERVAL_SECS\": \"300\"}";
                 cout << json << endl;
@@ -62,14 +63,17 @@ int main (void) {
                 cout << "Nms: " << config.getNmsThreshold() << endl;
                 cout << "Width: " << config.getWidth() << endl;
                 break;
-            case 3:
+            }
+            case 3: {
                 cout << "Write json in test.json" << endl;
                 config.write("test.json");
                 break;
-            case 4:
+            }
+            case 4: {
                 modem.getRssi();
                 break;
-            case 5:
+            }
+            case 5: {
                 string imageBytes;
                 vision.getFrameBytes(imageBytes);
                 fields.addField("text/plain", "time", "1996-03-05");
@@ -82,20 +86,24 @@ int main (void) {
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
                 cout << response << endl;
                 break;
-            case 6:
+            }
+            case 6: {
                 string cmd;
                 cout << "cmd: ";
                 cin >> cmd;
                 cmd += "\r";
                 modem.putATcmd(cmd);
                 break;
-            case 7: 
+            }
+            case 7: {
                 cout << modem.getResponse() << endl;
                 break;
-            case 8: 
+            }
+            case 8: {
                 vision.capture(800);
                 break;
-            case 9:
+            }
+            case 9: {
                 vision.setModel("bin/model/yolov4.weights", // .weights path
                                 "bin/model/yolov4.cfg",     // .cfg path
                                 "bin/model/classes.names"  // .names path
@@ -108,9 +116,11 @@ int main (void) {
                 vision.writeFrame("test.jpg");
                 cout << "Result frame was written to test.jpg" << endl;
                 break;
-            default: 
+            }
+            default: {
                 cout << "Invalid" << endl;
                 break;
+            }
         }
     }
 
