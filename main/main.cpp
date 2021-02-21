@@ -8,9 +8,9 @@
 #include "../YoloObjectDetector.hpp"
 
 const std::string JSON_PATH = "config/config.json";
-const std::string HOST = "http://ino-on.umilevx.com/";
-const std::string DETECTING_URI = "api/devices/events/";
-const std::string PREVIEW_URI = "api/manager/device/";
+const std::string HOST = "ino-on.umilevx.com";
+const std::string DETECTING_URI = "/api/devices/events/";
+const std::string PREVIEW_URI = "/api/manager/device/";
 
 const int RPI_OFF_PIN = 21; // BCM
 const std::string MODEM_PORT = "/dev/ttyS0";
@@ -29,6 +29,7 @@ int main (void) {
     std::string imageBytes;
     if (config.isDetectingMode()) {
         const std::string TIMESTAMP = getISOCurrentTimestamp();
+        const std::stirng FILENAME = TIMESTAMP.substr(0, 10); 
         vision.setModel("bin/model/yolov4.weights", // .weights path
                         "bin/model/yolov4.cfg",     // .cfg path
                         "bin/model/classes.names"  // .names path
@@ -46,8 +47,8 @@ int main (void) {
         fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
         // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
         fields.addField("text/plain", "battery", "99");
-        fields.addField("text/plain", "time", TIMESTAMP.substr(0, 10));
-        fields.addField("image/jpeg", "files", imageBytes);
+        fields.addField("text/plain", "filename", FILENAME);
+        fields.addField("image/jpeg", FILENAME, imageBytes);
         std::string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         config.readFromJsonString(response);
         // nrf.setPowerInterval(config.getIntervalSecs());

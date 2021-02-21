@@ -83,7 +83,7 @@ int main (void) {
             case 5: {
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "0");
-                fields.addField("text/plain", "rssi", "44");
+                fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
@@ -95,7 +95,7 @@ int main (void) {
                 string imageBytes = vision.extractFrameBytes();
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "1");
-                fields.addField("text/plain", "rssi", "44");
+                fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
                 fields.addField("text/plain", "filename", "1996-03-05.jpg");
