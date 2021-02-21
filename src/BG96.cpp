@@ -55,7 +55,7 @@ std::string BG96::postMultipart (const std::string host,
     this->putATcmd("AT+QHTTPCFG=\"requestheader\",1\r");
     this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
 
-    const std::string fullUrl = host + uri;
+    const std::string fullUrl = "http://" + host + uri;
     this->putATcmd("AT+QHTTPURL=" + std::to_string(fullUrl.length()) + "\r");
     this->waitResponseUntil("\r\nCONNECT\r\n", timeoutSecs);
     this->putATcmd(fullUrl);
