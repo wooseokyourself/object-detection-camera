@@ -60,7 +60,7 @@ int main (void) {
             }
             case 2: {
                 cout << "Below is input string." << endl;
-                string json = "{\"ID\": \"ino-on-xxxx\", \"CONF_THRESHOLD\": \"0.99\", \"NMS_THRESHOLD\": \"0.99\", \"WIDTH\": \"999\", \"MODE\": \"1\", \"INTERVAL_SECS\": \"300\"}";
+                string json = "{\"ID\": \"ino-on-1996\", \"CONF_THRESHOLD\": \"0.99\", \"NMS_THRESHOLD\": \"0.99\", \"WIDTH\": \"999\", \"MODE\": \"1\", \"INTERVAL_SECS\": \"300\"}";
                 cout << json << endl;
                 config.readFromJsonString(json);
                 cout << "ID: " << config.getID() << endl;
@@ -115,7 +115,7 @@ int main (void) {
                 vision.detect(0,                             // detecting target index (in .names file)
                               0.4,     // yolo confidence threshold
                               0.5,      // yolo nms threshold
-                              800              // resize
+                              800       // resize
                               );
                 vision.writeFrame("test.jpg");
                 cout << "Result frame was written to test.jpg" << endl;
