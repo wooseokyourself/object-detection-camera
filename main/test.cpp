@@ -99,7 +99,7 @@ int main (void) {
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
                 fields.addField("text/plain", "filename", "1996-03-05.jpg");
-                fields.addField("image/jpeg", "files", imageBytes);
+                fields.addField("image/jpeg", "1996-03-05.jpg", imageBytes);
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
                 cout << response << endl;
                 fields.clear();
@@ -117,7 +117,7 @@ int main (void) {
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
                 fields.addField("text/plain", "filename", "1996-03-05.jpg");
-                fields.addField("image/jpeg", "files", imageBytes);
+                fields.addField("image/jpeg", "1996-03-05.jpg", imageBytes);
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
                 cout << response << endl;
                 fields.clear();
