@@ -113,7 +113,7 @@ int main (void) {
                 vision.extractImagefileBytes(imageBytes, path);
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "1");
-                fields.addField("text/plain", "rssi", "44");
+                fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
                 fields.addField("text/plain", "filename", "1996-03-05.jpg");
@@ -136,7 +136,7 @@ int main (void) {
                 break;
             }
             case 10: {
-                vision.capture(800);
+                vision.capture(416);
                 break;
             }
             case 11: {
@@ -147,7 +147,7 @@ int main (void) {
                 vision.detect(0,                             // detecting target index (in .names file)
                               0.4,     // yolo confidence threshold
                               0.5,      // yolo nms threshold
-                              800       // resize
+                              416       // resize
                               );
                 vision.writeFrame("test.jpg");
                 cout << "Result frame was written to test.jpg" << endl;
