@@ -44,7 +44,7 @@ std::string BG96::postMultipart (const std::string host,
                                  const int timeoutSecs) {
 
     // multipart/form-data boundary
-    std::string boundary;
+    std::string boundary = "flesruoykoesoow";
 
     this->putATcmd("AT+QHTTPCFG=\"contextid\",1\r");
     this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
@@ -91,7 +91,7 @@ std::string BG96::postMultipart (const std::string host,
         std::string("POST ") + uri + " HTTP/1.1\r\n" + 
         "Host: " + host + "\r\n" + 
         "Content-Length: " + std::to_string(body.length()) + "\r\n" +  
-        "Content-Type: multipart/form-data; boundary=\"boundary\"\r\n" + 
+        "Content-Type: multipart/form-data; boundary=\"" + boundary + "\"\r\n" + 
         "\r\n"
     );
 
