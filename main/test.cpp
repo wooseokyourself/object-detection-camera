@@ -39,11 +39,12 @@ int main (void) {
         cout << "2. Config  : Read json from string." << endl;
         cout << "3. Config  : Write." << endl;
         cout << "4. BG96    : Get RSSI." << endl;
-        cout << "5. BG96    : POST request with image." << endl;
-        cout << "6. BG96    : Put custom AT command." << endl;
-        cout << "7. BG96    : Read response." << endl;
-        cout << "8. VISION  : Capture." << endl;
-        cout << "9. VISION  : Detect previous frame and save it to file." << endl;
+        cout << "5. BG96    : POST request without image." << endl;
+        cout << "6. BG96    : POST request with image." << endl;
+        cout << "7. BG96    : Put custom AT command." << endl;
+        cout << "8. BG96    : Read response." << endl;
+        cout << "9. VISION  : Capture." << endl;
+        cout << "10. VISION  : Detect previous frame and save it to file." << endl;
         cout << "=========================================================" << endl;
         cout << "select: ";
         cin >> select;
@@ -79,6 +80,17 @@ int main (void) {
                 break;
             }
             case 5: {
+                fields.addField("text/plain", "time", "1996-03-05");
+                fields.addField("text/plain", "event", "0");
+                fields.addField("text/plain", "rssi", "44");
+                // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
+                fields.addField("text/plain", "battery", "44");
+                fields.addField("text/plain", "time", "1996-03-05");
+                string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
+                cout << response << endl;
+                break;
+            }
+            case 6: {
                 string imageBytes = vision.extractFrameBytes();
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "1");
@@ -91,7 +103,7 @@ int main (void) {
                 cout << response << endl;
                 break;
             }
-            case 6: {
+            case 7: {
                 string cmd;
                 cout << "cmd: ";
                 cin >> cmd;
@@ -99,15 +111,15 @@ int main (void) {
                 modem.putATcmd(cmd);
                 break;
             }
-            case 7: {
+            case 8: {
                 cout << modem.getResponse() << endl;
                 break;
             }
-            case 8: {
+            case 9: {
                 vision.capture(800);
                 break;
             }
-            case 9: {
+            case 10: {
                 vision.setModel("bin/model/yolov4.weights", // .weights path
                                 "bin/model/yolov4.cfg",     // .cfg path
                                 "bin/model/classes.names"  // .names path
