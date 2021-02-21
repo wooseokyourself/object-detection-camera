@@ -124,12 +124,12 @@ void BG96::putATcmd (std::string cmd) {
 }
 
 void BG96::putATcmd (const char* cmd, const size_t len) {
-    std::cout << "[Send AT command]" << std::endl;
-    std::cout << cmd << std::endl;
     Serial::puts(cmd, len);
 }
 
 void BG96::putATcmd (std::string cmd, const size_t len) {
+    std::cout << "[Send AT command]" << std::endl;
+    std::cout << cmd << std::endl;
     Serial::puts(cmd.c_str(), len);
 }
 
