@@ -43,6 +43,12 @@ std::string YoloObjectDetector::extractFrameBytes () {
     return ret;
 }
 
+void YoloObjectDetector::extractImagefileBytes (std::string& outBytes, const std::string filePath) {
+    std::ifstream bin(filePath, std::ios::binary);
+    outBytes.clear();
+    outBytes = std::string((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
+}
+
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
     return imwrite(filePath, this->frame);
 }

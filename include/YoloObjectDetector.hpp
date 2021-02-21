@@ -27,6 +27,7 @@ public:
     Mat& getFrameRef ();
     Mat cloneFrame () const;
     std::string extractFrameBytes ();
+    void extractImagefileBytes (std::string& outBytes, const std::string filePath);
     bool writeFrame (const std::string filePath) const;
     void capture (const int width);
     int detect (const int target, 
