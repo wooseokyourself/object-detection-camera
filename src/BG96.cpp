@@ -34,7 +34,8 @@ int BG96::getRssi() {
     }
     if (colonIdx == -1)
         return -1;
-    return std::stoi(response.substr(colonIdx - 2, colonIdx - 1));
+    // response form = "+CSQ: 31,99"
+    return std::stoi(response.substr(colonIdx + 2, colonIdx + 3));
 }
 
 std::string BG96::postMultipart (const std::string host,
