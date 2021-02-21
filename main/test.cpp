@@ -10,9 +10,9 @@
 using namespace std;
 
 const std::string JSON_PATH = "config/config.json";
-const std::string HOST = "ino-on.umilevx.com/";
-const std::string DETECTING_URI = "api/devices/events/";
-const std::string PREVIEW_URI = "api/manager/device/";
+const std::string HOST = "ino-on.umilevx.com";
+const std::string DETECTING_URI = "/api/devices/events/";
+const std::string PREVIEW_URI = "/api/manager/device/";
 
 const int RPI_OFF_PIN = 21; // BCM
 const std::string MODEM_PORT = "/dev/ttyS0";
