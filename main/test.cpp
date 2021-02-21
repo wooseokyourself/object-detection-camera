@@ -106,11 +106,11 @@ int main (void) {
                 break;
             }
             case 7: {
-                std::string path;
+                string path;
                 cout << "image file: ";
                 cin >> path;
-                std::string imageBytes;
-                string imageBytes = vision.extractImagefileBytes(imageBytes, path);
+                string imageBytes;
+                vision.extractImagefileBytes(imageBytes, path);
                 fields.addField("text/plain", "time", "1996-03-05");
                 fields.addField("text/plain", "event", "1");
                 fields.addField("text/plain", "rssi", "44");
