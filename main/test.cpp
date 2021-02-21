@@ -87,6 +87,7 @@ int main (void) {
                 fields.addField("text/plain", "battery", "44");
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
                 cout << response << endl;
+                fields.clear();
                 break;
             }
             case 6: {
@@ -100,6 +101,7 @@ int main (void) {
                 fields.addField("image/jpeg", "files", imageBytes);
                 string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
                 cout << response << endl;
+                fields.clear();
                 break;
             }
             case 7: {
