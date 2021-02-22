@@ -33,6 +33,7 @@ Mat YoloObjectDetector::cloneFrame () const {
 }
 
 std::string YoloObjectDetector::extractFrameBytes () {
+    // 여기서 인코딩 한 뒤 그게 맞는지 비교해보자
     const size_t bytesLen = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
     char* bytes = (char*)malloc(bytesLen);
     std::memcpy(bytes, reinterpret_cast<char const*>(this->frame.data), bytesLen);
