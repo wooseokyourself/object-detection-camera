@@ -23,8 +23,8 @@ BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(),
 BG96::~BG96 () { }
 
 int BG96::getRssi() {
-    // try 5 times to get rssi
-    for (int trying = 0 ; trying < 5 ; trying ++) {
+    // try 10 times to get rssi
+    for (int trying = 0 ; trying < 10 ; trying ++) {
         this->putATcmd("AT+CSQ\r");
         std::string response = this->getResponse();
         int colonIdx = -1;
@@ -37,6 +37,7 @@ int BG96::getRssi() {
         }
         if (colonIdx != -1)
             return std::stoi(response.substr(colonIdx + 2, colonIdx + 3));
+        usleep(2500000);
     }
     return -1;
 }
@@ -162,6 +163,6 @@ bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs)
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs)
             return false;
-        usleep(500000); // 0.5 ms
+        usleep(2500000); // 2.5s
     }
 }
