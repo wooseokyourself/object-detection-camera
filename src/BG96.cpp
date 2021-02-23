@@ -24,7 +24,7 @@ BG96::~BG96 () { }
 
 int BG96::getRssi() {
     // try 5 times to get rssi
-    for (int i = 0 ; i < 5 ; i ++) {
+    for (int trying = 0 ; trying < 5 ; trying ++) {
         this->putATcmd("AT+CSQ\r");
         std::string response = this->getResponse();
         int colonIdx = -1;
