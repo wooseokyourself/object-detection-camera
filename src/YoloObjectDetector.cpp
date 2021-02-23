@@ -50,8 +50,13 @@ void YoloObjectDetector::extractImagefileBytes (std::string& outBytes, const std
     outBytes = std::string((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
 }
 
+void YoloObjectDetector::resizeFrame (const int width) {
+    const int height = int((float(width) / 4) * 3);
+    resize(this->frame, this->frame, Size(width, height));
+}
+
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
-    return imwrite(filePath, this->frame);
+    return imwrite(filePath, resize(this->frame));
 }
 
 void YoloObjectDetector::capture (const int width) {

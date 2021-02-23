@@ -149,6 +149,7 @@ int main (void) {
                               0.5,      // yolo nms threshold
                               416       // resize
                               );
+                vision.resizeFrame(256);
                 vision.writeFrame("test.jpg");
                 cout << "Result frame was written to test.jpg" << endl;
                 break;
