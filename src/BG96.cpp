@@ -23,19 +23,22 @@ BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(),
 BG96::~BG96 () { }
 
 int BG96::getRssi() {
-    this->putATcmd("AT+CSQ\r");
-    std::string response = this->getResponse();
-    int colonIdx = -1;
-    for (int i = 0 ; i < response.length() ; i ++) {
-        if (response[i] == ':') {
-            colonIdx = i;
-            break;
+    // try 5 times to get rssi
+    for (int i = 0 ; i < 5 ; i ++) {
+        this->putATcmd("AT+CSQ\r");
+        std::string response = this->getResponse();
+        int colonIdx = -1;
+        // response form = "+CSQ: 31,99"
+        for (int i = 0 ; i < response.length() ; i ++) {
+            if (response[i] == ':') {
+                colonIdx = i;
+                break;
+            }
         }
+        if (colonIdx != -1)
+            return std::stoi(response.substr(colonIdx + 2, colonIdx + 3));
     }
-    if (colonIdx == -1)
-        return -1;
-    // response form = "+CSQ: 31,99"
-    return std::stoi(response.substr(colonIdx + 2, colonIdx + 3));
+    return -1;
 }
 
 std::string BG96::postMultipart (const std::string host,
