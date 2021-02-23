@@ -56,7 +56,7 @@ void YoloObjectDetector::resizeFrame (const int width) {
 }
 
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
-    return imwrite(filePath, resize(this->frame));
+    return imwrite(filePath, this->frame);
 }
 
 void YoloObjectDetector::capture (const int width) {
