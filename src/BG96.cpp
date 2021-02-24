@@ -3,21 +3,21 @@
 BG96::BG96 (const char* _port, const int baudRate) : Serial(_port, baudRate) {
     // Wait until modem ready
     this->putATcmd("AT\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
     this->putATcmd("ATE0\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
     this->putATcmd("AT+CEREG=2\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
 }
 
 BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(), baudRate) {
     // Wait until modem ready
     this->putATcmd("AT\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
     this->putATcmd("ATE0\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
     this->putATcmd("AT+CEREG=2\r");
-    this->waitResponseUntil("\r\nOK\r\n", 3);
+    this->waitResponseUntil("OK", 3);
 }
 
 BG96::~BG96 () { }
@@ -51,19 +51,19 @@ std::string BG96::postMultipart (const std::string host,
     std::string boundary = "flesruoykoesoow";
 
     this->putATcmd("AT+QHTTPCFG=\"contextid\",1\r");
-    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
+    this->waitResponseUntil("OK", timeoutSecs);
 
     this->putATcmd("AT+QHTTPCFG=\"contenttype\",3\r"); // 3: multipart/form-data
-    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
+    this->waitResponseUntil("OK", timeoutSecs);
 
     this->putATcmd("AT+QHTTPCFG=\"requestheader\",1\r");
-    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
+    this->waitResponseUntil("OK", timeoutSecs);
 
     const std::string fullUrl = "http://" + host + uri;
     this->putATcmd("AT+QHTTPURL=" + std::to_string(fullUrl.length()) + "\r");
-    this->waitResponseUntil("\r\nCONNECT\r\n", timeoutSecs);
+    this->waitResponseUntil("CONNECT", timeoutSecs);
     this->putATcmd(fullUrl);
-    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
+    this->waitResponseUntil("OK", timeoutSecs);
 
     // Construct body of request form
     std::string body;
@@ -105,10 +105,10 @@ std::string BG96::postMultipart (const std::string host,
                     + std::to_string(header.length() + body.length()) + ","
                     + maxInputBodyTime + "," 
                     + maxResponseTime + "\r");
-    this->waitResponseUntil("\r\nCONNECT\r\n", timeoutSecs);
+    this->waitResponseUntil("CONNECT", timeoutSecs);
     this->putATcmd(header);
     this->putATcmd(body, body.length());
-    this->waitResponseUntil("\r\nOK\r\n", timeoutSecs);
+    this->waitResponseUntil("OK", timeoutSecs);
 
     this->putATcmd("AT+QHTTPREAD=80\r");
     std::string response = this->getResponse();
@@ -140,7 +140,7 @@ void BG96::putATcmd (std::string cmd, const size_t len) {
 std::string BG96::getResponse () {
     int len = Serial::remaining();
     if (len < 0)
-        return "Error";
+        return "ERROR";
     else if (len == 0)
         return "No data read";
     else {
@@ -156,13 +156,19 @@ bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs)
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while (true) {
         std::string response = this->getResponse();
-        if (response == expected)
+        if (response.find(expected) != -1) {
+            std::cout << expected << std::endl;
             return true;
-        else if (response == "\r\nERROR\r\n")
+        }
+        else if (response.find("ERROR") != -1) {
+            std::cerr << response << std::endl;
             return false;
+        }
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-        if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs)
+        if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs) {
+            std::cerr << "timeout" << std::endl;
             return false;
+        }
         usleep(2500000); // 2.5s
     }
 }

@@ -1,6 +1,7 @@
 #ifndef __BG96__
 #define __BG96__
 
+#include <iostream>
 #include <chrono>
 #include <string>
 #include <cstdlib>
