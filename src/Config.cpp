@@ -1,5 +1,7 @@
 #include "../include/Config.hpp"
 
+void Config::Config () : result(1) { }
+
 void Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
     Json::Reader reader;
@@ -30,6 +32,7 @@ void Config::write (const std::string filePath) const {
     root["confidenceThreshold"] = this->confidenceThreshold;
     root["nmsThreshold"] = this->nmsThreshold;
     root["resizeResolution"] = this->resizeResolution;
+    root["result"] = this->result;
     
     Json::StyledStreamWriter writer;
     std::ofstream jsonFile(filePath, std::ifstream::binary);

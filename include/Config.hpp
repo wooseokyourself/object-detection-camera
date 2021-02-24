@@ -12,6 +12,7 @@
 
 class Config {
 public:
+    Config ();
     void readFromJsonFile (const std::string filePath);
     void readFromJsonString (const std::string jsonString);
     void write (const std::string filePath) const;
@@ -32,6 +33,7 @@ private:
     float confidenceThreshold;
     float nmsThreshold;
     int resizeResolution;
+    int result;
 };
 
 #endif
