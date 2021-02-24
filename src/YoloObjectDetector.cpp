@@ -121,9 +121,9 @@ void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
                  Scalar()); // mean: Scalar
 }
 
-int YoloObjectDetector::netPostProcess (const int confThreshold, 
-                                        const int nmsThreshold, 
-                                        const int target, 
+int YoloObjectDetector::netPostProcess (const int target,
+                                        const float confThreshold, 
+                                        const float nmsThreshold,  
                                         const Size& padSize, 
                                         std::vector<Mat>& outs) {
     int targetCount = 0;

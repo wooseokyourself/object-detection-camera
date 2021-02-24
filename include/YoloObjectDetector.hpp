@@ -39,8 +39,8 @@ public:
 private:
     void netPreProcess (const int resize, Size& padSize);
     int netPostProcess (const int target,
-                        const int confThreshold, 
-                        const int nmsThreshold,  
+                        const float confThreshold, 
+                        const float nmsThreshold,  
                         const Size& padSize, 
                         std::vector<Mat>& outs);
 
