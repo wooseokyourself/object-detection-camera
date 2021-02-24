@@ -27,7 +27,7 @@ public:
     void putATcmd (const char* cmd, const size_t len);
     void putATcmd (std::string cmd, const size_t len);
     std::string getResponse ();
-    bool waitResponseUntil (const std::string expected, const int timeoutSecs);
+    std::string waitResponseUntil (const std::string expected, const int timeoutSecs);
 };
 
 #endif

@@ -111,10 +111,7 @@ std::string BG96::postMultipart (const std::string host,
     this->waitResponseUntil("OK", timeoutSecs);
 
     this->putATcmd("AT+QHTTPREAD=80\r");
-    std::string response = this->getResponse();
-    while (response.find("703") != -1) // 703: HTTP BUSY
-        response = this->getResponse();
-    return response;
+    return response = this->waitResponseUntil("CONNECT", timeoutSecs);
 }
 
 void BG96::putATcmd (const char* cmd) {
@@ -152,23 +149,24 @@ std::string BG96::getResponse () {
     }
 }
 
-bool BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
+std::string BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while (true) {
         std::string response = this->getResponse();
         if (response.find(expected) != -1) {
             std::cout << expected << std::endl;
-            return true;
+            break;
         }
         else if (response.find("ERROR") != -1) {
             std::cerr << response << std::endl;
-            return false;
+            break;
         }
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs) {
             std::cerr << "timeout" << std::endl;
-            return false;
+            break;
         }
         usleep(2500000); // 2.5s
     }
+    return response;
 }
