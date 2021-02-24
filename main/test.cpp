@@ -57,18 +57,22 @@ int main (void) {
                 cout << "ID: " << config.getID() << endl;
                 cout << "Conf: " << config.getConfThreshold() << endl;
                 cout << "Nms: " << config.getNmsThreshold() << endl;
-                cout << "Width: " << config.getWidth() << endl;
+                cout << "Resize: " << config.getCaptureWidth() << endl;
+                cout << "Interval: " << config.getIntervalSecs() << endl;
+                cout << "SendAlways: " << config.sendPictureAlways() ? "true" : "false" << endl;
                 break;
             }
             case 2: {
                 cout << "Below is input string." << endl;
-                string json = "{\"ID\": \"ino-on-0005\", \"CONF_THRESHOLD\": \"0.99\", \"NMS_THRESHOLD\": \"0.99\", \"WIDTH\": \"999\", \"MODE\": \"1\", \"INTERVAL_SECS\": \"300\"}";
+                string json = "{\"deviceId\": \"ino-on-0005\", \"confidenceThreshold\": \"0.99\", \"nmsThreshold\": \"0.99\", \"resizeResolution\": \"999\", \"sendInterval\": \"300\", \"sendOnDetectedOnly\": \"false\"}";
                 cout << json << endl;
                 config.readFromJsonString(json);
                 cout << "ID: " << config.getID() << endl;
                 cout << "Conf: " << config.getConfThreshold() << endl;
                 cout << "Nms: " << config.getNmsThreshold() << endl;
-                cout << "Width: " << config.getWidth() << endl;
+                cout << "Resize: " << config.getCaptureWidth() << endl;
+                cout << "Interval: " << config.getIntervalSecs() << endl;
+                cout << "SendAlways: " << config.sendPictureAlways() ? "true" : "false" << endl;
                 break;
             }
             case 3: {
