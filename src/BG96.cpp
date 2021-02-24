@@ -151,8 +151,9 @@ std::string BG96::getResponse () {
 
 std::string BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    std::string response;
     while (true) {
-        std::string response = this->getResponse();
+        response = this->getResponse();
         if (response.find(expected) != -1) {
             std::cout << expected << std::endl;
             break;
