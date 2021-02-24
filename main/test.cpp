@@ -59,7 +59,7 @@ int main (void) {
                 cout << "Nms: " << config.getNmsThreshold() << endl;
                 cout << "Resize: " << config.getCaptureWidth() << endl;
                 cout << "Interval: " << config.getIntervalSecs() << endl;
-                cout << "SendAlways: " << config.sendPictureAlways() ? "true" : "false" << endl;
+                cout << "SendAlways: " << (config.sendPictureAlways() ? "true" : "false") << endl;
                 break;
             }
             case 2: {
