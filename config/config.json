@@ -5,5 +5,5 @@
     "confidenceThreshold": "0.35", 
     "nmsThreshold": "0.5", 
     "resizeResolution": "416", 
-    "mode": "0"
+    "result": "1"
 }

@@ -4,10 +4,12 @@ void Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
     Json::Reader reader;
     std::ifstream jsonFile(filePath, std::ifstream::binary);
-    if (!reader.parse(jsonFile, root))
+    if (!reader.parse(jsonFile, root)) {
         std::cerr << "Config: " << "failed to parse" << reader.getFormattedErrorMessages() << std::endl;
-    jsonFile.close();
+        return;
+    }
     this->readJsonObject(root);
+    jsonFile.close();
 }
 
 void Config::readFromJsonString (const std::string jsonString) {
@@ -18,6 +20,7 @@ void Config::readFromJsonString (const std::string jsonString) {
         return;
     }
     this->readJsonObject(root);
+    jsonFile.close();
 }
 
 void Config::write (const std::string filePath) const {
@@ -60,6 +63,10 @@ bool Config::sendPictureAlways () const {
 }
 
 void Config::readJsonObject (Json::Value& root) {
+    if (root["result"].asString() != "1") {
+        std::cerr << "Config: " << "failed to parse because of {\"result\" : 0}" << std::endl;
+        return;
+    }
     this->deviceId = root["deviceId"].asString();
     this->sendInterval = std::stoi(root["sendInterval"].asString());
     this->sendOnDetectedOnly = root["sendOnDetectedOnly"].asString() == "true" ? true : false;
