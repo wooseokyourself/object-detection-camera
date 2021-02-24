@@ -131,7 +131,11 @@ void BG96::putATcmd (const char* cmd, const size_t len) {
 void BG96::putATcmd (std::string cmd, const size_t len) {
     std::cout << "[Send AT command]" << std::endl;
     std::cout << cmd << std::endl;
-    Serial::puts(cmd.c_str(), len);
+    int chunks = len / 512;
+    int remain = len % 512;
+    for (int i = 0 ; i < chunks ; i ++)
+        Serial::puts(cmd.substr(i * 512, (i+1) * 512).c_str(), 512);
+    Serial::puts(cmd.c_str(chunks * 512, len - 1), remain);
 }
 
 std::string BG96::getResponse () {
@@ -164,7 +168,7 @@ std::string BG96::waitResponseUntil (const std::string expected, const int timeo
         }
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         if (std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() > timeoutSecs) {
-            std::cerr << "timeout" << std::endl;
+            std::cerr << "TIMEOUT" << std::endl;
             break;
         }
         usleep(2500000); // 2.5s
