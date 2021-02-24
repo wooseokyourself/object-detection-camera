@@ -85,7 +85,7 @@ int YoloObjectDetector::detect (const int target,
     Size padSize;
     this->netPreProcess(resize, padSize);
     net.forward(outs, this->outNames);
-    int detected = netPostProcess(target, confThreshold, nmsThreshold, padSize, outs);
+    return netPostProcess(target, confThreshold, nmsThreshold, padSize, outs);
 }
 
 void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
