@@ -16,7 +16,7 @@ public:
     ~NRF ();
 
     int getBattery () const;
-    void setPowerInterval () const;
+    void setPowerInterval (const int intervalSecs) const;
 };
 
 #endif

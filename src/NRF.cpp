@@ -16,6 +16,6 @@ int NRF::getBattery () const {
     return 100;
 }
 
-void NRF::setPowerInterval () const {
+void NRF::setPowerInterval (const int intervalSecs) const {
     // send to nrf
 }

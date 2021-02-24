@@ -34,7 +34,7 @@ int main (void) {
 
     // Detecting Mode
     const std::string TIMESTAMP = getISOCurrentTimestamp();
-    const std::stirng FILENAME = TIMESTAMP.substr(0, 10) + ".jpg"; 
+    const std::string FILENAME = TIMESTAMP.substr(0, 10) + ".jpg"; 
     vision.setModel("bin/model/yolov4.weights", "bin/model/yolov4.cfg", "bin/model/classes.names");
     vision.capture(config.getCaptureWidth()); // picture width (ratio is 4:3)
     const int detectedCount
