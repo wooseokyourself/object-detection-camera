@@ -52,6 +52,8 @@ int main (void) {
     }
 
     std::string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
+    while (response.find("705") != -1) // HTTP(S) no GET/POST requests
+        response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
     config.readFromJsonString(response);
     nrf.setPowerInterval(config.getIntervalSecs());
     
