@@ -21,8 +21,6 @@ public:
     int getCaptureWidth () const;
     int getIntervalSecs () const;
     bool sendPictureAlways () const;
-    bool isPreviewMode () const;
-    bool isDetectingMode () const;
 
 private:
     void readJsonObject (Json::Value& root);
@@ -34,7 +32,6 @@ private:
     float confidenceThreshold;
     float nmsThreshold;
     int resizeResolution;
-    int mode;
 };
 
 #endif

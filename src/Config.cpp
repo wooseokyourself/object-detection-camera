@@ -28,7 +28,6 @@ void Config::write (const std::string filePath) const {
     root["confidenceThreshold"] = this->confidenceThreshold;
     root["nmsThreshold"] = this->nmsThreshold;
     root["resizeResolution"] = this->resizeResolution;
-    root["mode"] = this->mode;
     
     Json::StyledStreamWriter writer;
     std::ofstream jsonFile(filePath, std::ifstream::binary);
@@ -60,14 +59,6 @@ bool Config::sendPictureAlways () const {
     return this->sendOnDetectedOnly;
 }
 
-bool Config::isPreviewMode () const {
-    return this->mode == PREVIEW_MODE ? true : false;
-}
-
-bool Config::isDetectingMode () const {
-    return this->mode == DETECTING_MODE ? true : false;
-}
-
 void Config::readJsonObject (Json::Value& root) {
     this->deviceId = root["deviceId"].asString();
     this->sendInterval = std::stoi(root["sendInterval"].asString());
@@ -75,5 +66,4 @@ void Config::readJsonObject (Json::Value& root) {
     this->confidenceThreshold = std::stof(root["confidenceThreshold"].asString());
     this->nmsThreshold = std::stof(root["nmsThreshold"].asString());
     this->resizeResolution = std::stoi(root["resizeResolution"].asString());
-    this->mode = std::stoi(root["mode"].asString());
 }
