@@ -81,6 +81,6 @@ int main (void) {
     config.write(JSON_PATH);
 
     std::cout << "----End process----" << std::endl;
-    // gpio.shutdownRpi();
+    gpio.shutdownRpi();
     return 0;
 }
