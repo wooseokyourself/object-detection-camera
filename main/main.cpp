@@ -35,10 +35,14 @@ int main (void) {
     // Detecting Mode
     const std::string TIMESTAMP = getISOCurrentTimestamp();
     const std::string FILENAME = TIMESTAMP.substr(0, 10) + ".jpg"; 
+    std::cout << "[Start Process: " << TIMESTAMP << "]" << std::endl;
+
     vision.setModel("bin/model/yolov4.weights", "bin/model/yolov4.cfg", "bin/model/classes.names");
     vision.capture(config.getCaptureWidth()); // picture width (ratio is 4:3)
+    std::cout << "Capture done" << std::endl;
     const int detectedCount
         = vision.detect(EXCAVATOR, config.getConfThreshold(), config.getNmsThreshold(), config.getCaptureWidth());
+    std::cout << "Detected objects: " << detectedCount << std::endl;
     fields.addField("text/plain", "time", TIMESTAMP);
     fields.addField("text/plain", "event", detectedCount > 0 ? "1" : "0");
     fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
@@ -52,8 +56,12 @@ int main (void) {
     }
 
     std::string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
-    while (response.find("705") != -1) // HTTP(S) no GET/POST requests
+    int postFailed = 0;
+    while (response.find("705") != -1) { // HTTP(S) no GET/POST requests
         response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
+        ++postFailed;
+        std::cerr << "POST failed " << postFailed << " times." << std::endl;
+    }
     config.readFromJsonString(response);
     nrf.setPowerInterval(config.getIntervalSecs());
     
@@ -72,6 +80,7 @@ int main (void) {
 
     config.write(JSON_PATH);
 
+    std::cout << "----End process----" << std::endl;
     // gpio.shutdownRpi();
     return 0;
 }
