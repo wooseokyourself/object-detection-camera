@@ -1,6 +1,6 @@
 #include "../include/Config.hpp"
 
-void Config::Config () : result(1) { }
+Config::Config () : result(1) { }
 
 void Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
