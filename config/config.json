@@ -1,8 +1,9 @@
 {
-    "ID": "ino-on-0005", 
-    "CONF_THRESHOLD": "0.35", 
-    "NMS_THRESHOLD": "0.5", 
-    "WIDTH": "416", 
-    "MODE": "0", 
-    "INTERVAL_SECS": "300"
+    "deviceId": "ino-on-0005", 
+    "sendInterval": "5",
+    "sendOnDetectedOnly": "true", 
+    "confidenceThreshold": "0.35", 
+    "nmsThreshold": "0.5", 
+    "resizeResolution": "416", 
+    "mode": "0"
 }

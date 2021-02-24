@@ -22,12 +22,13 @@ void Config::readFromJsonString (const std::string jsonString) {
 
 void Config::write (const std::string filePath) const {
     Json::Value root;
-    root["ID"] = this->ID;
-    root["CONF_THRESHOLD"] = this->CONF_THRESHOLD;
-    root["NMS_THRESHOLD"] = this->NMS_THRESHOLD;
-    root["WIDTH"] = this->WIDTH;
-    root["MODE"] = this->MODE;
-    root["INTERVAL_SECS"] = this->INTERVAL_SECS;
+    root["deviceId"] = this->deviceId;
+    root["sendInterval"] = this->sendInterval;
+    root["sendOnDetectedOnly"] = this->sendOnDetectedOnly;
+    root["confidenceThreshold"] = this->confidenceThreshold;
+    root["nmsThreshold"] = this->nmsThreshold;
+    root["resizeResolution"] = this->resizeResolution;
+    root["mode"] = this->mode;
     
     Json::StyledStreamWriter writer;
     std::ofstream jsonFile(filePath, std::ifstream::binary);
@@ -36,38 +37,43 @@ void Config::write (const std::string filePath) const {
 }
 
 std::string Config::getID () const {
-    return this->ID;
+    return this->deviceId;
 }
 
 float Config::getConfThreshold () const {
-    return this->CONF_THRESHOLD;
+    return this->confidenceThreshold;
 }
 
 float Config::getNmsThreshold () const {
-    return this->NMS_THRESHOLD;
+    return this->nmsThreshold;
 }
 
-int Config::getWidth () const {
-    return this->WIDTH;
+int Config::getCaptureWidth () const {
+    return this->resizeResolution;
 }
 
 int Config::getIntervalSecs () const {
-    return this->INTERVAL_SECS;
+    return this->sendInterval;
+}
+
+bool Config::sendPictureAlways () const {
+    return this->sendOnDetectedOnly;
 }
 
 bool Config::isPreviewMode () const {
-    return this->MODE == PREVIEW_MODE ? true : false;
+    return this->mode == PREVIEW_MODE ? true : false;
 }
 
 bool Config::isDetectingMode () const {
-    return this->MODE == DETECTING_MODE ? true : false;
+    return this->mode == DETECTING_MODE ? true : false;
 }
 
 void Config::readJsonObject (Json::Value& root) {
-    this->ID = root["ID"].asString();
-    this->CONF_THRESHOLD = std::stof(root["CONF_THRESHOLD"].asString());
-    this->NMS_THRESHOLD = std::stof(root["NMS_THRESHOLD"].asString());
-    this->WIDTH = std::stoi(root["WIDTH"].asString());
-    this->MODE = std::stoi(root["MODE"].asString());
-    this->INTERVAL_SECS = std::stoi(root["INTERVAL_SECS"].asString());
+    this->deviceId = root["deviceId"].asString();
+    this->sendInterval = std::stoi(root["sendInterval"].asString());
+    this->sendOnDetectedOnly = root["sendOnDetectedOnly"].asString() == "true" ? true : false;
+    this->confidenceThreshold = std::stof(root["confidenceThreshold"].asString());
+    this->nmsThreshold = std::stof(root["nmsThreshold"].asString());
+    this->resizeResolution = std::stoi(root["resizeResolution"].asString());
+    this->mode = std::stoi(root["mode"].asString());
 }

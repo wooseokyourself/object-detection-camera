@@ -18,8 +18,9 @@ public:
     std::string getID () const;
     float getConfThreshold () const;
     float getNmsThreshold () const;
-    int getWidth () const;
+    int getCaptureWidth () const;
     int getIntervalSecs () const;
+    bool sendPictureAlways () const;
     bool isPreviewMode () const;
     bool isDetectingMode () const;
 
@@ -27,12 +28,13 @@ private:
     void readJsonObject (Json::Value& root);
 
 private:
-    std::string ID;
-    float CONF_THRESHOLD;
-    float NMS_THRESHOLD;
-    int WIDTH;
-    int MODE;
-    int INTERVAL_SECS;
+    std::string deviceId;
+    int sendInterval;
+    bool sendOnDetectedOnly;
+    float confidenceThreshold;
+    float nmsThreshold;
+    int resizeResolution;
+    int mode;
 };
 
 #endif
