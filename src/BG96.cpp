@@ -1,6 +1,6 @@
 #include "../include/BG96.hpp"
 
-BG96::BG96 (const char* _port, const int baudRate) : Serial(_port, baudRate) {
+BG96::BG96 (const char* port, const int baudRate) : Serial(port, baudRate) {
     // Wait until modem ready
     this->putATcmd("AT\r");
     this->waitResponseUntil("OK", 3);
@@ -10,7 +10,7 @@ BG96::BG96 (const char* _port, const int baudRate) : Serial(_port, baudRate) {
     this->waitResponseUntil("OK", 3);
 }
 
-BG96::BG96 (const std::string _port, const int baudRate) : Serial(_port.c_str(), baudRate) {
+BG96::BG96 (const std::string port, const int baudRate) : Serial(port.c_str(), baudRate) {
     // Wait until modem ready
     this->putATcmd("AT\r");
     this->waitResponseUntil("OK", 3);
