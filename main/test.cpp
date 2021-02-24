@@ -94,7 +94,7 @@ int main (void) {
             case 6: {
                 string imageBytes = vision.extractFrameBytes();
                 fields.addField("text/plain", "time", "1996-03-05");
-                fields.addField("text/plain", "event", "1");
+                fields.addField("text/plain", "event", "0");
                 fields.addField("text/plain", "rssi", std::to_string(modem.getRssi()));
                 // fields.addField("text/plain", "battery", std::to_string(nrf.getBattery()));
                 fields.addField("text/plain", "battery", "44");
@@ -154,6 +154,7 @@ int main (void) {
                 cout << "Result frame was written to test.jpg" << endl;
                 break;
             }
+
             default: {
                 cout << "Invalid" << endl;
                 break;

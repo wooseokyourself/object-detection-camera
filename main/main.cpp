@@ -35,11 +35,11 @@ int main (void) {
                         "bin/model/classes.names"  // .names path
                         );
         vision.capture(config.getWidth());           // picture width (retio is 4:3)
-        vision.detect(0,                             // detecting target index (in .names file)
-                      config.getConfThreshold(),     // yolo confidence threshold
-                      config.getNmsThreshold(),      // yolo nms threshold
-                      config.getWidth()              // resize
-                     );
+        int detectedCount = vision.detect(0,                             // detecting target index (in .names file)
+                                          config.getConfThreshold(),     // yolo confidence threshold
+                                          config.getNmsThreshold(),      // yolo nms threshold
+                                          config.getWidth()              // resize
+                                          );  
         imageBytes = vision.extractFrameBytes();
 
         fields.addField("text/plain", "time", TIMESTAMP);
