@@ -7,9 +7,6 @@
 #include <jsoncpp/json/json.h>
 #include <jsoncpp/json/writer.h>
 
-#define DETECTING_MODE 0
-#define PREVIEW_MODE 1
-
 class Config {
 public:
     Config ();
