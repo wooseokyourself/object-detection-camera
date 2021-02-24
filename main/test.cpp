@@ -37,14 +37,14 @@ int main (void) {
         cout << "=========================================================" << endl;
         cout << "1. Config  : Read json from file." << endl;
         cout << "2. Config  : Read json from string." << endl;
-        cout << "3. Config  : Write." << endl;
+        cout << "3. Config  : Write json to file." << endl;
         cout << "4. BG96    : Get RSSI." << endl;
         cout << "5. BG96    : POST request without image." << endl;
         cout << "6. BG96    : POST request with image (Image bytes from memory frame)." << endl;
         cout << "7. BG96    : POST request with image (Image bytes from image file)." << endl;
         cout << "8. BG96    : Put custom AT command." << endl;
-        cout << "9. BG96    : Read response." << endl;
-        cout << "10. VISION  : Capture." << endl;
+        cout << "9. BG96    : Read AT response." << endl;
+        cout << "10. VISION  : Capture and save to frame." << endl;
         cout << "11. VISION  : Detect previous frame and save it to file." << endl;
         cout << "=========================================================" << endl;
         cout << "select: ";
