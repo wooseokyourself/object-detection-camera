@@ -21,7 +21,7 @@
 class Serial {
 public:
     Serial ();
-    Serial (const char* _port, const int baudRate);
+    Serial (const char* port, const int baudRate);
     ~Serial ();
 
 protected:
