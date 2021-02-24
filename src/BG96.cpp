@@ -111,7 +111,7 @@ std::string BG96::postMultipart (const std::string host,
     this->waitResponseUntil("OK", timeoutSecs);
 
     this->putATcmd("AT+QHTTPREAD=80\r");
-    return response = this->waitResponseUntil("CONNECT", timeoutSecs);
+    return this->waitResponseUntil("CONNECT", timeoutSecs);
 }
 
 void BG96::putATcmd (const char* cmd) {
