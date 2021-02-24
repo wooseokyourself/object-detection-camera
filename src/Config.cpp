@@ -5,22 +5,21 @@ void Config::readFromJsonFile (const std::string filePath) {
     Json::Reader reader;
     std::ifstream jsonFile(filePath, std::ifstream::binary);
     if (!reader.parse(jsonFile, root)) {
-        std::cerr << "Config: " << "failed to parse" << reader.getFormattedErrorMessages() << std::endl;
+        std::cerr << "Config: " << "readFromJsonFile() - failed to parse" << reader.getFormattedErrorMessages() << std::endl;
         return;
     }
-    this->readJsonObject(root);
     jsonFile.close();
+    this->readJsonObject(root);
 }
 
 void Config::readFromJsonString (const std::string jsonString) {
     Json::Value root;
     Json::Reader reader;
     if (!reader.parse(jsonString.c_str(), root)) {
-        std::cerr << "Config: " << "failed to parse" << reader.getFormattedErrorMessages() << std::endl;
+        std::cerr << "Config: " << "readFromJsonString - failed to parse" << reader.getFormattedErrorMessages() << std::endl;
         return;
     }
     this->readJsonObject(root);
-    jsonFile.close();
 }
 
 void Config::write (const std::string filePath) const {
@@ -64,7 +63,7 @@ bool Config::sendPictureAlways () const {
 
 void Config::readJsonObject (Json::Value& root) {
     if (root["result"].asString() != "1") {
-        std::cerr << "Config: " << "failed to parse because of {\"result\" : 0}" << std::endl;
+        std::cerr << "Config: " << "readJsonObject - failed to parse because of {\"result\" : 0}" << std::endl;
         return;
     }
     this->deviceId = root["deviceId"].asString();
