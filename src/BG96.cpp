@@ -119,8 +119,8 @@ void BG96::putATcmd (const char* cmd) {
 }
 
 void BG96::putATcmd (std::string cmd) {
-    std::cout << "[Send AT command]" << std::endl;
-    std::cout << cmd << std::endl;
+    // std::cout << "[Send AT command]" << std::endl;
+    // std::cout << cmd << std::endl;
     Serial::puts(cmd.c_str());
 }
 
@@ -129,8 +129,8 @@ void BG96::putATcmd (const char* cmd, const size_t len) {
 }
 
 void BG96::putATcmd (std::string cmd, const size_t len) {
-    std::cout << "[Send AT command]" << std::endl;
-    std::cout << cmd << std::endl;
+    // std::cout << "[Send AT command]" << std::endl;
+    // std::cout << cmd << std::endl;
     int chunks = len / 512;
     int remain = len % 512;
     for (int i = 0 ; i < chunks ; i ++)
@@ -159,7 +159,7 @@ std::string BG96::waitResponseUntil (const std::string expected, const int timeo
     while (true) {
         response = this->getResponse();
         if (response.find(expected) != -1) {
-            std::cout << expected << std::endl;
+            // std::cout << expected << std::endl;
             break;
         }
         else if (response.find("ERROR") != -1) {

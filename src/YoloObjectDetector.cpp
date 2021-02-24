@@ -37,9 +37,9 @@ std::string YoloObjectDetector::extractFrameBytes () {
     const size_t bytesLen = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
     char* bytes = (char*)malloc(bytesLen);
     std::memcpy(bytes, reinterpret_cast<char const*>(this->frame.data), bytesLen);
-    std::cout << "Image bytes cstring: " << bytes << std::endl;
+    // std::cout << "Image bytes cstring: " << bytes << std::endl;
     std::string ret(bytes);
-    std::cout << "Image bytes string:" << ret << std::endl;
+    // std::cout << "Image bytes string:" << ret << std::endl;
     free(bytes);
     return ret;
 }
