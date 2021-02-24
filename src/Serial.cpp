@@ -1,5 +1,7 @@
 #include "../include/Serial.hpp"
 
+Serial::Serial () { }
+
 Serial::Serial (const char* port, const int baudRate) {
     struct termios options;
     speed_t myBaud;
