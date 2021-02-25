@@ -1,0 +1,118 @@
+\hypertarget{test_8cpp}{}\doxysection{/\+Users/choiwooseok/\+Google\+Drive/\+Github Local Repo/ino-\/on\+\_\+\+AICamera/main/test.cpp File Reference}
+\label{test_8cpp}\index{/Users/choiwooseok/GoogleDrive/Github Local Repo/ino-\/on\_AICamera/main/test.cpp@{/Users/choiwooseok/GoogleDrive/Github Local Repo/ino-\/on\_AICamera/main/test.cpp}}
+{\ttfamily \#include \char`\"{}../include/\+Common.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+BG96.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+Config.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+GPIO.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+Http\+Post\+Form\+Data.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+NRF.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+Serial.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/\+Yolo\+Object\+Detector.\+hpp\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{test_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_a7d61993f7fdae71a2ea973e0471cf7e8}{JSON\+\_\+\+PATH}} = \char`\"{}config/config.\+json\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_a31286b5babe41e1c44365f96f223780b}{HOST}} = \char`\"{}ino-\/on.\+umilevx.\+com\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_afb6ee20c2e8c98be132abf5fefe1cfe5}{DETECTING\+\_\+\+URI}} = \char`\"{}/api/devices/events/\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_ab43aa05300d7e64431a8427cb8898478}{PREVIEW\+\_\+\+URI}} = \char`\"{}/api/manager/device/\char`\"{}
+\item 
+const int \mbox{\hyperlink{test_8cpp_aa93f6bfa81744d2041aa9b162bd3c13c}{RPI\+\_\+\+OFF\+\_\+\+PIN}} = 21
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_aa42ddddef1e6c71aef3bcf4601817765}{MODEM\+\_\+\+PORT}} = \char`\"{}/dev/tty\+S0\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{test_8cpp_a6c3c662a1ec924fb3f2747df9636d164}{NRF\+\_\+\+PORT}} = \char`\"{} \char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test_8cpp_a840291bc02cba5474a4cb46a9b9566fe}\label{test_8cpp_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{test.cpp@{test.cpp}!main@{main}}
+\index{main@{main}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 21 of file test.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{test_8cpp_afb6ee20c2e8c98be132abf5fefe1cfe5}\label{test_8cpp_afb6ee20c2e8c98be132abf5fefe1cfe5}} 
+\index{test.cpp@{test.cpp}!DETECTING\_URI@{DETECTING\_URI}}
+\index{DETECTING\_URI@{DETECTING\_URI}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{DETECTING\_URI}{DETECTING\_URI}}
+{\footnotesize\ttfamily const std\+::string DETECTING\+\_\+\+URI = \char`\"{}/api/devices/events/\char`\"{}}
+
+
+
+Definition at line 14 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_a31286b5babe41e1c44365f96f223780b}\label{test_8cpp_a31286b5babe41e1c44365f96f223780b}} 
+\index{test.cpp@{test.cpp}!HOST@{HOST}}
+\index{HOST@{HOST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{HOST}{HOST}}
+{\footnotesize\ttfamily const std\+::string HOST = \char`\"{}ino-\/on.\+umilevx.\+com\char`\"{}}
+
+
+
+Definition at line 13 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_a7d61993f7fdae71a2ea973e0471cf7e8}\label{test_8cpp_a7d61993f7fdae71a2ea973e0471cf7e8}} 
+\index{test.cpp@{test.cpp}!JSON\_PATH@{JSON\_PATH}}
+\index{JSON\_PATH@{JSON\_PATH}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{JSON\_PATH}{JSON\_PATH}}
+{\footnotesize\ttfamily const std\+::string JSON\+\_\+\+PATH = \char`\"{}config/config.\+json\char`\"{}}
+
+
+
+Definition at line 12 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_aa42ddddef1e6c71aef3bcf4601817765}\label{test_8cpp_aa42ddddef1e6c71aef3bcf4601817765}} 
+\index{test.cpp@{test.cpp}!MODEM\_PORT@{MODEM\_PORT}}
+\index{MODEM\_PORT@{MODEM\_PORT}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{MODEM\_PORT}{MODEM\_PORT}}
+{\footnotesize\ttfamily const std\+::string MODEM\+\_\+\+PORT = \char`\"{}/dev/tty\+S0\char`\"{}}
+
+
+
+Definition at line 18 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_a6c3c662a1ec924fb3f2747df9636d164}\label{test_8cpp_a6c3c662a1ec924fb3f2747df9636d164}} 
+\index{test.cpp@{test.cpp}!NRF\_PORT@{NRF\_PORT}}
+\index{NRF\_PORT@{NRF\_PORT}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{NRF\_PORT}{NRF\_PORT}}
+{\footnotesize\ttfamily const std\+::string NRF\+\_\+\+PORT = \char`\"{} \char`\"{}}
+
+
+
+Definition at line 19 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_ab43aa05300d7e64431a8427cb8898478}\label{test_8cpp_ab43aa05300d7e64431a8427cb8898478}} 
+\index{test.cpp@{test.cpp}!PREVIEW\_URI@{PREVIEW\_URI}}
+\index{PREVIEW\_URI@{PREVIEW\_URI}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{PREVIEW\_URI}{PREVIEW\_URI}}
+{\footnotesize\ttfamily const std\+::string PREVIEW\+\_\+\+URI = \char`\"{}/api/manager/device/\char`\"{}}
+
+
+
+Definition at line 15 of file test.\+cpp.
+
+\mbox{\Hypertarget{test_8cpp_aa93f6bfa81744d2041aa9b162bd3c13c}\label{test_8cpp_aa93f6bfa81744d2041aa9b162bd3c13c}} 
+\index{test.cpp@{test.cpp}!RPI\_OFF\_PIN@{RPI\_OFF\_PIN}}
+\index{RPI\_OFF\_PIN@{RPI\_OFF\_PIN}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{RPI\_OFF\_PIN}{RPI\_OFF\_PIN}}
+{\footnotesize\ttfamily const int RPI\+\_\+\+OFF\+\_\+\+PIN = 21}
+
+
+
+Definition at line 17 of file test.\+cpp.
+

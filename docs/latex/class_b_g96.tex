@@ -1,0 +1,253 @@
+\hypertarget{class_b_g96}{}\doxysection{BG96 Class Reference}
+\label{class_b_g96}\index{BG96@{BG96}}
+
+
+{\ttfamily \#include $<$BG96.\+hpp$>$}
+
+Inheritance diagram for BG96\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_b_g96}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_b_g96_a94faaebb5e0de036d5d989fbc8e2dc84}{BG96}} (const char $\ast$port, const int baud\+Rate)
+\item 
+\mbox{\hyperlink{class_b_g96_a82ef9da22633559a6591274bb0b954d5}{BG96}} (const std\+::string port, const int baud\+Rate)
+\item 
+\mbox{\hyperlink{class_b_g96_a6ded885d270e9678e990450d536c9452}{$\sim$\+BG96}} ()
+\item 
+int \mbox{\hyperlink{class_b_g96_a613a78b3b0b6a7d466ae607621e3eeb7}{get\+Rssi}} ()
+\begin{DoxyCompactList}\small\item\em Get RSSI of modem through AT command. Try 10 times to get RSSI if AT response is invalid value as RSSI. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_b_g96_a30991e28fed6d1e7506c46c94715b14a}{post\+Multipart}} (const std\+::string host, const std\+::string uri, const \mbox{\hyperlink{class_http_post_form_data}{Http\+Post\+Form\+Data}} \&fields, const int timeout\+Secs)
+\begin{DoxyCompactList}\small\item\em Send HTTP Post request through AT command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_b_g96_adbb4b7c921428ea527f5674af8cb7662}{put\+ATcmd}} (const char $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Send AT command. All AT syntax must be followed. There shouldn\textquotesingle{}t be null character in the command. If it is, use an overridden method that includes \char`\"{}len\char`\"{} in the parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_b_g96_a66665ebd80f4209c602ee5fa642e27b7}{put\+ATcmd}} (std\+::string cmd)
+\begin{DoxyCompactList}\small\item\em Send AT command. All AT syntax must be followed. There shouldn\textquotesingle{}t be null character in the command. If it is, use an overridden method that includes \char`\"{}len\char`\"{} in the parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_b_g96_a4a839b3b7108c62765447e4b32102a5a}{put\+ATcmd}} (const char $\ast$cmd, const size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Send AT command. All AT syntax must be followed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_b_g96_abf69f36ab0bfbfd66fbd15e93a4d3052}{put\+ATcmd}} (std\+::string cmd, const size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Send AT command. All AT syntax must be followed. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_b_g96_a035320378037fb4fb53ab366b261ea9c}{get\+Response}} ()
+\begin{DoxyCompactList}\small\item\em Get AT response. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_b_g96_a2041cb103f44dcb7159baa67204e8d25}{wait\+Response\+Until}} (const std\+::string expected, const int timeout\+Secs)
+\begin{DoxyCompactList}\small\item\em Wait AT response until it has sub-\/string of \char`\"{}expected\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 12 of file BG96.\+hpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_b_g96_a94faaebb5e0de036d5d989fbc8e2dc84}\label{class_b_g96_a94faaebb5e0de036d5d989fbc8e2dc84}} 
+\index{BG96@{BG96}!BG96@{BG96}}
+\index{BG96@{BG96}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{BG96()}{BG96()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily BG96\+::\+BG96 (\begin{DoxyParamCaption}\item[{const char $\ast$}]{port,  }\item[{const int}]{baud\+Rate }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a82ef9da22633559a6591274bb0b954d5}\label{class_b_g96_a82ef9da22633559a6591274bb0b954d5}} 
+\index{BG96@{BG96}!BG96@{BG96}}
+\index{BG96@{BG96}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{BG96()}{BG96()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily BG96\+::\+BG96 (\begin{DoxyParamCaption}\item[{const std\+::string}]{port,  }\item[{const int}]{baud\+Rate }\end{DoxyParamCaption})}
+
+
+
+Definition at line 13 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a6ded885d270e9678e990450d536c9452}\label{class_b_g96_a6ded885d270e9678e990450d536c9452}} 
+\index{BG96@{BG96}!````~BG96@{$\sim$BG96}}
+\index{````~BG96@{$\sim$BG96}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{$\sim$BG96()}{~BG96()}}
+{\footnotesize\ttfamily BG96\+::$\sim$\+BG96 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 23 of file BG96.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_b_g96_a035320378037fb4fb53ab366b261ea9c}\label{class_b_g96_a035320378037fb4fb53ab366b261ea9c}} 
+\index{BG96@{BG96}!getResponse@{getResponse}}
+\index{getResponse@{getResponse}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{getResponse()}{getResponse()}}
+{\footnotesize\ttfamily std\+::string BG96\+::get\+Response (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get AT response. 
+
+\begin{DoxyReturn}{Returns}
+AT response or \char`\"{}\+No data read\char`\"{} 
+\end{DoxyReturn}
+
+
+Definition at line 184 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a613a78b3b0b6a7d466ae607621e3eeb7}\label{class_b_g96_a613a78b3b0b6a7d466ae607621e3eeb7}} 
+\index{BG96@{BG96}!getRssi@{getRssi}}
+\index{getRssi@{getRssi}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{getRssi()}{getRssi()}}
+{\footnotesize\ttfamily int BG96\+::get\+Rssi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get RSSI of modem through AT command. Try 10 times to get RSSI if AT response is invalid value as RSSI. 
+
+\begin{DoxyReturn}{Returns}
+The RSSI of modem. -\/1 if failed. 
+\end{DoxyReturn}
+
+
+Definition at line 30 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a30991e28fed6d1e7506c46c94715b14a}\label{class_b_g96_a30991e28fed6d1e7506c46c94715b14a}} 
+\index{BG96@{BG96}!postMultipart@{postMultipart}}
+\index{postMultipart@{postMultipart}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{postMultipart()}{postMultipart()}}
+{\footnotesize\ttfamily std\+::string BG96\+::post\+Multipart (\begin{DoxyParamCaption}\item[{const std\+::string}]{host,  }\item[{const std\+::string}]{uri,  }\item[{const \mbox{\hyperlink{class_http_post_form_data}{Http\+Post\+Form\+Data}} \&}]{fields,  }\item[{const int}]{timeout\+Secs }\end{DoxyParamCaption})}
+
+
+
+Send HTTP Post request through AT command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The host url. There should be no \char`\"{}http\+://\char`\"{} prefix. ex) www.\+myhome.\+com \\
+\hline
+{\em uri} & The uri of url. There should be \char`\"{}/\char`\"{} prefix. ex) /my-\/room/my-\/desk \\
+\hline
+{\em fields} & The fields object. This will not be checked for invalid values. \\
+\hline
+{\em timeout\+Secs} & Timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The AT response. 
+\end{DoxyReturn}
+
+
+Definition at line 60 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_adbb4b7c921428ea527f5674af8cb7662}\label{class_b_g96_adbb4b7c921428ea527f5674af8cb7662}} 
+\index{BG96@{BG96}!putATcmd@{putATcmd}}
+\index{putATcmd@{putATcmd}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{putATcmd()}{putATcmd()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void BG96\+::put\+ATcmd (\begin{DoxyParamCaption}\item[{const char $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Send AT command. All AT syntax must be followed. There shouldn\textquotesingle{}t be null character in the command. If it is, use an overridden method that includes \char`\"{}len\char`\"{} in the parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & String of command. There shouldn\textquotesingle{}t be null character. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 138 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a4a839b3b7108c62765447e4b32102a5a}\label{class_b_g96_a4a839b3b7108c62765447e4b32102a5a}} 
+\index{BG96@{BG96}!putATcmd@{putATcmd}}
+\index{putATcmd@{putATcmd}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{putATcmd()}{putATcmd()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void BG96\+::put\+ATcmd (\begin{DoxyParamCaption}\item[{const char $\ast$}]{cmd,  }\item[{const size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Send AT command. All AT syntax must be followed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & String of command. \\
+\hline
+{\em len} & Length of cmd. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 159 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a66665ebd80f4209c602ee5fa642e27b7}\label{class_b_g96_a66665ebd80f4209c602ee5fa642e27b7}} 
+\index{BG96@{BG96}!putATcmd@{putATcmd}}
+\index{putATcmd@{putATcmd}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{putATcmd()}{putATcmd()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void BG96\+::put\+ATcmd (\begin{DoxyParamCaption}\item[{std\+::string}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Send AT command. All AT syntax must be followed. There shouldn\textquotesingle{}t be null character in the command. If it is, use an overridden method that includes \char`\"{}len\char`\"{} in the parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & String of command. There shouldn\textquotesingle{}t be null character. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 148 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_abf69f36ab0bfbfd66fbd15e93a4d3052}\label{class_b_g96_abf69f36ab0bfbfd66fbd15e93a4d3052}} 
+\index{BG96@{BG96}!putATcmd@{putATcmd}}
+\index{putATcmd@{putATcmd}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{putATcmd()}{putATcmd()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void BG96\+::put\+ATcmd (\begin{DoxyParamCaption}\item[{std\+::string}]{cmd,  }\item[{const size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Send AT command. All AT syntax must be followed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & String of command. \\
+\hline
+{\em len} & Length of cmd. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 168 of file BG96.\+cpp.
+
+\mbox{\Hypertarget{class_b_g96_a2041cb103f44dcb7159baa67204e8d25}\label{class_b_g96_a2041cb103f44dcb7159baa67204e8d25}} 
+\index{BG96@{BG96}!waitResponseUntil@{waitResponseUntil}}
+\index{waitResponseUntil@{waitResponseUntil}!BG96@{BG96}}
+\doxysubsubsection{\texorpdfstring{waitResponseUntil()}{waitResponseUntil()}}
+{\footnotesize\ttfamily std\+::string BG96\+::wait\+Response\+Until (\begin{DoxyParamCaption}\item[{const std\+::string}]{expected,  }\item[{const int}]{timeout\+Secs }\end{DoxyParamCaption})}
+
+
+
+Wait AT response until it has sub-\/string of \char`\"{}expected\char`\"{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expected} & Expected string within the AT response. \\
+\hline
+{\em timeout\+Secs} & Timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The AT response. 
+\end{DoxyReturn}
+
+
+Definition at line 205 of file BG96.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/choiwooseok/\+Google\+Drive/\+Github Local Repo/ino-\/on\+\_\+\+AICamera/include/\mbox{\hyperlink{_b_g96_8hpp}{BG96.\+hpp}}\item 
+/\+Users/choiwooseok/\+Google\+Drive/\+Github Local Repo/ino-\/on\+\_\+\+AICamera/src/\mbox{\hyperlink{_b_g96_8cpp}{BG96.\+cpp}}\end{DoxyCompactItemize}

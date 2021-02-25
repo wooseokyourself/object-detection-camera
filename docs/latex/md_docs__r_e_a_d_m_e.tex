@@ -1,0 +1,149 @@
+{\bfseries{본 장의 1, 2 가 진행된 라즈베리파이 이미지는 다음 링크에서 다운받을 수 있다. (최소 4GB의 SD카드 필요)}} ~\newline
+ \begin{quote}
+\href{http://solution.technonia.com/download/inoon_raspbian_image/PiLite4GB-no-ppp.zip}{\texttt{ http\+://solution.\+technonia.\+com/download/inoon\+\_\+raspbian\+\_\+image/\+Pi\+Lite4\+GB-\/no-\/ppp.\+zip}} ~\newline
+ \end{quote}
+{\itshape 라즈베리파이 계정\+: pi / raspberry} ~\newline
+ {\itshape 자동로그인 설정은 안 되어 있음!} ~\newline
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{1. Software Requirements}\label{md_docs__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# Requirements 설치}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% sudo apt-\/get update}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% sudo apt-\/get upgrade}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% sudo apt-\/get install git}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% git clone https://github.com/WiringPi/WiringPi}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% ./WiringPi/build}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% sudo apt-\/get install libjsoncpp-\/dev libilmbase-\/dev libopenexr-\/dev libgstreamer1.0-\/dev}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# OpenCV 4.5 (https://qengineering.eu/install-\/opencv-\/4.5-\/on-\/raspberry-\/64-\/os.html)}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% git clone https://github.com/wooseokyourself/raspi-\/opencv-\/sh}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% cd raspi-\/opencv-\/sh}
+\DoxyCodeLine{pi@raspberrypi:\string~/raspi-\/opencv-\/sh \% chmod 755 opencv.sh}
+\DoxyCodeLine{pi@raspberrypi:\string~ \% ./opencv.sh }
+
+\end{DoxyCode}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{2. Setup raspi-\/config}\label{md_docs__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pi@raspberrypi:\string~ \$ sudo raspi-\/config}
+
+\end{DoxyCode}
+
+\begin{DoxyItemize}
+\item 시리얼 포트 설정 (\href{https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with\%20Python)_HandsON.pdf}{\texttt{ reference}}) {\bfseries{모뎀의 시리얼 경로\+: /dev/tty\+S0}}
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item Interface Options 선택 ~\newline
+
+\item \mbox{\hyperlink{class_serial}{Serial}} Port 선택
+\item {\ttfamily \char`\"{}\+Would you like a login shell to be accessible over serial?\char`\"{}} -\/-\/$>$ $\ast$$\ast$\char`\"{}\+No\char`\"{}$\ast$$\ast$
+\item {\ttfamily \char`\"{}\+Would you like the serial port hardware to be enabled?\char`\"{}} -\/-\/$>$ $\ast$$\ast$\char`\"{}\+Yes\char`\"{}$\ast$$\ast$
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item 카메라 사용 설정
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item Interface Options 선택
+\item Camera 선택 및 Enable 설정
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item 부팅시 자동 로그인 설정
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item System Options 선택
+\item Boot / Auto Login 선택
+\item Console Autologin 선택
+\end{DoxyEnumerate}\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{3. Install Project}\label{md_docs__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pi@raspberrypi:\string~ \$ git clone https://github.com/UmileVX/ino-\/on\_AICamera}
+\DoxyCodeLine{pi@raspberrypi:\string~ \$ cd ino-\/on\_AICamera}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# 처음 clone 시 한 번만 실행.}
+\DoxyCodeLine{\# \string~/.profile 에 부팅시 자동실행 등을 설정하고 모델을 다운받는다.}
+\DoxyCodeLine{pi@raspberrypi:\string~/ino-\/on\_AICamera \$ ./init.sh}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# 매번 컴파일이 필요할때마다 실행.}
+\DoxyCodeLine{pi@raspberrypi:\string~/ino-\/on\_AICamera \$ ./build.sh}
+
+\end{DoxyCode}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{4. Run \& Test}\label{md_docs__r_e_a_d_m_e_autotoc_md4}
+라즈베리파이 전원이 켜지면 자동으로 시작된다. 실행을 멈추고싶다면 본 프로그램 실행 중 {\ttfamily Ctrl + C} 로 인터럽트를 줘야 한다. ~\newline
+ 테스트는 다음과 같이 실행가능하다. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pi@raspberrypi:\string~/ino-\/on\_AICamera \$ ./build/test}
+
+\end{DoxyCode}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{5. Tuning}\label{md_docs__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item 라즈베리파이의 부팅속도를 줄이기 위해 dhcp 서버 비활성화 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pi@raspberrypi:\string~ \$ sudo systemctl disable dhcpcd.service}
+
+\end{DoxyCode}
+ 추후 외부인터넷을 사용할 때 {\ttfamily sudo systemctl start dhcpcd.\+service} 가 필요함
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md6}{}\doxysection{Informations}\label{md_docs__r_e_a_d_m_e_autotoc_md6}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{Raspberry Pi GPIO Pin Number (\+BCM)}\label{md_docs__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyItemize}
+\item 작업 완료 알림\+: 21 output ~\newline
+ $>$ HIGH\+: pi 작업 완료 ~\newline
+ $>$ LOW\+: pi 작업 진행중
+\end{DoxyItemize}\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{Yolov4 Configuration (\+Json)}\label{md_docs__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyItemize}
+\item {\ttfamily config/config.\+json}
+\item 각 필드의 의미는 다음과 같다.
+\begin{DoxyItemize}
+\item $\ast$$\ast${\ttfamily device\+Id}$\ast$$\ast$ ~\newline
+ $>$ AICamera 에 부여되는 고유한 ID. ino-\/on-\/xxxx 형식을 따름
+\item $\ast$$\ast${\ttfamily send\+Interval}$\ast$$\ast$ ~\newline
+ $>$ AICamera 의 작동 주기 (초 단위)
+\item $\ast$$\ast${\ttfamily send\+On\+Detected\+Only}$\ast$$\ast$ ~\newline
+ $>$ true 일 경우 이벤트 검출 시에만 사진을 POST, false 일 경우 항상 사진을 POST 하도록 작동
+\item $\ast$$\ast${\ttfamily confidence\+Threshold}$\ast$$\ast$ $>$ 0 -\/ 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
+\item $\ast$$\ast${\ttfamily nms\+Threshold}$\ast$$\ast$ $>$ 0 -\/ 1 사이의 부동소수점. 높을수록 중복 검출 증가
+\item $\ast$$\ast${\ttfamily resize\+Resolution}$\ast$$\ast$ $>$ 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
+\item $\ast$$\ast${\ttfamily result}$\ast$$\ast$ ~\newline
+ $>$ 서버 측의 HTTP request 정상 수신 여부. 1일 경우 정상, 0일 경우 비정상
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{HTTP Request to Server}\label{md_docs__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item URL
+\begin{DoxyItemize}
+\item HOST\+: {\ttfamily \href{http://ino-on.umilevx.com/api/devices/events/ino-on-xxxx}{\texttt{ http\+://ino-\/on.\+umilevx.\+com/api/devices/events/ino-\/on-\/xxxx}}} $>$ {\ttfamily ino-\/on-\/xxxx} 는 본 카메라 디바이스의 고유한 아이디를 의미.
+\item 서버 로그기록 확인\+: \href{http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log}{\texttt{ http\+://ino-\/on.\+umilevx.\+com/api/logs/\+YYYY-\/\+MM-\/\+DD.\+log}} $>$ {\ttfamily YYYY-\/\+MM-\/\+DD} 는 현재날짜이다.
+\end{DoxyItemize}
+\item Format
+\begin{DoxyItemize}
+\item {\ttfamily send\+On\+Detected\+Only = false} 일 경우 ~\newline
+ \`{}\`{}\`{} \{ \char`\"{}time\char`\"{}=\char`\"{}2021-\/01-\/08\+T13\+:41\+:21.\+046\+Z\char`\"{} \char`\"{}event\char`\"{}=\char`\"{}1\char`\"{} \char`\"{}rssi\char`\"{}=\char`\"{}31\char`\"{} \char`\"{}battery\char`\"{}=\char`\"{}97\char`\"{} \char`\"{}filename\char`\"{}=\char`\"{}2021-\/01-\/08.\+jpg\char`\"{} \char`\"{}files\char`\"{}=\char`\"{}@results/2021-\/01-\/08.\+jpg\char`\"{} \} \`{}\`{}{\ttfamily  +}send\+On\+Detected\+Only = true{\ttfamily 이며 이벤트 미검출일 경우 $<$br$>$ }\`{}\`{} \{ \char`\"{}time\char`\"{}=\char`\"{}2021-\/01-\/08\+T13\+:41\+:21.\+046\+Z\char`\"{} \char`\"{}event\char`\"{}=\char`\"{}0\char`\"{} \char`\"{}rssi\char`\"{}=\char`\"{}31\char`\"{} \char`\"{}battery\char`\"{}=\char`\"{}97\char`\"{} \} \`{}\`{}{\ttfamily  $>$}time{\ttfamily \+: 사진 촬영 시간 $<$br$>$ $>$}event{\ttfamily \+: 이벤트 검출 여부 $<$br$>$ $>$}rssi{\ttfamily \+: 모뎀의 RSSI $<$br$>$ $>$}battery{\ttfamily \+: NRF에 연결된 배터리 잔여용량 $<$br$>$ $>$}filename{\ttfamily \+: 서버에 저장될 이미지 파일의 서버 경로이다. $<$br$>$ $>$}files\`{}\+: 전송할 이미지 파일의 로컬 경로이다.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_docs__r_e_a_d_m_e_autotoc_md10}{}\doxysection{Resources}\label{md_docs__r_e_a_d_m_e_autotoc_md10}
+{\bfseries{Imported}}
+\begin{DoxyItemize}
+\item \href{http://wiringpi.com/}{\texttt{ Wiring\+Pi}}
+\item \href{https://opencv.org/}{\texttt{ Open\+CV}}
+\item \href{http://open-source-parsers.github.io/jsoncpp-docs/doxygen/index.html/}{\texttt{ Json\+Cpp}}
+\item \href{https://github.com/HowardHinnant/date/}{\texttt{ Date}}
+\end{DoxyItemize}
+
+{\bfseries{Code reference}}
+\begin{DoxyItemize}
+\item \href{https://github.com/opencv/opencv/blob/master/samples/dnn/object_detection.cpp/}{\texttt{ Opencv-\/dnn-\/yolo}}
+\end{DoxyItemize}
+
+{\bfseries{Others}}
+\begin{DoxyItemize}
+\item \href{https://www.acidb.ca/}{\texttt{ ACID-\/dateset}}
+\item \href{https://github.com/AlexeyAB/darknet/}{\texttt{ Darknet}}
+\item \href{https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/}{\texttt{ CATM1}} 
+\end{DoxyItemize}
