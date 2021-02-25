@@ -1,8 +1,8 @@
 {
-    "deviceId": "ino-on-0005", 
-    "sendInterval": "5",
+    "deviceId": "ino-on-xxxx", 
+    "sendInterval": "300",
     "sendOnDetectedOnly": "true", 
-    "confidenceThreshold": "0.35", 
+    "confidenceThreshold": "0.4", 
     "nmsThreshold": "0.5", 
     "resizeResolution": "416", 
     "result": "1"
