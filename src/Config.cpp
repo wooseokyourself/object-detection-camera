@@ -1,7 +1,11 @@
 #include "../include/Config.hpp"
 
-Config::Config () : result(1) { }
+Config::Config () : result(1), previewMode(false) { }
 
+/**
+ * @brief Read json from .json file and save it in this object.
+ * @param filePath The path of .json file.
+ */
 void Config::readFromJsonFile (const std::string filePath) {
     Json::Value root;
     Json::Reader reader;
@@ -14,6 +18,10 @@ void Config::readFromJsonFile (const std::string filePath) {
     this->readJsonObject(root);
 }
 
+/**
+ * @brief Read json from string and save it in this object.
+ * @param jsonString The string formed json. ex) {"time"="2021-01-08T13:41:21.046Z"}
+ */
 void Config::readFromJsonString (const std::string jsonString) {
     Json::Value root;
     Json::Reader reader;
@@ -24,6 +32,10 @@ void Config::readFromJsonString (const std::string jsonString) {
     this->readJsonObject(root);
 }
 
+/**
+ * @brief Write json from this object to file. Not checking for invalid values.
+ * @param filePath The path of .json file to write.
+ */
 void Config::write (const std::string filePath) const {
     Json::Value root;
     root["deviceId"] = this->deviceId;
@@ -64,15 +76,24 @@ bool Config::sendPictureAlways () const {
     return this->sendOnDetectedOnly;
 }
 
+bool Config::isPreviewMode () const {
+    return this->previewMode;
+}
+
 void Config::readJsonObject (Json::Value& root) {
     if (root["result"].asString() != "1") {
         std::cerr << "Config: " << "readJsonObject - failed to parse because of {\"result\" : 0}" << std::endl;
         return;
     }
-    this->deviceId = root["deviceId"].asString();
-    this->sendInterval = std::stoi(root["sendInterval"].asString());
-    this->sendOnDetectedOnly = root["sendOnDetectedOnly"].asString() == "true" ? true : false;
-    this->confidenceThreshold = std::stof(root["confidenceThreshold"].asString());
-    this->nmsThreshold = std::stof(root["nmsThreshold"].asString());
-    this->resizeResolution = std::stoi(root["resizeResolution"].asString());
+    if (root.isMember("deviceId")) { // Detecting Mode
+        this->deviceId = root["deviceId"].asString();
+        this->sendInterval = std::stoi(root["sendInterval"].asString());
+        this->sendOnDetectedOnly = root["sendOnDetectedOnly"].asString() == "true" ? true : false;
+        this->confidenceThreshold = std::stof(root["confidenceThreshold"].asString());
+        this->nmsThreshold = std::stof(root["nmsThreshold"].asString());
+        this->resizeResolution = std::stoi(root["resizeResolution"].asString());
+    }
+    else { // Preview Mode
+        this->previewMode = root["previewMode"].asString() == "true" ? true : false;
+    }
 }

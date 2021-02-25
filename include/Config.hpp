@@ -24,13 +24,18 @@ private:
     void readJsonObject (Json::Value& root);
 
 private:
+    int result;
+
+private: // Detecting Mode Parameters
     std::string deviceId;
     int sendInterval;
     bool sendOnDetectedOnly;
     float confidenceThreshold;
     float nmsThreshold;
     int resizeResolution;
-    int result;
+
+private: // Preview Mode Parameter
+    bool previewMode;
 };
 
 #endif
