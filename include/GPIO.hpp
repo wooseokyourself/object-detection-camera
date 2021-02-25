@@ -7,8 +7,6 @@
 class GPIO {
 public:
     GPIO (const int _rpiOffPin);
-    ~GPIO ();
-
     void shutdownRpi ();
 
 private:
