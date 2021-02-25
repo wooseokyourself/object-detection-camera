@@ -133,8 +133,10 @@ void BG96::putATcmd (std::string cmd, const size_t len) {
     // std::cout << cmd << std::endl;
     int chunks = len / 512;
     int remain = len % 512;
-    for (int i = 0 ; i < chunks ; i ++)
+    for (int i = 0 ; i < chunks ; i ++) {
         Serial::puts(cmd.substr(i * 512, (i+1) * 512).c_str(), 512);
+        usleep(250000); // 0.25s
+    }
     Serial::puts(cmd.substr(chunks * 512, len - 1).c_str(), remain);
 }
 
