@@ -31,10 +31,12 @@ pi@raspberrypi:~ $ sudo raspi-config
 2. Serial Port 선택
 3. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
 4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
+   
 
 + 카메라 사용 설정
 1. Interface Options 선택
 2. Camera 선택 및 Enable 설정
+   
 
 + 부팅시 자동 로그인 설정
 1. System Options 선택
@@ -66,6 +68,7 @@ pi@raspberrypi:~/ino-on_AICamera $ ./build/test
 ```console
 pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 ```
+추후 외부인터넷을 사용할 때 `sudo systemctl start dhcpcd.service` 가 필요함
 
 ****
 
@@ -78,27 +81,27 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 ## Yolov4 Configuration (Json)
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
-    + Data: `deviceId`   
+    + **`deviceId`**   
         > AICamera 에 부여되는 고유한 ID. ino-on-xxxx 형식을 따름
-    + Data: `sendInterval`   
+    + **`sendInterval`**   
         > AICamera 의 작동 주기 (초 단위)
-    + Data: `sendOnDetectedOnly`   
+    + **`sendOnDetectedOnly`**   
         > true 일 경우 이벤트 검출 시에만 사진을 POST, false 일 경우 항상 사진을 POST 하도록 작동
-    + Data: `confidenceThreshold`
+    + **`confidenceThreshold`**
         > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
-    + Data: `nmsThreshold`
+    + **`nmsThreshold`**
         > 0 - 1 사이의 부동소수점. 높을수록 중복 검출 증가
-    + Data: `resizeResolution`
+    + **`resizeResolution`**
         > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
-    + Data: `result`   
+    + **`result`**   
         > 서버 측의 HTTP request 정상 수신 여부. 1일 경우 정상, 0일 경우 비정상
 
 ## HTTP Request to Server
 + URL
     + HOST: `http://ino-on.umilevx.com/api/devices/events/ino-on-xxxx`
-    > `ino-on-xxxx` 는 본 카메라 디바이스의 고유한 아이디를 의미.
+        > `ino-on-xxxx` 는 본 카메라 디바이스의 고유한 아이디를 의미.
     + 서버 로그기록 확인: http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
-    > `YYYY-MM-DD` 는 현재날짜이다.
+        > `YYYY-MM-DD` 는 현재날짜이다.
 + Format
     + `sendOnDetectedOnly = false` 일 경우   
     ```
