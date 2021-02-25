@@ -4,6 +4,12 @@ YoloObjectDetector::YoloObjectDetector () : isSet(false) {
 
 }
 
+/**
+ * @brief Import YOLOv4 model into this object.
+ * @param weightsPath .weights path.
+ * @param cfgPath .cfg path.
+ * @param namesPath .names path.
+ */
 void YoloObjectDetector::setModel (const std::string weightsPath, 
                                    const std::string cfgPath, 
                                    const std::string namesPath) {
@@ -24,14 +30,23 @@ void YoloObjectDetector::setModel (const std::string weightsPath,
     this->isSet = true;
 }
 
+/**
+ * @return Reference type of YoloObjectDetector::frame.
+ */
 Mat& YoloObjectDetector::getFrameRef () {
     return this->frame;
 }
 
+/**
+ * @return Deep copy of YoloObjectDetector::frame.
+ */
 Mat YoloObjectDetector::cloneFrame () const {
     return this->frame.clone();
 }
 
+/**
+ * @brief 아직 미작동으로 사용 불가.
+ */
 std::string YoloObjectDetector::extractFrameBytes () {
     // 여기서 인코딩 한 뒤 그게 맞는지 비교해보자
     const size_t bytesLen = (this->frame.total() * this->frame.elemSize()) * sizeof(unsigned char);
@@ -44,21 +59,39 @@ std::string YoloObjectDetector::extractFrameBytes () {
     return ret;
 }
 
+/**
+ * @brief Load image file and get its bytes binary.
+ * @param outBytes String to save bytes binary of the image file.
+ * @param filePath Path of image file. Extension suffix should be included.
+ */
 void YoloObjectDetector::extractImagefileBytes (std::string& outBytes, const std::string filePath) {
     std::ifstream bin(filePath, std::ios::binary);
     outBytes.clear();
     outBytes = std::string((std::istreambuf_iterator<char>(bin)), std::istreambuf_iterator<char>());
 }
 
+/**
+ * @brief Resize frame with 4:3 ratio.
+ * @param width Target width. The ratio is 4:3.
+ */
 void YoloObjectDetector::resizeFrame (const int width) {
     const int height = int((float(width) / 4) * 3);
     resize(this->frame, this->frame, Size(width, height));
 }
 
+/**
+ * @brief Write YoloObjectDetector::frame into file.
+ * @param filePath Path of image file to write. Extension suffix should be included.
+ * @return false if writing failed.
+ */
 bool YoloObjectDetector::writeFrame (const std::string filePath) const {
     return imwrite(filePath, this->frame);
 }
 
+/**
+ * @brief Take a picture of raspi camera with 4:3 ratio and save into YoloObjectDetector::frame.
+ * @param width Target width. The ratio is 4:3.
+ */
 void YoloObjectDetector::capture (const int width) {
     try {
         VideoCapture cap;
@@ -73,6 +106,16 @@ void YoloObjectDetector::capture (const int width) {
     }
 }
 
+/**
+ * @brief Run YOLOv4 inference with YoloObjectDetector::frame image.
+ *          Result image with detected boxes and inference time is saved into YoloObjectDetector::frame.
+ *          YoloObjectDetector::setModel() should be called first.
+ * @param target Class ID of target object in your .names file.
+ * @param confThreshold Confidence threshold of Yolo. It should be 0 to 1.
+ * @param nmsThreshold NMS threshold of Yolo. It should be 0 to 1.
+ * @param resize The size of the image input to the top network. It should be multiples of 32.
+ * @return Number of detected target object.
+ */
 int YoloObjectDetector::detect (const int target, 
                                 const float confThreshold, 
                                 const float nmsThreshold, 
@@ -89,7 +132,12 @@ int YoloObjectDetector::detect (const int target,
 }
 
 void YoloObjectDetector::netPreProcess (const int resize, Size& padSize) {
-    // Add padding to image
+    /**
+     * The resized image is square, so the original image is distorted. 
+     * In order to put a distortion-free image as input to the YOLO network, 
+     * the original image is padded and squared, and then resized.
+     * Images made in this way give better detection results!
+     */
     if (this->frame.rows != this->frame.cols) {
         int length = this->frame.cols > this->frame.rows ? this->frame.cols : this->frame.rows;
         if (this->frame.cols < length) {

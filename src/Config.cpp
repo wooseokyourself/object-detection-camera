@@ -80,6 +80,11 @@ bool Config::isPreviewMode () const {
     return this->previewMode;
 }
 
+/**
+ * @brief Parse json object to member variables. Preview or Detecting mode is distinguished 
+ *          through checking the fields of the json object.
+ * @param root Json object.
+ */
 void Config::readJsonObject (Json::Value& root) {
     if (root["result"].asString() != "1") {
         std::cerr << "Config: " << "readJsonObject - failed to parse because of {\"result\" : 0}" << std::endl;
