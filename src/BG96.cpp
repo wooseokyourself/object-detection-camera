@@ -22,6 +22,11 @@ BG96::BG96 (const std::string port, const int baudRate) : Serial(port.c_str(), b
 
 BG96::~BG96 () { }
 
+/**
+ * @brief Get RSSI of modem through AT command.
+ *          Try 10 times to get RSSI if AT response is invalid value as RSSI.
+ * @return The RSSI of modem. -1 if failed.
+ */
 int BG96::getRssi() {
     // try 10 times to get rssi
     for (int trying = 0 ; trying < 10 ; trying ++) {
@@ -42,6 +47,16 @@ int BG96::getRssi() {
     return -1;
 }
 
+/**
+ * @brief Send HTTP Post request through AT command.
+ * @param host The host url. There should be no "http://" prefix.
+ *              ex) www.myhome.com
+ * @param uri The uri of url. There should be "/" prefix.
+ *              ex) /my-room/my-desk
+ * @param fields The fields object. This will not be checked for invalid values.
+ * @param timeoutSecs Timeout.
+ * @return The AT response.
+ */
 std::string BG96::postMultipart (const std::string host,
                                  const std::string uri,
                                  const HttpPostFormData& fields, 
@@ -114,20 +129,42 @@ std::string BG96::postMultipart (const std::string host,
     return this->waitResponseUntil("CONNECT", timeoutSecs);
 }
 
+/**
+ * @brief Send AT command. All AT syntax must be followed.
+ *          There shouldn't be null character in the command.
+ *          If it is, use an overridden method that includes "len" in the parameter.
+ * @param cmd String of command. There shouldn't be null character. 
+ */
 void BG96::putATcmd (const char* cmd) {
     Serial::puts(cmd);
 }
 
+/**
+ * @brief Send AT command. All AT syntax must be followed.
+ *          There shouldn't be null character in the command.
+ *          If it is, use an overridden method that includes "len" in the parameter.
+ * @param cmd String of command. There shouldn't be null character. 
+ */
 void BG96::putATcmd (std::string cmd) {
     // std::cout << "[Send AT command]" << std::endl;
     // std::cout << cmd << std::endl;
     Serial::puts(cmd.c_str());
 }
 
+/**
+ * @brief Send AT command. All AT syntax must be followed.
+ * @param cmd String of command.
+ * @param len Length of cmd.
+ */
 void BG96::putATcmd (const char* cmd, const size_t len) {
     Serial::puts(cmd, len);
 }
 
+/**
+ * @brief Send AT command. All AT syntax must be followed.
+ * @param cmd String of command.
+ * @param len Length of cmd.
+ */
 void BG96::putATcmd (std::string cmd, const size_t len) {
     // std::cout << "[Send AT command]" << std::endl;
     // std::cout << cmd << std::endl;
@@ -140,6 +177,10 @@ void BG96::putATcmd (std::string cmd, const size_t len) {
     Serial::puts(cmd.substr(chunks * 512, len - 1).c_str(), remain);
 }
 
+/**
+ * @brief Get AT response.
+ * @return AT response or "No data read"
+ */
 std::string BG96::getResponse () {
     int len = Serial::remaining();
     if (len < 0)
@@ -155,6 +196,12 @@ std::string BG96::getResponse () {
     }
 }
 
+/**
+ * @brief Wait AT response until it has sub-string of "expected".
+ * @param expected Expected string within the AT response.
+ * @param timeoutSecs Timeout.
+ * @return The AT response.
+ */
 std::string BG96::waitResponseUntil (const std::string expected, const int timeoutSecs) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     std::string response;
