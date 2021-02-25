@@ -83,12 +83,12 @@ Serial::~Serial () {
     this->release();
 }
 
-/// @brief Flush the serial buffers (both tx & rx)
+/// @brief Flush the serial buffers. (both tx & rx)
 void Serial::flush () {
     tcflush(this->fd, TCIOFLUSH);
 }
 
-/// @brief Return the number of bytes of data available to be read in the serial port
+/// @brief Return the number of bytes of data available to be read in the serial port.
 int Serial::remaining () {
     int len;
     if (ioctl(this->fd, FIONREAD, &len) == -1)
@@ -96,13 +96,13 @@ int Serial::remaining () {
     return len;
 }
 
-/// @brief Send a string to the serial port
+/// @brief Send a string to the serial port.
 /// @param s which don't have null as a byte
 void Serial::puts (const char* s) {
     write (this->fd, s, strlen(s));
 }
 
-/// @brief Send a string to the serial port
+/// @brief Send a string to the serial port.
 /// @param s which can have null as a byte
 /// @param len the number of bytes from s
 void Serial::puts (const char* s, const size_t len) {
@@ -110,7 +110,7 @@ void Serial::puts (const char* s, const size_t len) {
 }
 
 /// @brief Get a single character from the serial device.
-/// @brief Note: Zero is a valid character and this function will time-out after 10 secs.
+///        Note: Zero is a valid character and this function will time-out after 10 secs.
 int Serial::getchar () {
     uint8_t x;
     if (read(this->fd, &x, 1) != 1)
