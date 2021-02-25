@@ -1,7 +1,9 @@
 # Instructions to Start
 **본 장의 1, 2 가 진행된 라즈베리파이 이미지는 다음 링크에서 다운받을 수 있다. (최소 4GB의 SD카드 필요)**   
-*자동로그인 설정은 안 되어 있음! 라즈베리파이 계정: pi / raspberry*
 > http://solution.technonia.com/download/inoon_raspbian_image/PiLite4GB-no-ppp.zip   
+*라즈베리파이 계정: pi / raspberry*   
+*자동로그인 설정은 안 되어 있음!*   
+
 ### 1. Software Requirements
 ```console
 # Requirements 설치
@@ -26,17 +28,18 @@ pi@raspberrypi:~ $ sudo raspi-config
 + 시리얼 포트 설정 ([reference](https://github.com/codezoo-ltd/CodeZoo_CATM1_Arduino/blob/master/Hands-ON/Cat.M1_RaspberryPi(with%20Python)_HandsON.pdf))
 **모뎀의 시리얼 경로: /dev/ttyS0**
 1. Interface Options 선택   
-2. P6 Serial Port 선택
+2. Serial Port 선택
 3. `"Would you like a login shell to be accessible over serial?"` --> **"No"**
 4. `"Would you like the serial port hardware to be enabled?"` --> **"Yes"**
 
 + 카메라 사용 설정
-
+1. Interface Options 선택
+2. Camera 선택 및 Enable 설정
 
 + 부팅시 자동 로그인 설정
 1. System Options 선택
-2. S5 Boot / Auto Login 선택
-3. B2 Console Autologin 혹은 B4 Desktop Autologin 선택
+2. Boot / Auto Login 선택
+3. Console Autologin 선택
 
 ### 3. Install Project
 ```console
@@ -76,13 +79,19 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
     + Data: `deviceId`   
-        > AICamera 에 부여되는 고유한 ID. ino-on-xxxx 형식을 따른다.
+        > AICamera 에 부여되는 고유한 ID. ino-on-xxxx 형식을 따름
+    + Data: `sendInterval`   
+        > AICamera 의 작동 주기 (초 단위)
+    + Data: `sendOnDetectedOnly`   
+        > true 일 경우 이벤트 검출 시에만 사진을 POST, false 일 경우 항상 사진을 POST 하도록 작동
     + Data: `confidenceThreshold`
         > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
     + Data: `nmsThreshold`
         > 0 - 1 사이의 부동소수점. 높을수록 중복 검출 증가
     + Data: `resizeResolution`
         > 32 배수의 정수. 낮을수록 검출속도는 빠르나 작은 객체 검출 불리, 높을수록 검출속도는 느리나 작은 객체 검출 유리
+    + Data: `result`   
+        > 서버 측의 HTTP request 정상 수신 여부. 1일 경우 정상, 0일 경우 비정상
 
 ## HTTP Request to Server
 + URL
@@ -91,30 +100,30 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
     + 서버 로그기록 확인: http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
     > `YYYY-MM-DD` 는 현재날짜이다.
 + Format
-    + 이벤트가 있을 경우
+    + `sendOnDetectedOnly = false` 일 경우   
     ```
     {
         "time"="2021-01-08T13:41:21.046Z"
         "event"="1"
-        "rssi"="-31"
+        "rssi"="31"
         "battery"="97"
         "filename"="2021-01-08.jpg"
         "files"="@results/2021-01-08.jpg"
     }
     ```
-    + 이벤트가 없을 경우 
+    + `sendOnDetectedOnly = true` 이며 이벤트 미검출일 경우    
     ```
     {
         "time"="2021-01-08T13:41:21.046Z"
         "event"="0"
-        "rssi"="-31"
+        "rssi"="31"
         "battery"="97"
     }
     ```
-    > `time`: 사진을 촬영한 시간이다.   
-    > `event`:  사진 내에서 객체가 검출된 여부이다.   
-    > `rssi`: 모뎀의 RSSI값이다.   
-    > `battery`: NRF에 연결되어 공급받는 배터리의 상태이다.   
+    > `time`: 사진 촬영 시간   
+    > `event`:  이벤트 검출 여부   
+    > `rssi`: 모뎀의 RSSI   
+    > `battery`: NRF에 연결된 배터리 잔여용량   
     > `filename`: 서버에 저장될 이미지 파일의 서버 경로이다.   
     > `files`: 전송할 이미지 파일의 로컬 경로이다.
 
