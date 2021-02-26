@@ -89,6 +89,7 @@ int main (void) {
             if (!config.isPreviewMode()) {
                 /**
                  * 여기에서 NRF에게 UART로 Preview Mode가 종료되었다고 알려야함.
+                 * 이게 구현이 안되어있을경우 직접 NRF 관리어플을 통해 1을 0으로 바꿔야 Preview Mode 종료가능.
                  */
                 break;
             }
