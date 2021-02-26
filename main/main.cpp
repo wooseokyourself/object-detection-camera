@@ -56,10 +56,11 @@ int main (void) {
 
         std::string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         int postFailed = 0;
-        while (response.find("result") != -1) { 
-            std::cerr << "POST failed " << postFailed << " times." << std::endl;
-            response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
+        while (response.find("result") == -1) { 
             ++postFailed;
+            std::cerr << "POST failed " << postFailed << " times." << std::endl;
+            std::cerr << " response:\n" << response << std::endl;
+            response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         }
         config.readFromJsonString(response);
         config.write(JSON_PATH);
@@ -85,10 +86,11 @@ int main (void) {
             fields.addField("image/jpeg", "files", imageBytes);
             std::string response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
             int postFailed = 0;
-            while (response.find("result") != -1) { 
-                std::cerr << "POST failed " << postFailed << " times." << std::endl;
-                response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
+            while (response.find("result") == -1) { 
                 ++postFailed;
+                std::cerr << "POST failed " << postFailed << " times." << std::endl;
+                std::cerr << " response:\n" << response << std::endl;
+                response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
             }
             config.readFromJsonString(response);
             fields.clear();
