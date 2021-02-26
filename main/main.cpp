@@ -56,10 +56,10 @@ int main (void) {
 
         std::string response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         int postFailed = 0;
-        while (response.find("705") != -1) { // HTTP(S) no GET/POST requests
+        while (response.find("result") != -1) { 
+            std::cerr << "POST failed " << postFailed << " times." << std::endl;
             response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
             ++postFailed;
-            std::cerr << "POST failed " << postFailed << " times." << std::endl;
         }
         config.readFromJsonString(response);
         config.write(JSON_PATH);
@@ -84,6 +84,12 @@ int main (void) {
             vision.extractImagefileBytes(imageBytes, "results/preview.jpg");
             fields.addField("image/jpeg", "files", imageBytes);
             std::string response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
+            int postFailed = 0;
+            while (response.find("result") != -1) { 
+                std::cerr << "POST failed " << postFailed << " times." << std::endl;
+                response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
+                ++postFailed;
+            }
             config.readFromJsonString(response);
             fields.clear();
             if (!config.isPreviewMode()) {
