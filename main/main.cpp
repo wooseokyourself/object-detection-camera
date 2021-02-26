@@ -66,18 +66,18 @@ int main (void) {
         nrf.setPowerInterval(config.getIntervalSecs());
     }
     else {
-    /**
-     *      ----Set Preview Mode---->        --------Captured Image------>
-     * NRF                              RPi                                 Server
-     *      <---Set Detecting Mode---        <---Terminate Preview Mode---
-     * 
-     * Preview Mode 여부는 NRF로부터 읽어온다. 이는 GPIO::isDetectingMode() 를 통해 확인한다.
-     * Preview Mode 에 진입하면, Preview Mode 의 종료여부는 서버의 http response 로부터 읽어온다.
-     * Config::readFromJsonString() 이 서버의 http response 를 분석하고, 이후
-     * Config::isPreviewMode() 를 통해 분석결과를 확인할 수 있다.
-     * Preview Mode 가 종료되면 GPIO::setDetectingMode() 를 통해 다시 NRF에게 종료를 알려야 한다.
-     */
-    std::cout << " Preview Mode" << std::endl;
+        /**
+         *      ----Set Preview Mode---->        --------Captured Image------>
+         * NRF                              RPi                                 Server
+         *      <---Set Detecting Mode---        <---Terminate Preview Mode---
+         * 
+         * Preview Mode 여부는 NRF로부터 읽어온다. 이는 GPIO::isDetectingMode() 를 통해 확인한다.
+         * Preview Mode 에 진입하면, Preview Mode 의 종료여부는 서버의 http response 로부터 읽어온다.
+         * Config::readFromJsonString() 이 서버의 http response 를 분석하고, 이후
+         * Config::isPreviewMode() 를 통해 분석결과를 확인할 수 있다.
+         * Preview Mode 가 종료되면 GPIO::setDetectingMode() 를 통해 다시 NRF에게 종료를 알려야 한다.
+         */
+        std::cout << " Preview Mode" << std::endl;
         while (true) {
             vision.capture(256);
             vision.writeFrame("results/preview.jpg");
@@ -87,7 +87,9 @@ int main (void) {
             config.readFromJsonString(response);
             fields.clear();
             if (!config.isPreviewMode()) {
-                gpio.setDetectingMode();
+                /**
+                 * 여기에서 NRF에게 UART로 Preview Mode가 종료되었다고 알려야함.
+                 */
                 break;
             }
         }

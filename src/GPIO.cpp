@@ -22,15 +22,3 @@ void GPIO::shutdownRpi () {
 bool GPIO::isDetectingMode () {
     return !digitalRead(this->rpiModePin);
 }
-
-/**
- * @brief Write LOW into GPIO::rpiModePin pin.
- */
-void GPIO::setDetectingMode () {
-    pinMode(this->rpiModePin, OUTPUT);
-    digitalWrite(this->rpiModePin, LOW);
-    delay(1000);
-    pinMode(this->rpiModePin, INPUT);
-    while (!this->isDetectingMode())
-        digitalWrite(this->rpiOffPin, LOW);
-}
