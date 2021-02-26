@@ -19,6 +19,7 @@ public:
     int getCaptureWidth () const;
     int getIntervalSecs () const;
     bool sendPictureAlways () const;
+    bool isPreviewMode () const;
 
 private:
     void readJsonObject (Json::Value& root);

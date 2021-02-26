@@ -80,7 +80,7 @@ int main (void) {
     std::cout << " Preview Mode" << std::endl;
         while (true) {
             vision.capture(256);
-            vision.writeFrame("results/preview.jpg")
+            vision.writeFrame("results/preview.jpg");
             vision.extractImagefileBytes(imageBytes, "results/preview.jpg");
             fields.addField("image/jpeg", "files", imageBytes);
             std::string response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
