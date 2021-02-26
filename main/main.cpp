@@ -13,6 +13,7 @@ const std::string DETECTING_URI = "/api/devices/events/";
 const std::string PREVIEW_URI = "/api/manager/device/preview/";
 
 const int RPI_OFF_PIN = 21; // BCM
+const int RPI_MODE_PIN = 20; 
 const std::string MODEM_PORT = "/dev/ttyS0";
 const std::string NRF_PORT = " ";
 
@@ -24,7 +25,7 @@ int main (void) {
     Config config;
     BG96 modem(MODEM_PORT, 115200);
     NRF nrf;
-    GPIO gpio(RPI_OFF_PIN);
+    GPIO gpio(RPI_OFF_PIN, RPI_MODE_PIN);
     HttpPostFormData fields;
     YoloObjectDetector vision;
 
