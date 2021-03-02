@@ -12,6 +12,6 @@ cd build && \
 cmake .. \
 && make && \
 cd ../ai-cam/model && \
-wget -O ~/ino-on_AICamera/bin/model/yolov4.weights http://solution.technonia.com/download/inoon_models/yolov4-v02.weights && \
-wget -O ~/ino-on_AICamera/bin/model/yolov4.cfg http://solution.technonia.com/download/inoon_models/yolov4-custom.cfg
+wget -O ~/ino-on_AICamera/ai-cam/model/yolov4.weights http://solution.technonia.com/download/inoon_models/yolov4-v02.weights && \
+wget -O ~/ino-on_AICamera/ai-cam/model/yolov4.cfg http://solution.technonia.com/download/inoon_models/yolov4-custom.cfg
 cd ../../
