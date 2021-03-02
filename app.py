@@ -46,8 +46,8 @@ def normalMode (isPPP):
 
     ''' Detect '''
     detector = "./build/detector "\
-            + "ai-cam/model/yolov4-custom_best.weights "\
-            + "ai-cam/model/yolov4-custom.cfg "\
+            + "ai-cam/model/yolov4.weights "\
+            + "ai-cam/model/yolov4.cfg "\
             + "ai-cam/model/classes.names "\
             + "results/" + IMAGEFILE\
             + " " + str(confidence) + " " + str(nms) + " " + str(resize)
