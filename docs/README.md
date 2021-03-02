@@ -69,7 +69,7 @@ pi@raspberrypi:~ % pip3 install pyserial    # for OS Lite
 pi@raspberrypi:~ % pip3 install flask       # for OS Lite
 pi@raspberrypi:~ $ pip3 install ifcfg
 pi@raspberrypi:~ $ pip3 install numpy
-pi@raspberrypi:~ $ pip3 install opencv-python
+pi@raspberrypi:~ $ pip3 install opencv-python opencv-contrib-python
 pi@raspberrypi:~ $ pip3 install imutils
 ```
 
