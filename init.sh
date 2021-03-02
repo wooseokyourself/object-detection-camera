@@ -4,7 +4,7 @@ echo 'cd ino-on_AICamera' >> ~/.profile
 echo 'mkdir -p logs' >> ~/.profile
 echo 'mkdir -p results' >> ~/.profile
 echo 'find logs/*.txt -type f -mtime +7 -exec rm {} +' >> ~/.profile
-echo 'python3 ./build/app.py 2>&1 | tee -a logs/$(date +%Y-%m-%d).txt' >> ~/.profile
+echo 'python3 ./app.py 2>&1 | tee -a logs/$(date +%Y-%m-%d).txt' >> ~/.profile
 
 rm -rf build
 mkdir build && \
