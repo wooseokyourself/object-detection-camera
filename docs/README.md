@@ -100,20 +100,17 @@ pi@raspberrypi:~ $ sudo raspi-config
 **※ 주의: PPP 인터페이스가 활성화되어있으면 AT Command 를 사용할 수 없다.**
 #### 2.1. PPP Install
 + PPP 설치 방법 ([reference](https://github.com/sixfab/Sixfab_PPP_Installer))
-1. PPP 설치 파일 다운로드
+1. PPP 설치 파일 다운로드 및 실행
 ```console
-pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_installer/install.sh
+pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer/master/ppp_install_standalone.sh
+pi@raspberrypi:~ $ sudo chmod +x ppp_install_standalone.sh
+pi@raspberrypi:~ $ sudo ./ppp_install_standalone.sh
 ```
-2. install.sh 권한 변경 및 실행
-```console
-pi@raspberrypi:~ $ chmod 755 install.sh
-pi@raspberrypi:~ $ sudo ./install.sh
-```
-3. 3G/4G Base HAT 선택
-4. APN 입력
+2. 3G/4G Base HAT 선택
+3. APN 입력
 + 텔레노어 유심: internet.lte.cxn
 + 타타 유심: move.dataxs.mobi
-5. 기타 설정을 다음과 같이 입력
+4. 기타 설정을 다음과 같이 입력
 ```
 Does your carrier need username and password? [Y/n]
 >> n
@@ -121,8 +118,8 @@ What is your device communication PORT? (ttyS0/ttyUSB3/etc.)
 >> ttyS0
 Do you want to activate auto connect/reconnect service at R.Pi boot up? [Y/n]
 >> Y   
-
-6. Enter 를 입력하여 라즈베리파이 재실행   
+```
+5. Enter 를 입력하여 라즈베리파이 재실행   
 **만약 wlan이 인터페이스에 없다면 다음을 입력하여 wlan의 block 풀기**
 ```console
 pi@raspberrypi:~ $ sudo rfkill unblock wlan
