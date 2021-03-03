@@ -23,9 +23,18 @@ void Config::readFromJsonFile (const std::string filePath) {
  * @param jsonString The string formed json. ex) {"time"="2021-01-08T13:41:21.046Z"}
  */
 void Config::readFromJsonString (const std::string jsonString) {
+    const int l = jsonString.find("{");
+    const int r = jsonString.find("}");
+    if (l == -1 || r == -1) {
+        std::cerr << "Config: " << "readFromJsonString - failed to parse" << " because jsonString has no json form" << std:: endl;
+        return;
+    }
+    std::string jsonStringCpy;
+    for (int i = l ; i <= r ; i ++)
+        jsonStringCpy += jsonString[i];
     Json::Value root;
     Json::Reader reader;
-    if (!reader.parse(jsonString.c_str(), root)) {
+    if (!reader.parse(jsonStringCpy.c_str(), root)) {
         std::cerr << "Config: " << "readFromJsonString - failed to parse" << reader.getFormattedErrorMessages() << std::endl;
         return;
     }
