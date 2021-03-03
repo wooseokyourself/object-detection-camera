@@ -62,6 +62,8 @@ int main (void) {
             std::cerr << " response:\n" << response << std::endl;
             response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         }
+        std::cout << "HTTP response is below" << endl;
+        std::cout << response << std::endl;
         config.readFromJsonString(response);
         config.write(JSON_PATH);
         nrf.setPowerInterval(config.getIntervalSecs());
@@ -106,6 +108,6 @@ int main (void) {
 
     std::cout << "----End process----" << std::endl;
     usleep(1000000); // wait 10s to write log in background. 
-    gpio.shutdownRpi();
+    // gpio.shutdownRpi();
     return 0;
 }
