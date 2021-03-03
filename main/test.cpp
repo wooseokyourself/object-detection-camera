@@ -65,7 +65,7 @@ int main (void) {
             }
             case 2: {
                 cout << "Below is input string." << endl;
-                string json = "{\"deviceId\": \"ino-on-0005\", \"confidenceThreshold\": \"0.99\", \"nmsThreshold\": \"0.99\", \"resizeResolution\": \"999\", \"sendInterval\": \"300\", \"sendOnDetectedOnly\": \"false\"}";
+                string json = "{\"deviceId\": \"ino-on-0005\", \"confidenceThreshold\": \"0.99\", \"nmsThreshold\": \"0.99\", \"resizeResolution\": \"999\", \"sendInterval\": \"300\", \"sendOnDetectedOnly\": \"false\", \"result\": \"1\"}";
                 cout << json << endl;
                 config.readFromJsonString(json);
                 cout << "ID: " << config.getID() << endl;
