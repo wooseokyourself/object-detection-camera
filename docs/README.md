@@ -1,4 +1,4 @@
-# [Doxygen here](https://wooseokyourself.github.io/my-github-docs/Ino-on_AICamera/html/annotated.html)
+# [Code Documentation](https://wooseokyourself.github.io/my-github-docs/Ino-on_AICamera/html/annotated.html)
 
 # Instructions to Start
 **본 장의 1, 2 가 진행된 라즈베리파이 이미지는 다음 링크에서 다운받을 수 있다. (최소 4GB의 SD카드 필요)**   
