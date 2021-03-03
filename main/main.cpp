@@ -108,6 +108,6 @@ int main (void) {
 
     std::cout << "----End process----" << std::endl;
     usleep(1000000); // wait 10s to write log in background. 
-    // gpio.shutdownRpi();
+    gpio.shutdownRpi();
     return 0;
 }
