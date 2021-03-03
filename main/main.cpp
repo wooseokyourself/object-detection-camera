@@ -62,7 +62,7 @@ int main (void) {
             std::cerr << " response:\n" << response << std::endl;
             response = modem.postMultipart(HOST, DETECTING_URI + config.getID(), fields, 20);
         }
-        std::cout << "HTTP response is below" << endl;
+        std::cout << "HTTP response is below" << std::endl;
         std::cout << response << std::endl;
         config.readFromJsonString(response);
         config.write(JSON_PATH);
