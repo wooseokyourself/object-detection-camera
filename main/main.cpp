@@ -105,7 +105,7 @@ int main (void) {
     }
 
     std::cout << "----End process----" << std::endl;
-    usleep(100000); // 1s
+    usleep(250000); // 2.5s
     gpio.shutdownRpi();
     return 0;
 }
