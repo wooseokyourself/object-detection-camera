@@ -47,7 +47,7 @@ void Config::write (const std::string filePath) const {
     root["result"] = this->result;
     
     Json::StyledStreamWriter writer;
-    std::ofstream jsonFile(filePath, std::ifstream::binary);
+    std::ofstream jsonFile(filePath);
     writer.write(jsonFile, root);
     jsonFile.close();
 }
