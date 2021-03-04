@@ -94,6 +94,8 @@ int main (void) {
                 std::cerr << " response:\n" << response << std::endl;
                 response = modem.postMultipart(HOST, PREVIEW_URI + config.getID(), fields, 20);
             }
+            std::cout << "HTTP response is below" << std::endl;
+            std::cout << response << std::endl;
             config.readFromJsonString(response);
             fields.clear();
             if (!config.isPreviewMode()) {
