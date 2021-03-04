@@ -82,7 +82,7 @@ int Config::getIntervalSecs () const {
 }
 
 bool Config::sendPictureAlways () const {
-    return this->sendOnDetectedOnly;
+    return !this->sendOnDetectedOnly;
 }
 
 bool Config::isPreviewMode () const {
