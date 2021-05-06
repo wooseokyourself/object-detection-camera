@@ -79,7 +79,7 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
     + **`deviceId`**   
-        > AICamera 에 부여되는 고유한 ID. ino-on-xxxx 형식을 따름
+        > AICamera 에 부여되는 고유한 ID.
     + **`sendInterval`**   
         > AICamera 의 작동 주기 (초 단위)
     + **`sendOnDetectedOnly`**   
