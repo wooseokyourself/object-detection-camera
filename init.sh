@@ -1,12 +1,12 @@
 #!/bin/sh
 
-mkdir -p ~/ino-on_AICamera/logs
-mkdir -p ~/ino-on_AICamera/results
-mkdir ~/ino-on_AICamera/build
-wget -O ~/ino-on_AICamera/bin/model/yolov4.weights http://solution.technonia.com/download/inoon_models/yolov4-v02.weights && \
-wget -O ~/ino-on_AICamera/bin/model/yolov4.cfg http://solution.technonia.com/download/inoon_models/yolov4-custom.cfg
+mkdir -p ~/object-detection-camera/logs
+mkdir -p ~/object-detection-camera/results
+mkdir ~/object-detection-camera/build
+wget -O ~/object-detection-camera/bin/model/yolov4.weights https://your-yolo.weights && \
+wget -O ~/object-detection-camera/bin/model/yolov4.cfg https://your-yolo.cfg
 
-echo 'cd ino-on_AICamera' >> ~/.profile
+echo 'cd object-detection-camera' >> ~/.profile
 echo 'find logs/*.txt -type f -mtime +7 -exec rm {} +' >> ~/.profile
 echo 'mkdir -p logs' >> ~/.profile
 echo 'mkdir -p results' >> ~/.profile
