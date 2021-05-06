@@ -1,11 +1,6 @@
 # [Code Documentation](https://wooseokyourself.github.io/my-github-docs/Ino-on_AICamera/html/annotated.html)
 
 # Instructions to Start
-**본 장의 1, 2 가 진행된 라즈베리파이 이미지는 다음 링크에서 다운받을 수 있다. (최소 4GB의 SD카드 필요)**   
-> http://solution.technonia.com/download/inoon_raspbian_image/PiLite4GB-no-ppp.zip   
-*라즈베리파이 계정: pi / raspberry*   
-*자동로그인 설정은 안 되어 있음!*   
-
 ### 1. Software Requirements
 ```console
 # Requirements 설치
@@ -47,22 +42,22 @@ pi@raspberrypi:~ $ sudo raspi-config
 
 ### 3. Install Project
 ```console
-pi@raspberrypi:~ $ git clone https://github.com/UmileVX/ino-on_AICamera
-pi@raspberrypi:~ $ cd ino-on_AICamera
+pi@raspberrypi:~ $ git clone https://github.com/wooseokyourself/object-detection-camera
+pi@raspberrypi:~ $ cd object-detection-camera
 
 # 처음 clone 시 한 번만 실행.
 # ~/.profile 에 부팅시 자동실행 등을 설정하고 모델을 다운받는다.
-pi@raspberrypi:~/ino-on_AICamera $ ./init.sh
+pi@raspberrypi:~/object-detection-camera $ ./init.sh
 
 # 매번 컴파일이 필요할때마다 실행.
-pi@raspberrypi:~/ino-on_AICamera $ ./build.sh
+pi@raspberrypi:~/object-detection-camera $ ./build.sh
 ```
 
 ### 4. Run & Test
 라즈베리파이 전원이 켜지면 자동으로 시작된다. 실행을 멈추고싶다면 본 프로그램 실행 중 ```Ctrl + C``` 로 인터럽트를 줘야 한다.   
 테스트는 다음과 같이 실행가능하다.
 ```console
-pi@raspberrypi:~/ino-on_AICamera $ ./build/test
+pi@raspberrypi:~/object-detection-camera $ ./build/test
 ```
 
 ### 5. Tuning
@@ -100,10 +95,7 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
 
 ## HTTP Request to Server
 + URL
-    + HOST: `http://ino-on.umilevx.com/api/devices/events/ino-on-xxxx`
-        > `ino-on-xxxx` 는 본 카메라 디바이스의 고유한 아이디를 의미.
-    + 서버 로그기록 확인: http://ino-on.umilevx.com/api/logs/YYYY-MM-DD.log
-        > `YYYY-MM-DD` 는 현재날짜이다.
+    + 정보비공개
 + Format
     + `sendOnDetectedOnly = false` 일 경우   
     ```
