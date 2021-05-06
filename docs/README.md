@@ -1,5 +1,4 @@
 # [Report](https://github.com/wooseokyourself/object-detection-camera/blob/cpp-base-0.2/docs/report.pdf)
-# [Code Documentation](https://wooseokyourself.github.io/my-github-docs/Ino-on_AICamera/html/annotated.html)
 
 # Instructions to Start
 ### 1. Software Requirements
