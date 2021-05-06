@@ -1,5 +1,5 @@
 #!/bin/sh
 
-mkdir -p ~/ino-on_AICamera/build
-cd ~/ino-on_AICamera/build
+mkdir -p ~/object-detection-camera/build
+cd ~/object-detection-camera/build
 cmake .. && make && cd ..
