@@ -1,4 +1,13 @@
 # [Report](https://github.com/wooseokyourself/object-detection-camera/blob/cpp-base-0.2/docs/report.pdf)
+# What I Did
++ AT command 를 이용하여 LTE 모뎀 제어
++ 라즈베리파이의 부팅 속도를 단축시키기 위한 다양한 최적화 방법 모색 및 적용
++ GPIO를 이용하여 외부 디바이스와의 통신
++ HTTP POST form 작성
++ Darknet 을 이용한 custom 딥러닝 객체인식 모델 데이터 구성 및 학습
++ OpenCV 를 활용하여 ARM 기반 CPU에 최적화된 딥러닝 객체인식 응용프로그램 개발
++ 클래스 및 디자인패턴을 적용하여 라즈베리파이의 모든 기능 모듈화
++ 모든 소스코드를 깃허브를 통해 버전관리 및 유지보수를 위한 문서화
 
 # Instructions to Start
 ### 1. Software Requirements
