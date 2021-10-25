@@ -92,7 +92,7 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
     + **`sendInterval`**   
         > AICamera 의 작동 주기 (초 단위)
     + **`sendOnDetectedOnly`**   
-        > true 일 경우 이벤트 검출 시에만 사진을 POST, false 일 경우 항상 사진을 POST 하도록 작동
+        > true 일 경우 이벤트 검출 시에만 사진을 서버로 전송, false 일 경우 항상 전송하도록 작동
     + **`confidenceThreshold`**
         > 0 - 1 사이의 부동소수점. 낮을수록 False Positive 검출 증가, 높을수록 True Positive 검출 감소
     + **`nmsThreshold`**
