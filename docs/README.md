@@ -84,7 +84,7 @@ pi@raspberrypi:~ $ sudo systemctl disable dhcpcd.service
     > HIGH: pi 작업 완료   
     > LOW: pi 작업 진행중
 
-## Yolov4 Configuration (Json)
+## HTTP Request from Server (Json)
 + `config/config.json`
 + 각 필드의 의미는 다음과 같다.
     + **`deviceId`**   
